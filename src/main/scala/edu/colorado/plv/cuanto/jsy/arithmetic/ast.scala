@@ -1,4 +1,4 @@
-package edu.colorado.plv.cuanto.jsy.ast
+package edu.colorado.plv.cuanto.jsy.arithmetic
 
 import scala.util.parsing.input.Positional
 
@@ -6,7 +6,7 @@ import scala.util.parsing.input.Positional
   *
   * @author Bor-Yuh Evan Chang
   */
-package object arithmetic {
+object ast {
   /** Expressions ''e''. */
   sealed trait Expr extends Positional
 
