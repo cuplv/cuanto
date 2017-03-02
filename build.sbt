@@ -10,6 +10,7 @@ lazy val root = (project in file(".")).
     name := "cuanto",
     libraryDependencies ++= Seq(
       scalaParserCombinators,
-      scalaTest % Test
+      scalaTest % Test,
+      scalaCheck % Test
     )
   )
