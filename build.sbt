@@ -13,5 +13,4 @@ lazy val root = (project in file(".")).
       scalaTest % Test,
       scalaCheck % Test
     )
-    libraryDependencies += scalaTest % Test
   )
