@@ -1,7 +1,11 @@
 language: scala
-
 scala:
-   - 2.12.1
-
+- 2.12.1
 jdk:
-   - oraclejdk8
+- oraclejdk8
+notifications:
+  slack:
+    rooms:
+      - secure: dx44+qghF1uboPZf2APo0vooY0cOrOqLzMbXU42vMYs2v83PQBp7e3r5BPagTk7mJs2S0caf8yOUO3ZTIWrYSN5AwOsnkjI7PX9dBxSa1nb8g/CwLq+EJXB1buF6Bfv7GIdKLJ/inh2Mkw9t3GPXwuhV3lqQPXUdDonmEmGW4+Zb4zFVBSyUEL0dXe4HSj9u5pBRC6Mxz3zchGPUc3WH2oQgZMldaUo+8B6AA8VDfUiIoUx8ukL+MKgEsRUmyd4c52xEbaDJ97FoKWf+AtMAHoIqWZzNA6ETV/tyuyk2eakBadrLd0yoFmNRoSb5/3zQzB1cdiz2YXFNoGS7HDwid3R7ssMjaT15EFuxlS9SySivUzWYjghnAC/XCKP633FkHfYhHqCjQc6Hpxhp1eJdDEVzTYy/5RGeEjVSnyVx4LUS9oJsRpZl5qVchG0t6OA85GDuw98+/OSMLsLQ2hKvIZmkKD7+SupYGtAAUSsX/l4YDtPh2BfvaZuOwxnYcGElLFjHs7kQ8Cm0jeSjXllhCfAhTrVMcemSbLzYK+TCtBldZ5YZo0XgtLDBMCDWTR2STHXZcvjWiX7X5nTfK4O2EhSsrGJN9JW8MFob+F9ou5rxN2ZTlek1DEY+qWJq23Xjco5Vz4vO13+3rOtdslrzcIBgmYFJUJwksVW06UB40r0=
+    on_success: always # default: always
+    on_failure: always # default: always
