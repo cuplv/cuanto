@@ -19,7 +19,7 @@ class PositionedError(kind: String, msg: String, source: String, pos: Position) 
   *
   * @author Bor-Yuh Evan Chang
   */
-trait ParserLike[+T] { self: Parsers =>
+trait ParserLike[+T] { this: Parsers =>
   /** Helper parser to expose the position. */
   def withpos[T](q: => Parser[T]): Parser[(Position, T)] = Parser { in =>
     q(in) map { t => (in.pos,t) }

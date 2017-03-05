@@ -8,44 +8,50 @@ import scala.util.parsing.input.Positional
   */
 object ast {
   /** Expressions ''e''. */
-  sealed trait Expr extends Positional
+  trait Expr extends Positional
 
   /* Literals and Values */
 
-  /** Numbers ''n''. */
+  /** Numbers ''v'' ::= ''n''. */
   case class N(n: Double) extends Expr
 
   /* Unary and Binary Operators */
 
-  /** Unary expressions ''e'' ::= ''op'' ''e,,1,,''. */
-  case class Unary(op: Op, e1: Expr) extends Expr
-  /** Binary expressions ''e'' ::= ''e,,1,,'' ''op'' ''e,,2,,''. */
-  case class Binary(op: Op, e1: Expr, e2: Expr) extends Expr
+  /** Unary expressions ''e'' ::= ''uop'' ''e,,1,,''. */
+  case class Unary(op: Uop, e1: Expr) extends Expr
 
-  /** Operators ''op''. */
-  sealed trait Op
+  /** Binary expressions ''e'' ::= ''e,,1,,'' ''bop'' ''e,,2,,''. */
+  case class Binary(op: Bop, e1: Expr, e2: Expr) extends Expr
 
-  /** Plus ''op'' ::= `+`. */
-  case object Plus extends Op /* + */
-  /** Minus ''op'' ::= `-`. */
-  case object Minus extends Op /* - */
-  /** Times ''op'' ::= `*`. */
-  case object Times extends Op /* * */
-  /** Div ''op'' ::= `/`. */
-  case object Div extends Op /* / */
+  /** Unary operators ''uop''. */
+  sealed trait Uop
 
-  /** Define well-formed expressions. */
-  def isWellFormed(e: Expr): Boolean = e match {
-    case N(_) => true
-    case Unary(Minus, e1) => isWellFormed(e1)
-    case Binary(_, e1, e2) => isWellFormed(e1) && isWellFormed(e2)
-    case _ => false
-  }
+  /** Neg ''uop'' ::= `-`. */
+  case object Neg extends Uop /* - */
+
+  /** Binary operators ''bop''. */
+  sealed trait Bop
+
+  /** Plus ''bop'' ::= `+`. */
+  case object Plus extends Bop /* + */
+  /** Minus ''bop'' ::= `-`. */
+  case object Minus extends Bop /* - */
+  /** Times ''bop'' ::= `*`. */
+  case object Times extends Bop /* * */
+  /** Div ''bop'' ::= `/`. */
+  case object Div extends Bop /* / */
 
   /** Define values. */
   def isValue(e: Expr): Boolean = e match {
     case N(_) => true
     case _ => false
+  }
+
+  object Value {
+    def unapply(e: Expr): Option[Expr] = e match {
+      case N(_) => Some(e)
+      case _ => None
+    }
   }
 
   /** Pretty-print values.
@@ -55,7 +61,7 @@ object ast {
     */
   def prettyValue(v: Expr): String = {
     require(isValue(v))
-    (v: @unchecked) match {
+    v match {
       case N(n) => prettyDouble(n)
     }
   }

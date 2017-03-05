@@ -1,9 +1,9 @@
 package edu.colorado.plv.cuanto.jsy.arithmetic
 
 import org.scalactic.Equality
-import org.scalatest._
 import org.scalatest.prop.PropertyChecks
 import org.scalacheck.Gen
+import org.scalatest.{FlatSpec, Matchers}
 
 import scala.util.Try
 

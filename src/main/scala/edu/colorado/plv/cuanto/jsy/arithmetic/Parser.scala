@@ -34,7 +34,7 @@ object Parser extends JavaTokenParsers with ParserLike[Expr] {
     *
     */
   def binary(ops: OpPrecedence): Parser[Expr] = {
-    def level(ops: List[(String, Op)]): Parser[(Expr, Expr) => Expr] = {
+    def level(ops: List[(String, Bop)]): Parser[(Expr, Expr) => Expr] = {
       val op1 :: t = ops
       (prebinary(op1) /: t) { (acc, op) => acc | prebinary(op) }
     }
@@ -57,8 +57,8 @@ object Parser extends JavaTokenParsers with ParserLike[Expr] {
     failure("expected an atom")
 
   /** ''uop'' ::= '-' */
-  def uop: Parser[Op] =
-    "-" ^^ { _ => Minus }
+  def uop: Parser[Uop] =
+    "-" ^^ { _ => Neg }
 
   /** Define precedence of left-associative binary operators.
     *
@@ -71,9 +71,9 @@ object Parser extends JavaTokenParsers with ParserLike[Expr] {
     /* highest */
   )
 
-  type OpPrecedence = List[List[(String,Op)]]
+  type OpPrecedence = List[List[(String,Bop)]]
 
-  def prebinary(opsyn: (String, Op)): Parser[(Expr, Expr) => Expr] = {
+  def prebinary(opsyn: (String, Bop)): Parser[(Expr, Expr) => Expr] = {
     val (csyn, asyn) = opsyn
     withpos(csyn) ^^ { case (pos, _) => (e1: Expr, e2: Expr) => Binary(asyn, e1, e2) setPos pos }
   }
