@@ -9,8 +9,62 @@ In brief, the core of the workflow consists of the following:
 - Basing feature branches off of the `develop` branch.
 
   ```
-git checkout -b some-feature develop
+$ git checkout -b some-feature develop
 ```
 
 - Merging into the `develop` branch via pull requests.
 - Reserving the `master` branch for releases.
+
+## Development Environment
+
+### Dependencies
+
+- JDK 8
+- `sbt`
+
+#### macOS: Install Dependencies
+
+Using [Homebrew](https://brew.sh/), install dependencies as follows:
+```
+$ brew cask install java
+$ brew install sbt
+```
+
+### Building and Testing 
+
+See documentation on [sbt](http://www.scala-sbt.org/) for details. In brief, it is most convenient to start an `sbt` shell
+```
+$ sbt
+```
+and then
+- Build
+  ```
+> compile  
+```
+- Test
+  ```
+> test
+```
+- Generate API documentation
+  ```
+> doc
+```
+- Start a Scala console
+  ```
+> console
+```  
+- Prefix any command with `~` to re-execute the command when any file in the project is updated; for example,
+  ```
+> ~test  
+```
+
+### IntelliJ Import
+
+If you want to use [IntelliJ IDEA](https://www.jetbrains.com/idea/) as your IDE, use the [`sbt` import wizard](https://www.jetbrains.com/help/idea/2016.3/getting-started-with-sbt.html#import_project). In brief,
+
+- Make sure the Scala plugin is installed.
+- Import via `File > New > Project from Existing Sources > Import project from external model > SBT`.
+- We recommend checking `Use auto-import` to automaticaly stay in sync with `build.sbt`.
+- Make sure the `Project SDK` is 1.8.
+
+It is particularly convenient to run [ScalaTest via IntelliJ](http://www.scalatest.org/user_guide/using_scalatest_with_intellij). Get started by right-clicking on a ScalaTest `Spec` class.

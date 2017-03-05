@@ -1,6 +1,7 @@
 # cuanto
-CU Suite of Program Analyses
+
+CU Suite of Program Analysis Tools
 
 ## Contributing
 
-See [CONTRIBUTING](CONTRIBUTING.md).
+Please see [CONTRIBUTING](CONTRIBUTING.md) for information on our contribution processes and setting up a development environment.
