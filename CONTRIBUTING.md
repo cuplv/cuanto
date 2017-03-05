@@ -38,22 +38,31 @@ $ sbt
 ```
 and then
 - Build
+
   ```
 > compile  
 ```
+
 - Test
+
   ```
 > test
 ```
+
 - Generate API documentation
+
   ```
 > doc
 ```
+
 - Start a Scala console
+
   ```
 > console
 ```  
+
 - Prefix any command with `~` to re-execute the command when any file in the project is updated; for example,
+
   ```
 > ~test  
 ```
