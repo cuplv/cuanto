@@ -1,11 +1,12 @@
 package edu.colorado.plv.cuanto.jsy.arithmetic
 
+import edu.colorado.plv.cuanto.jsy.arithmetic.ast._
+
 /** Implement interpreters in the standard interpreter styles as examples.
   *
   * @author Bor-Yuh Evan Chang
   */
 object Interpreter {
-  import edu.colorado.plv.cuanto.jsy.arithmetic.ast._
 
   def denote(uop: Uop): Double => Double = uop match {
     case Neg => { - _ }
