@@ -25,8 +25,19 @@ def eval2: FixFun[Expr,Int] = eval1 orElse FixFun(self => {
   case Plus(e1,e2) => self(e1) + self(e2)
 })
 
+/* An example composition. Print on entry. */
 def prettyeval2: FixFun[Expr,Int] =
-  eval2 compose { (e: Expr) => println(s"eval(${pretty2(e)})"); e }
+  eval2 compose { (e: Expr) =>
+    println(s"eval(${pretty2(e)})")
+    e
+  }
+
+/* Print on entry using the more general map. */
+def prettyeval3: FixFun[Expr,Int] =
+  eval2 map { self => e =>
+    println(s"eval(${pretty2(e)})");
+    self(e)
+  }
 
 val a = N(1)
 val b = Neg(a)
@@ -45,3 +56,4 @@ eval2(c)
 eval2(d)
 
 prettyeval2(d)
+prettyeval3(d)
