@@ -1,4 +1,4 @@
-# cuanto
+# cuanto [![Develop Branch Build Status](https://travis-ci.org/cuplv/cuanto.svg?branch=develop)](https://travis-ci.org/cuplv/cuanto)
 
 CU Suite of Program Analysis Tools
 
