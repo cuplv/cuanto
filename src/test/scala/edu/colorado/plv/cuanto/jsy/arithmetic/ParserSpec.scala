@@ -1,4 +1,5 @@
-package edu.colorado.plv.cuanto.jsy.arithmetic
+package edu.colorado.plv.cuanto.jsy
+package arithmetic
 
 import org.scalactic.Equality
 import org.scalatest.prop.PropertyChecks
@@ -8,7 +9,6 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.util.Try
 
 class ParserSpec extends FlatSpec with Matchers with PropertyChecks {
-  import edu.colorado.plv.cuanto.jsy.arithmetic.ast._
   import edu.colorado.plv.cuanto.jsy.arithmetic.Parser.parse
 
   implicit def tryEquality[T]: Equality[Try[T]] = { (a: Try[T], b: Any) =>

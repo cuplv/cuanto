@@ -1,6 +1,5 @@
-package edu.colorado.plv.cuanto.jsy.arithmetic
-
-import edu.colorado.plv.cuanto.jsy.arithmetic.ast._
+package edu.colorado.plv.cuanto.jsy
+package arithmetic
 
 /** Implement interpreters in the standard interpreter styles as examples.
   *
