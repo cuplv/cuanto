@@ -1,7 +1,7 @@
 package edu.colorado.plv.cuanto.jsy.arithmetic
 
 import edu.colorado.plv.cuanto.jsy.arithmetic.ast._
-import edu.colorado.plv.cuanto.parsing.ParserLike
+import edu.colorado.plv.cuanto.parsing.{ParserLike, RichParsers}
 
 import scala.util.parsing.combinator.JavaTokenParsers
 import scala.util.parsing.input.Reader
@@ -10,7 +10,7 @@ import scala.util.parsing.input.Reader
   *
   * @author Bor-Yuh Evan Chang
   */
-object Parser extends JavaTokenParsers with ParserLike[Expr] {
+object Parser extends JavaTokenParsers with RichParsers with ParserLike[Expr] {
   override def scan(in: Reader[Char]): Input = in
   override def start: Parser[Expr] = expr
 
