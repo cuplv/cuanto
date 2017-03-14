@@ -35,35 +35,26 @@ See documentation on [sbt](http://www.scala-sbt.org/) for details. In brief, it 
 $ sbt
 ```
 and then
+
 - Build
 
-  ```
-> compile  
-```
+  ```> compile```
 
 - Test
 
-  ```
-> test
-```
+  ```> test```
 
 - Generate API documentation
 
-  ```
-> doc
-```
+  ```> doc```
 
 - Start a Scala console
 
-  ```
-> console
-```  
+  ```> console```  
 
 - Prefix any command with `~` to re-execute the command when any file in the project is updated; for example,
 
-  ```
-> ~test  
-```
+  ```> ~test```
 
 ### IntelliJ Import
 
