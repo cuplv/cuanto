@@ -8,7 +8,7 @@ package object arithmetic {
 
   /* Literals and values. */
 
-  /** Numbers ''v'' ::= ''n''. */
+  /** Numbers ''e'' ::= ''n''. */
   case class N(n: Double) extends Expr
 
   /* Unary and binary operators. */
