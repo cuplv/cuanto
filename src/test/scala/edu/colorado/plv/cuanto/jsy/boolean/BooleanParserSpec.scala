@@ -9,13 +9,21 @@ import org.scalatest.{FlatSpec, Matchers}
 /**
   * @author Bor-Yuh Evan Chang
   */
-class ParserSpec extends FlatSpec with Matchers with PropertyChecks {
+class BooleanParserSpec extends FlatSpec with Matchers with PropertyChecks {
 
   behavior of "jsy.boolean.Parser"
 
   val positives = Table(
     "concrete" -> "abstract",
     "true" -> B(true),
+    "false" -> B(false),
+    "!false" -> Unary(Not, B(false)),
+    "(true || false) && true" -> {
+      Binary(And,
+        Binary(Or, B(true), B(false)),
+        B(true)
+      )
+    },
     /* precedence: || < && */
     "true || false && true" -> {
       Binary(Or,

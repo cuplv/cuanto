@@ -7,7 +7,7 @@ import org.scalatest.prop.PropertyChecks
 /**
   * @author Bor-Yuh Evan Chang
   */
-class InterpreterSpec extends FlatSpec with Matchers with PropertyChecks {
+class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChecks {
   import implicits.stringToExpr
   import Interpreter._
   import syntax._

@@ -7,7 +7,7 @@ import org.scalacheck.Gen
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
 
-class ParserSpec extends FlatSpec with Matchers with PropertyChecks {
+class ArithmeticParserSpec extends FlatSpec with Matchers with PropertyChecks {
 
   "jsy.arithmetic.Parser" should "parse 3.14" in {
     parse("3.14") shouldEqual N(3.14)
