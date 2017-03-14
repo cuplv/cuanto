@@ -8,9 +8,7 @@ In brief, the core of the workflow consists of the following:
 
 - Basing feature branches off of the `develop` branch.
 
-  ```
-$ git checkout -b some-feature develop
-```
+  ```$ git checkout -b some-feature develop```
 
 - Merging into the `develop` branch via pull requests.
 - Reserving the `master` branch for releases.
