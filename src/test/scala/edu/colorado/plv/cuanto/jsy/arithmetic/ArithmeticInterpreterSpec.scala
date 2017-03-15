@@ -1,4 +1,5 @@
-package edu.colorado.plv.cuanto.jsy.arithmetic
+package edu.colorado.plv.cuanto.jsy
+package arithmetic
 
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.PropertyChecks
@@ -6,10 +7,10 @@ import org.scalatest.prop.PropertyChecks
 /**
   * @author Bor-Yuh Evan Chang
   */
-class InterpreterSpec extends FlatSpec with Matchers with PropertyChecks {
+class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChecks {
   import implicits.stringToExpr
   import Interpreter._
-  import ast._
+  import syntax._
 
   val denoteTests = Table(
     "expression" -> "denotation",

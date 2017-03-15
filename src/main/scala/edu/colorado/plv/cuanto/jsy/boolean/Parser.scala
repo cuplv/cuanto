@@ -1,9 +1,9 @@
 package edu.colorado.plv.cuanto.jsy
-package arithmetic
+package boolean
 
 import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike}
 
-/** Parse into the arithmetic sub-language.
+/** Parse into the boolean sub-language.
   *
   * @author Bor-Yuh Evan Chang
   */
@@ -20,12 +20,13 @@ object Parser extends OpParserLike with JsyParserLike {
   /** ''atom'' ::= ''float'' */
   def opatom: Parser[Expr] =
     positioned {
-      floatingPointNumber ^^ (s => N(s.toDouble))
+      "true" ^^^ B(true) |
+      "false" ^^^ B(false)
     }
 
   /** ''uop'' ::= '-' */
   def uop: Parser[Uop] =
-    "-" ^^ { _ => Neg }
+    "!" ^^ { _ => Not }
 
   /** Define precedence of left-associative binary operators.
     *
@@ -33,8 +34,10 @@ object Parser extends OpParserLike with JsyParserLike {
     */
   lazy val bop: OpPrecedence = List(
     /* lowest */
-    List("+" -> Plus, "-" -> Minus),
-    List("*" -> Times, "/" -> Div)
+    List("||" -> Or),
+    List("&&" -> And),
+    List("===" -> Eq, "!==" -> Ne),
+    List("<" -> Lt, "<=" -> Le, ">" -> Gt, ">=" -> Ge)
     /* highest */
   )
 }

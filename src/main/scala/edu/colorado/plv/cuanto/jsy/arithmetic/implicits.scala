@@ -1,7 +1,5 @@
-package edu.colorado.plv.cuanto.jsy.arithmetic
-
-import edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr
-import edu.colorado.plv.cuanto.parsing.ParserLike
+package edu.colorado.plv.cuanto.jsy
+package arithmetic
 
 /**
   * @author Bor-Yuh Evan Chang
@@ -10,7 +8,7 @@ object implicits {
 
   /** Effectful: parses a [[String]] into an [[Expr]].
     *
-    * @throws ParserLike#SyntaxError
+    * @throws [[edu.colorado.plv.cuanto.parsing.SyntaxError]]
     */
   implicit def stringToExpr(s: String): Expr =
     Parser.parse(s).get
