@@ -35,9 +35,7 @@ object Parser extends OpParserLike with JsyParserLike {
   lazy val bop: OpPrecedence = List(
     /* lowest */
     List("||" -> Or),
-    List("&&" -> And),
-    List("===" -> Eq, "!==" -> Ne),
-    List("<" -> Lt, "<=" -> Le, ">" -> Gt, ">=" -> Ge)
+    List("&&" -> And)
     /* highest */
   )
 }
