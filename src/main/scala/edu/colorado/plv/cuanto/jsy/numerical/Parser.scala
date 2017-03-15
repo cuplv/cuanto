@@ -1,7 +1,7 @@
 package edu.colorado.plv.cuanto.jsy
 package numerical
 
-import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike}
+import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpParser}
 
 /** Parse into the numerical sub-language.
   *
@@ -11,10 +11,24 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   lazy val comparisonBop: OpPrecedence = List(
     /* lowest */
     List("===" -> Eq, "!==" -> Ne),
-    List("<" -> Lt, "<=" -> Le, ">" -> Gt, ">=" -> Ge)
+    List("<=" -> Le, "<" -> Lt, ">=" -> Ge, ">" -> Gt)
     /* highest */
   )
 }
 
-/** The parser for just this arithmetic sub-language. */
-object Parser
+/** The parser for just this numerical sub-language. */
+object Parser extends UnitOpParser with ParserLike with boolean.ParserLike with arithmetic.ParserLike {
+  override def start: Parser[Expr] = expr
+
+  /** Parser for expressions ''expr'': [[Expr]].
+    *
+    * ''expr'' ::= ''binary''
+    */
+  override def expr: Parser[Expr] = binary
+
+  /** Define precedence of left-associative binary operators. */
+  override lazy val bop: OpPrecedence =
+    /* lowest */
+    booleanBop ++ (comparisonBop ++ arithmeticBop)
+    /* highest */
+}
