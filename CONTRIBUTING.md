@@ -2,7 +2,8 @@
 
 ## Workflow
 
-We follow the common Gitflow Workflow. A quick [tutorial](https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow) on the Gitflow Workflow is available from Atlassian.
+We follow the common Gitflow Workflow. A quick [tutorial][Atlassian. Gitflow Workflow] on the Gitflow Workflow is available from Atlassian.
+
 
 In brief, the core of the workflow consists of the following:
 
@@ -14,6 +15,21 @@ $ git checkout -b some-feature develop
 
 - Merging into the `develop` branch via pull requests.
 - Reserving the `master` branch for releases.
+
+[Atlassian. Gitflow Workflow]: https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow
+
+## Coding Style
+
+We follow the standard [Scala Style Guide] and [Effective Scala] with respect to coding style. Please read over these guides before contributing.
+
+[Scala Style Guide]: http://docs.scala-lang.org/style/
+[Effective Scala]: http://twitter.github.io/effectivescala/
+
+## API Documentation
+
+We use Scaladoc and follow the standard guidelines from [Scaladoc for Library Authors].
+
+[Scaladoc for Library Authors]: http://docs.scala-lang.org/overviews/scaladoc/for-library-authors.html
 
 ## Development Environment
 
