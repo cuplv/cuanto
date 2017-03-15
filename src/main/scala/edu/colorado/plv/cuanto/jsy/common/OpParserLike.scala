@@ -3,13 +3,13 @@ package edu.colorado.plv.cuanto.jsy.common
 import edu.colorado.plv.cuanto.jsy._
 import edu.colorado.plv.cuanto.parsing.RichParsers
 
-import scala.util.parsing.combinator.{Parsers, RegexParsers}
+import scala.util.parsing.combinator.RegexParsers
 
 /** Parser components that handle unary and binary operators.
   *
   * @author Bor-Yuh Evan Chang
   */
-trait OpParserLike { _: RichParsers with RegexParsers with Parsers =>
+trait OpParserLike extends RegexParsers with RichParsers {
   /** Define expressions. */
   def expr: Parser[Expr]
 

@@ -1,41 +1,50 @@
 package edu.colorado.plv.cuanto.jsy
 package boolean
 
-import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike}
+import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpParser}
 
 /** Parse into the boolean sub-language.
   *
   * @author Bor-Yuh Evan Chang
   */
-object Parser extends OpParserLike with JsyParserLike {
+trait ParserLike extends OpParserLike with JsyParserLike {
   override def start: Parser[Expr] = expr
 
-  /** Parser for expressions ''expr'': [[Expr]].
-    *
-    * ''expr'' ::=
-    *
-    */
-  def expr: Parser[Expr] = binary
-
   /** ''atom'' ::= ''float'' */
-  def opatom: Parser[Expr] =
+  abstract override def opatom: Parser[Expr] =
     positioned {
       "true" ^^^ B(true) |
       "false" ^^^ B(false)
-    }
+    } |
+    super.opatom
 
   /** ''uop'' ::= '-' */
-  def uop: Parser[Uop] =
-    "!" ^^ { _ => Not }
+  abstract override def uop: Parser[Uop] =
+    "!" ^^ { _ => Not } |
+    super.uop
 
-  /** Define precedence of left-associative binary operators.
+  /** Precedence: { '||' } < { '&&' }.
     *
-    * ''bop'' ::= '+' | '-' | '*' | '/'
+    * ''bop'' ::= '\\' | '&&'
     */
-  lazy val bop: OpPrecedence = List(
+  lazy val booleanBop: OpPrecedence = List(
     /* lowest */
     List("||" -> Or),
     List("&&" -> And)
     /* highest */
   )
+}
+
+/** The parser for just this arithmetic sub-language */
+object Parser extends UnitOpParser with ParserLike {
+  override def start: Parser[Expr] = expr
+
+  /** Parser for expressions ''expr'': [[Expr]].
+    *
+    * ''expr'' ::= ''binary''
+    */
+  override def expr: Parser[Expr] = binary
+
+  /** Define precedence of left-associative binary operators. */
+  override lazy val bop: OpPrecedence = booleanBop
 }
