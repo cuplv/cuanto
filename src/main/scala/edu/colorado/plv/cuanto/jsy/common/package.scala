@@ -2,7 +2,7 @@ package edu.colorado.plv.cuanto.jsy
 
 import edu.colorado.plv.cuanto.parsing.{ParserLike, RichParsers}
 
-import scala.util.parsing.combinator.{JavaTokenParsers, Parsers}
+import scala.util.parsing.combinator.JavaTokenParsers
 import scala.util.parsing.input.Reader
 
 /**
