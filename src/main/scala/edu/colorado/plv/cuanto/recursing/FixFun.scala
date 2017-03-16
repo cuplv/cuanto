@@ -62,7 +62,7 @@ class FixFun[E,R] private(private val gen: (E => R) => PartialFunction[E,R]) ext
 object FixFun {
   /** Construct a fixfun.
     *
-    * @param gen a generator that yields a [[PartialFunction]] when
+    * @param gen a generator that yields a [[scala.PartialFunction]] when
     *            given a reference to the "completed" function, that is,
     *            the parameter of type E => R is a kind of self reference
     *            that includes itself and any extensions.
@@ -79,7 +79,7 @@ object FixFun {
     fun(e)
   }
 
-  /** Override apply on a given [[PartialFunction]]. */
+  /** Override apply on a given [[scala.PartialFunction]]. */
   private def withApply[E,R](pf: PartialFunction[E,R], app: E => R): PartialFunction[E,R] = new PartialFunction[E,R] {
     override def isDefinedAt(e: E) = pf.isDefinedAt(e)
     override def apply(e: E) = app(e)
