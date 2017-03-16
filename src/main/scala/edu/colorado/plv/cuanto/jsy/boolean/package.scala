@@ -4,7 +4,7 @@ package edu.colorado.plv.cuanto.jsy
   *
   * @author Bor-Yuh Evan Chang
   */
-package object boolean {
+package boolean {
 
   /* Literals and Values */
 

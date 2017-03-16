@@ -6,7 +6,7 @@ package edu.colorado.plv.cuanto.jsy
   *
   * @author Bor-Yuh Evan Chang
   */
-package object numerical {
+package numerical {
 
   /** Equal ''bop'' ::= `==`. */
   case object Eq extends Bop
