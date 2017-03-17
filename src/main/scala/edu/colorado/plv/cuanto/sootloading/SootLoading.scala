@@ -9,7 +9,7 @@ import scala.collection.JavaConverters._
   * Created by s on 3/17/17.
   */
 object SootLoading {
-  def load(paths: List[String], main: Option[String] = None): Option[Scene] ={
+  def getAnalysisResult[T](paths: List[String], main: Option[String] = None,analysis: Scene=>T): Option[T] ={
     Options.v().keep_line_number()
     Options.v().set_src_prec(Options.src_prec_class)
     Options.v().set_process_dir(paths.asJava)
@@ -27,12 +27,13 @@ object SootLoading {
     println(s)
     Scene.v().setSootClassPath(path + ":" + s)
 //    Scene.v().loadNecessaryClasses()
-//    val cg = Scene.v().getCallGraph
-    //new OverrideAllMethods(config)
-    var getJimple: GetJimple = new GetJimple
-    PackManager.v().getPack("wjtp").add(new Transform("wjtp.getjimple", getJimple))
+//    PackManager.v().runBodyPacks()
+//    PackManager.v().onlyStandardPacks()
+//    Some(Scene.v())
+    val getJimple: GetJimple[T] = new GetJimple(analysis)
+    PackManager.v().getPack("wjtp").add(new Transform("wjtp.get_jimple", getJimple))
     soot.Main.main(Array("-unfriendly-mode"))
-    getJimple.scene
+    getJimple.result
   }
 
 }
