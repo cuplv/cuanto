@@ -35,7 +35,7 @@ class SootLoadingSpec extends FlatSpec with Matchers{
 
       )
     val classesExist = SootLoading.getAnalysisResult[Boolean](
-      List("/home/s/Documents/source/cuanto/test_files/test1/"),
+      List(getClass.getResource("/test_files/test1/").getPath),
       Some("Test1"),
       testClassExists
     )
