@@ -13,19 +13,8 @@ import scala.collection.JavaConverters._
   * Created by s on 3/17/17.
   */
 class SootLoadingSpec extends FlatSpec with Matchers{
-//  "getAnalysisResult" should "run whole program transformation" in {
-//    //TODO: non hard coded path
-//
-//    val l = SootLoading.getAnalysisResult[Boolean](
-//      List("/home/s/Documents/source/cuanto/test_files/test1/"),
-//      Some("Test1"),
-//      (s: Scene) => true
-//    )
-//    l shouldBe a [Some[_]]
-//
-//  }
 
-  "" should "" in {
+  "SootLoading" should "successfully load jimple" in {
     val testClassExists = (scene: Scene) =>
       scene.getClasses.asScala.exists((clazz: SootClass) => {
         clazz.getName == "Test1" &&

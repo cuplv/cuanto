@@ -26,10 +26,6 @@ object SootLoading {
     val s: String = sys.env("JAVA_HOME") + "/jre/lib/rt.jar"
     println(s)
     Scene.v().setSootClassPath(path + ":" + s)
-//    Scene.v().loadNecessaryClasses()
-//    PackManager.v().runBodyPacks()
-//    PackManager.v().onlyStandardPacks()
-//    Some(Scene.v())
     val getJimple: GetJimple[T] = new GetJimple(analysis)
     PackManager.v().getPack("wjtp").add(new Transform("wjtp.get_jimple", getJimple))
     soot.Main.main(Array("-unfriendly-mode"))
