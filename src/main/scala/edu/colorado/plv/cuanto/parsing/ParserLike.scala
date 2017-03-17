@@ -18,7 +18,7 @@ trait ParserLike[+T] { _: Parsers =>
   /** Define the start symbol. */
   def start: Parser[T]
 
-  /** Parse a complete phrase using [[start]]. */
+  /** Parse a complete phrase using `start`. */
   def parse(in: Input, source: String): Try[T] = Try {
     phrase(start)(in) match {
       case Success(t, _) => t
@@ -26,17 +26,17 @@ trait ParserLike[+T] { _: Parsers =>
     }
   }
 
-  /** Parse a complete phrase from `in`: [[java.lang.CharSequence]]. */
+  /** Parse a complete phrase from `in`: [[CharSequence]]. */
   def parse(in: CharSequence): Try[T] =
     parse(scan(new CharSequenceReader(in)), "<string>")
 
-  /** Parse a complete phrase from `in`: [[java.io.InputStream]]. */
+  /** Parse a complete phrase from `in`: [[InputStream]]. */
   def parse(in: InputStream, source: String = "<stream>"): Try[T] = {
     val reader = StreamReader(new InputStreamReader(in))
     parse(scan(reader), source)
   }
 
-  /** Parse a complete phrase from `in`: [[java.io.File]]. */
+  /** Parse a complete phrase from `in`: [[File]]. */
   def parse(in: File): Try[T]  =
     parse(new FileInputStream(in), in.getName)
 
