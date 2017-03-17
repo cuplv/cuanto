@@ -9,7 +9,7 @@ In brief, the core of the workflow consists of the following:
 
 - Basing feature branches off of the `develop` branch.
 
-  ```$ git checkout -b some-feature develop```
+  `$ git checkout -b some-feature develop`
 
 - Merging into the `develop` branch via pull requests.
 - Reserving the `master` branch for releases.
@@ -54,23 +54,23 @@ and then
 
 - Build
 
-  ```> compile```
+  `> compile`
 
 - Test
 
-  ```> test```
+  `> test`
 
 - Generate API documentation
 
-  ```> doc```
+  `> doc`
 
 - Start a Scala console
 
-  ```> console```  
+  `> console`  
 
 - Prefix any command with `~` to re-execute the command when any file in the project is updated; for example,
 
-  ```> ~test```
+  `> ~test`
 
 ### IntelliJ Import
 
