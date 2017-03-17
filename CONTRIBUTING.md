@@ -15,9 +15,9 @@ In brief, the core of the workflow consists of the following:
 
 [Atlassian. Gitflow Workflow]: https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow
 
-## Writing Commit Messages
+## Commit Messages
 
-We follow standard conventions for Git commit messages. First read the brief [How to Write a Git Commit Message] and then [Contributing to a Project][ProGit: Contributing to a Project] from the [ProGit] book. In short, write substantitive messages that convey _why_ something was changed versus simply saying _what_ was changed. 
+We follow standard conventions for writing effective Git commit messages. First read the brief [How to Write a Git Commit Message] and then [Contributing to a Project][ProGit: Contributing to a Project] from the [ProGit] book. In short, write substantitive messages that convey _why_ something was changed versus simply saying _what_ was changed. 
 
 [How to Write a Git Commit Message]: https://chris.beams.io/posts/git-commit/
 [ProGit: Contributing to a Project]: https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project "Scott Chacon and Ben Straub. ProGit: Distributed Git: Contributing to a Project."
