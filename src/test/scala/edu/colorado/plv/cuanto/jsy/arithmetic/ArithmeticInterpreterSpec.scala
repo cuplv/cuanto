@@ -8,7 +8,7 @@ import org.scalatest.{FlatSpec, Matchers}
   * @author Bor-Yuh Evan Chang
   */
 class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChecks {
-  import Interpreter._
+  import SimpleInterpreter._
   import implicits.stringToExpr
 
   val denoteTests = Table(
