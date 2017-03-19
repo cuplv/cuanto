@@ -1,9 +1,7 @@
-package edu.colorado.plv.cuanto.sootloading
+package edu.colorado.plv.cuanto.jimpleinterpreter
 
-import java.util
-
-import soot.options.Options
 import soot._
+import soot.options.Options
 
 import scala.collection.JavaConverters._
 
@@ -17,13 +15,15 @@ object SootLoading {
     val jcePath: String = javaLibraryPath + "jce.jar"
     val rtPath: String = javaLibraryPath + "rt.jar"
 
-    def getAnalysisResult[T](paths: List[String], main: Option[String] = None, analysis: Scene => T): Option[T] = {
+    def init(paths: List[String], main: Option[String] = None) = {
         Options.v().keep_line_number()
         Options.v().set_src_prec(Options.src_prec_class)
         Options.v().set_process_dir(paths.asJava)
         Options.v().unfriendly_mode() //allow to run with no command line args
         Options.v().set_allow_phantom_refs(true)
         Options.v().set_whole_program(true)
+
+        // Set main class
         main match {
             case Some(_main) => Options.v().set_main_class(_main)
             case None =>
@@ -31,10 +31,9 @@ object SootLoading {
 
         // Set soot class path to directories: (1) where the jars to be analyzed are located (2) rt.jar (3) jce.jar
         Scene.v().setSootClassPath(paths.foldLeft("")((acc, str) => acc + str) + pathSep + jcePath + pathSep + rtPath)
-        val getJimple: GetJimple[T] = new GetJimple(analysis)
-        PackManager.v().getPack("wjtp").add(new Transform("wjtp.get_jimple", getJimple))
-        soot.Main.main(Array("-unfriendly-mode"))
-        getJimple.result
-    }
 
+        PackManager.v().getPack("wjtp").add(new Transform("wjtp.jimple_interpreter", new JimpleInterpreter()))
+
+        soot.Main.main(Array("-unfriendly-mode"))
+    }
 }
