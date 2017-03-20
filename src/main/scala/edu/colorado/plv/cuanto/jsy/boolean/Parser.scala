@@ -8,8 +8,6 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
   * @author Bor-Yuh Evan Chang
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
-  override def start: Parser[Expr] = expr
-
   /** ''atom'' ::= ''float'' */
   abstract override def opatom: Parser[Expr] =
     positioned {
