@@ -19,6 +19,9 @@ package jsy {
   /** Binary operators ''bop''. */
   trait Bop
 
+  /** Values ''v'' with ''e'' ::= ''v''. */
+  trait Val extends Expr
+
 }
 
 /** Defining the JavaScripty language platform.
