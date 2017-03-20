@@ -15,7 +15,7 @@ object SootLoading {
     val jcePath: String = javaLibraryPath + "jce.jar"
     val rtPath: String = javaLibraryPath + "rt.jar"
 
-    def init(paths: List[String], main: Option[String] = None) = {
+    def init(paths: List[String], mainClass: Option[String] = None, mainMethod: Option[String] = None) = {
         Options.v().keep_line_number()
         Options.v().set_src_prec(Options.src_prec_class)
         Options.v().set_process_dir(paths.asJava)
@@ -24,8 +24,8 @@ object SootLoading {
         Options.v().set_whole_program(true)
 
         // Set main class
-        main match {
-            case Some(_main) => Options.v().set_main_class(_main)
+        mainClass match {
+            case Some(klass) => Options.v().set_main_class(klass)
             case None =>
         }
 
