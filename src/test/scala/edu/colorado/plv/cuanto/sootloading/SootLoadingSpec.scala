@@ -16,6 +16,7 @@ class SootLoadingSpec extends FlatSpec with Matchers {
     val fileSep: String = System.getProperty("file.separator")
     val pathSep: String = System.getProperty("path.separator")
 
+    /*
     "SootLoading" should "successfully load jimple" in {
         val testClassExists = (scene: Scene) =>
             scene.getClasses.asScala.exists((clazz: SootClass) => {
@@ -37,6 +38,6 @@ class SootLoadingSpec extends FlatSpec with Matchers {
         classesExist shouldBe a[Some[_]]
         classesExist.get shouldBe true
     }
-
+    */
 
 }
