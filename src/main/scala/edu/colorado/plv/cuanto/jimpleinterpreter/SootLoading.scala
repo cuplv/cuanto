@@ -1,11 +1,10 @@
-package edu.colorado.plv.cuanto.sootloading
+package edu.colorado.plv.cuanto.jimpleinterpreter
 
-import java.util
-
-import soot.options.Options
 import soot._
+import soot.options.Options
 
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 
 /**
   * Created by s on 3/17/17.
@@ -16,8 +15,9 @@ object SootLoading {
     val javaLibraryPath: String = System.getProperty("java.home") + fileSep + "lib" + fileSep
     val jcePath: String = javaLibraryPath + "jce.jar"
     val rtPath: String = javaLibraryPath + "rt.jar"
+    val memory: mutable.HashMap[Local, Int] = new mutable.HashMap[Local, Int]()
 
-    def getAnalysisResult[T](paths: List[String], main: Option[String] = None, analysis: Scene => T): Option[T] = {
+    def init(paths: List[String], mainClass: Option[String] = None, mainMethod: Option[String] = None) = {
         G.reset()
 
         Options.v().keep_line_number()
@@ -26,17 +26,18 @@ object SootLoading {
         Options.v().unfriendly_mode() //allow to run with no command line args
         Options.v().set_allow_phantom_refs(true)
         Options.v().set_whole_program(true)
-        main match {
-            case Some(_main) => Options.v().set_main_class(_main)
+
+        // Set main class
+        mainClass match {
+            case Some(klass) => Options.v().set_main_class(klass)
             case None =>
         }
 
         // Set soot class path to directories: (1) where the jars to be analyzed are located (2) rt.jar (3) jce.jar
         Scene.v().setSootClassPath(paths.foldLeft("")((acc, str) => acc + str + pathSep) + jcePath + pathSep + rtPath)
-        val getJimple: GetJimple[T] = new GetJimple(analysis)
-        PackManager.v().getPack("wjtp").add(new Transform("wjtp.get_jimple", getJimple))
-        soot.Main.main(Array("-unfriendly-mode"))
-        getJimple.result
-    }
 
+        PackManager.v().getPack("wjtp").add(new Transform("wjtp.jimple_interpreter", new JimpleInterpreter(memory)))
+
+        soot.Main.main(Array("-unfriendly-mode"))
+    }
 }
