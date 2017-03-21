@@ -4,6 +4,7 @@ import soot._
 import soot.options.Options
 
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 
 /**
   * Created by s on 3/17/17.
@@ -14,6 +15,7 @@ object SootLoading {
     val javaLibraryPath: String = System.getProperty("java.home") + fileSep + "lib" + fileSep
     val jcePath: String = javaLibraryPath + "jce.jar"
     val rtPath: String = javaLibraryPath + "rt.jar"
+    val memory: mutable.HashMap[Local, Int] = new mutable.HashMap[Local, Int]()
 
     def init(paths: List[String], mainClass: Option[String] = None, mainMethod: Option[String] = None) = {
         Options.v().keep_line_number()
@@ -32,7 +34,7 @@ object SootLoading {
         // Set soot class path to directories: (1) where the jars to be analyzed are located (2) rt.jar (3) jce.jar
         Scene.v().setSootClassPath(paths.foldLeft("")((acc, str) => acc + str) + pathSep + jcePath + pathSep + rtPath)
 
-        PackManager.v().getPack("wjtp").add(new Transform("wjtp.jimple_interpreter", new JimpleInterpreter()))
+        PackManager.v().getPack("wjtp").add(new Transform("wjtp.jimple_interpreter", new JimpleInterpreter(memory)))
 
         soot.Main.main(Array("-unfriendly-mode"))
     }

@@ -9,13 +9,14 @@ import soot.shimple.toolkits.scalar.SEvaluator.MetaConstant
 import soot.{Body, Local, Scene, SceneTransformer, Value}
 
 import scala.collection.immutable.HashMap
+import scala.collection.mutable
 
 /**
   * Created by Lumber on 3/19/2017.
   */
-class JimpleInterpreter extends SceneTransformer {
+class JimpleInterpreter(memory: mutable.HashMap[Local, Int]) extends SceneTransformer {
     val DEBUG = true
-    var memory: HashMap[Local, Int] = new HashMap()
+    // var memory: HashMap[Local, Int] = new HashMap()
     var pc: Stmt = _
 
     override def internalTransform(s: String, map: util.Map[String, String]): Unit = {
@@ -31,9 +32,11 @@ class JimpleInterpreter extends SceneTransformer {
             concreteInterpret(pc, methodBody)
         }
 
-        println(methodBody)
-        memory.foreach {
-            case (variable, value) => println(variable + ": " + value)
+        if (DEBUG) {
+            println(methodBody)
+            memory.foreach {
+                case (variable, value) => println(variable + ": " + value)
+            }
         }
     }
 
@@ -65,7 +68,8 @@ class JimpleInterpreter extends SceneTransformer {
                     case _stmt: AssignStmt =>
                         _stmt.getLeftOp match {
                             case left: Local =>
-                                memory = memory + (left -> getVal(_stmt.getRightOp))
+                                    // memory = memory + (left -> getVal(_stmt.getRightOp))
+                                    memory.update(left, getVal(_stmt.getRightOp))
                             case left@_ => println(left.getClass); assert(false, "Left op of AssignStmt is not Local")
                         }
                     case _stmt: IdentityStmt => // Ignore
@@ -78,17 +82,17 @@ class JimpleInterpreter extends SceneTransformer {
                 }
             case stmt: IfStmt =>
                 val cond = getVal(stmt.getCondition)
-                if (cond == 0) {
+                if (cond == 1) {
                     pc = stmt.getTarget
-                } else if (cond == 1) {
+                } else if (cond == 0) {
                     pc = getNextStmt(stmt, body)
                 } else {
                     assert(false, "Evaluation error in if condition")
                 }
-                println(stmt.getClass)
             case stmt: ReturnStmt =>
                 pc = null
             case stmt: ReturnVoidStmt => // Ignore
+                pc = null
                 pc = getNextStmt(stmt, body)
             case stmt: InvokeStmt => // Ignore
                 pc = getNextStmt(stmt, body)
@@ -104,7 +108,6 @@ class JimpleInterpreter extends SceneTransformer {
                 pc = getNextStmt(stmt, body)
             case stmt: RetStmt => // Ignore
                 pc = getNextStmt(stmt, body)
-            case stmt@_ => System.err.print(stmt.getClass)
         }
 
     }
