@@ -18,6 +18,8 @@ object SootLoading {
     val memory: mutable.HashMap[Local, Int] = new mutable.HashMap[Local, Int]()
 
     def init(paths: List[String], mainClass: Option[String] = None, mainMethod: Option[String] = None) = {
+        G.reset()
+
         Options.v().keep_line_number()
         Options.v().set_src_prec(Options.src_prec_class)
         Options.v().set_process_dir(paths.asJava)

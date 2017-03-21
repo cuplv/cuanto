@@ -18,6 +18,8 @@ object SootLoading {
     val rtPath: String = javaLibraryPath + "rt.jar"
 
     def getAnalysisResult[T](paths: List[String], main: Option[String] = None, analysis: Scene => T): Option[T] = {
+        G.reset()
+
         Options.v().keep_line_number()
         Options.v().set_src_prec(Options.src_prec_class)
         Options.v().set_process_dir(paths.asJava)
