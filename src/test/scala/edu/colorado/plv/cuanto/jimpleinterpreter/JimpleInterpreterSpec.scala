@@ -12,14 +12,6 @@ class JimpleInterpreterSpec extends FlatSpec with Matchers {
     val testFilePaths: String = System.getProperty("user.dir") + fileSep + "src" + fileSep + "test" + fileSep + "resources" + fileSep + "test_files" + fileSep + "test1"
     SootLoading.init(List(testFilePaths), Some("Test1"))
 
-    /*
-        $i1: 8
-        b0: 10
-        z0: 1
-        i3: 1048576
-        $i2: 2097152
-        i4: 10
-     */
     "Jimple interpreter" should "concretely and correctly interpret the Jimple code" in {}
 
     def getVariableVal(name: String): Int = {

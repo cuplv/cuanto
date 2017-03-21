@@ -34,7 +34,7 @@ object SootLoading {
         }
 
         // Set soot class path to directories: (1) where the jars to be analyzed are located (2) rt.jar (3) jce.jar
-        Scene.v().setSootClassPath(paths.foldLeft("")((acc, str) => acc + str) + pathSep + jcePath + pathSep + rtPath)
+        Scene.v().setSootClassPath(paths.foldLeft("")((acc, str) => acc + str + pathSep) + jcePath + pathSep + rtPath)
 
         PackManager.v().getPack("wjtp").add(new Transform("wjtp.jimple_interpreter", new JimpleInterpreter(memory)))
 

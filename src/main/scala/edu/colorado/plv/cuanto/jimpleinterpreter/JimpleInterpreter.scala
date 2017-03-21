@@ -41,6 +41,7 @@ class JimpleInterpreter(memory: mutable.HashMap[Local, Int]) extends SceneTransf
     }
 
     // TODO: is there a better way to do this?
+    @deprecated("")
     def getNextStmt(stmt: Stmt, body: Body): Stmt = {
         val it = body.getUnits.iterator()
         while (it.hasNext) {
@@ -61,6 +62,7 @@ class JimpleInterpreter(memory: mutable.HashMap[Local, Int]) extends SceneTransf
         null
     }
 
+    @deprecated("")
     def concreteInterpret(statement: Stmt, body: Body): Unit = {
         statement match {
             case stmt: DefinitionStmt =>
@@ -112,6 +114,7 @@ class JimpleInterpreter(memory: mutable.HashMap[Local, Int]) extends SceneTransf
 
     }
 
+    @deprecated("")
     def getVal(value: Value): Int = {
         value match {
             case _value: Local => memory.getOrElse(_value, 0) // Uninitialized value of any variable is 0
@@ -121,6 +124,7 @@ class JimpleInterpreter(memory: mutable.HashMap[Local, Int]) extends SceneTransf
         }
     }
 
+    @deprecated("")
     def eval(expr: Expr): Int = {
         expr match {
             case _expr: AnyNewExpr => 0
@@ -166,6 +170,7 @@ class JimpleInterpreter(memory: mutable.HashMap[Local, Int]) extends SceneTransf
         }
     }
 
+    @deprecated("")
     def getConstantVal(constant: Constant): Int = {
         constant match {
             case cons: ClassConstant => 0
