@@ -13,7 +13,7 @@ import scala.util.{Failure, Success, Try}
   */
 class FixFun[E,R] private(private val gen: (E => R) => PartialFunction[E,R]) extends (E => R) {
   /** The recursive function. */
-  lazy private val fun: E => R = FixFun.fix(gen)
+  private lazy val fun: E => R = FixFun.fix(gen)
 
   /** Apply the recursive function. */
   def apply(e: E): R = fun(e)
