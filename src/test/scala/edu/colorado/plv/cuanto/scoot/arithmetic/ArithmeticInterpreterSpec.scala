@@ -5,25 +5,23 @@ import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.PropertyChecks
 
 class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChecks {
-  import Interpreter._
-  import Builder._
+  import Builder.{init, add, sub, mul, div, neg}
 
   val denoteTests = Table(
     "expression" -> "denotation",
-    int(1) -> 1,
+    init(1) -> 1,
+    neg(init(1)) -> -1,
 
-    add(1,1) -> 2,
-    sub(1,1) -> 0,
-    mul(1,1) -> 1,
-    div(1,1) -> 1
-    // add(int(1),add(int(2),int(3))) -> 6,
-    // add(int(1),mul(int(2),int(3))) -> 7
+    add(init(1),1) -> 2,
+    sub(init(1),1) -> 0,
+    mul(init(1),1) -> 1,
+    div(init(1),1) -> 1,
+    add(add(init(3),2),1) -> 6,
+    add(mul(init(3),2),1) -> 7
   )
 
   forAll (denoteTests) { (e, n) =>
-    it should s"interpret $e to $n" in {
-      denote(e) shouldEqual n
-    }
+    Interpreter.denote(e) should equal (n)
   }
 
 }
