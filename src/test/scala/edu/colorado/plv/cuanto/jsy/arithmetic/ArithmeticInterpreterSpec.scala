@@ -1,15 +1,14 @@
 package edu.colorado.plv.cuanto.jsy
 package arithmetic
 
-import org.scalatest.prop.PropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import edu.colorado.plv.cuanto.CuantoSpec
 
 import scala.util.Try
 
 /**
   * @author Bor-Yuh Evan Chang
   */
-class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChecks with ArithmeticInterpreterBehaviors {
+class ArithmeticInterpreterSpec extends CuantoSpec with ArithmeticInterpreterBehaviors {
   import SimpleInterpreter._
 
   behavior of "denote"

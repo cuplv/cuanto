@@ -1,15 +1,14 @@
 package edu.colorado.plv.cuanto.jsy
 package arithmetic
 
-import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.prop.PropertyChecks
+import edu.colorado.plv.cuanto.CuantoSpec
 
 import scala.util.Try
 
 /**
   * @author Bor-Yuh Evan Chang
   */
-trait ArithmeticInterpreterBehaviors { self: FlatSpec with Matchers with PropertyChecks =>
+trait ArithmeticInterpreterBehaviors { self: CuantoSpec =>
   import edu.colorado.plv.cuanto.testing.implicits.tryEquality
   import implicits.stringToExpr
 
