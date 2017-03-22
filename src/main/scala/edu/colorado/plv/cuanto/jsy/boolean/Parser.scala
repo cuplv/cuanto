@@ -35,7 +35,7 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   )
 }
 
-/** The parser for just this arithmetic sub-language */
+/** The parser for just this boolean sub-language */
 object Parser extends UnitOpParser with ParserLike {
   override def start: Parser[Expr] = expr
 
