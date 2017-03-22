@@ -45,9 +45,9 @@ trait OpParserLike extends RegexParsers with RichParsers {
       }
       def level(ops: List[(String, Bop)]): Parser[(Expr, Expr) => Expr] = {
         val op1 :: t = ops
-        (binaryCase(op1) /: t) { (acc, op) => acc | binaryCase(op) }
+        t.foldLeft(binaryCase(op1)) { (acc, op) => acc | binaryCase(op) }
       }
-      (ops :\ unary) { (lops, acc) => acc * level(lops) }
+      ops.foldRight(unary) { (lops, acc) => acc * level(lops) }
     }
     binaryOps(bop)
   }
