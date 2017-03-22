@@ -1,17 +1,18 @@
 package edu.colorado.plv.cuanto.abstracting
 
-/** The signature for a generic abstraction.
+/** Signature for a generic abstraction.
   *
   * An abstraction is a join semi-lattice.
   *
   * @author Bor-Yuh Evan Chang
   */
 trait Abstraction {
-  type Element
+  /** The abstract element type. */
+  type A
 
-  val bottom: Element
-  def isBottom(e: Element): Boolean
+  val bottom: A
+  def isBottom(e: A): Boolean
 
-  def implies(e1: Element, e2: Element): Boolean
-  def join(e1: Element, e2: Element): Element
+  def implies(e1: A, e2: A): Boolean
+  def join(e1: A, e2: A): A
 }
