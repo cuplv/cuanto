@@ -12,10 +12,10 @@ class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChec
     "expression" -> "denotation",
     int(1) -> 1,
 
-    add(int(1),int(1)) -> 2,
-    sub(int(1),int(1)) -> 0,
-    mul(int(1),int(1)) -> 1,
-    div(int(1),int(1)) -> 1
+    add(1,1) -> 2,
+    sub(1,1) -> 0,
+    mul(1,1) -> 1,
+    div(1,1) -> 1
     // add(int(1),add(int(2),int(3))) -> 6,
     // add(int(1),mul(int(2),int(3))) -> 7
   )
