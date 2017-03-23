@@ -1,6 +1,8 @@
 package edu.colorado.plv.cuanto.sootloading
 
+
 import java.util.concurrent.locks.ReentrantLock
+
 
 import soot.options.Options
 import soot._
@@ -11,8 +13,15 @@ import scala.collection.JavaConverters._
   * Created by s on 3/17/17.
   */
 object SootLoading {
+
   //Note: soot uses a lot of global static variables, we can only run one copy at a time and it must be reset
   val lock : ReentrantLock = new ReentrantLock()
+
+  val fileSep: String = System.getProperty("file.separator")
+  val pathSep: String = System.getProperty("path.separator")
+  val javaLibraryPath: String = System.getProperty("java.home") + fileSep + "lib" + fileSep
+  val jcePath: String = javaLibraryPath + "jce.jar"
+  val rtPath: String = javaLibraryPath + "rt.jar"
 
 
   def getAnalysisResult[T](paths: List[String], main: Option[String] = None,analysis: Scene=>T): Option[T] ={
@@ -29,10 +38,7 @@ object SootLoading {
     }
 
     val path: String = Scene.v().getSootClassPath
-    val sep: String = System.getProperty("file.separator")
-    val s: String =  System.getProperty("java.home") +  sep + "jre" + sep + "lib" + sep + "rt.jar"
-    println(s)
-    Scene.v().setSootClassPath(path + ":" + s)
+    Scene.v().setSootClassPath(path + ":" + paths.foldLeft("")((acc, str) => acc + str + pathSep) + jcePath + pathSep + rtPath)
     val getJimple: GetJimple[T] = new GetJimple(analysis)
     PackManager.v().getPack("wjtp").add(new Transform("wjtp.get_jimple", getJimple))
     soot.Main.main(Array("-unfriendly-mode"))
