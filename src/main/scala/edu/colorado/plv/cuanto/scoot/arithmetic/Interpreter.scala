@@ -41,7 +41,7 @@ object Interpreter {
   /** Interpret an arithmetic unary operator node, getting back a
     * function that performs the operation */
   def uop(op: UnopExpr): Int => Int = op match {
-    case _: NegExpr => {_ * -1}
+    case _: NegExpr => _ * -1
   }
 
   /** Interpret an arithemetic binary operator node, getting back a
@@ -63,19 +63,13 @@ object Interpreter {
     case _op: XorExpr => ???
   }
 
-  def condop(op: ConditionExpr): (Int, Int) => Int = op match {
+  def condop(op: ConditionExpr): (Int, Int) => Boolean = op match {
     case _: EqExpr => _ == _
     case _: GeExpr => _ >= _
-    case ___expr: GtExpr => _ > _
-    case ___expr: LeExpr => _ <= _
-    case ___expr: LtExpr => _ < _
-    case ___expr: NeExpr => _ != _
-  }
-
-  def bToi(f: (Int, Int) => Boolean): (Int, Int) => Int = {
-    if (f(_, _)) {
-      
-    }
+    case _: GtExpr => _ > _
+    case _: LeExpr => _ <= _
+    case _: LtExpr => _ < _
+    case _: NeExpr => _ != _
   }
 
   def eval(expr: Expr, memory: HashMap[Local, Int]): Int = {
