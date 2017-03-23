@@ -52,7 +52,7 @@ object Interpreter {
     case _op: CmpExpr => ???
     case _op: CmpgExpr => ???
     case _op: CmplExpr => ???
-    case _op: ConditionExpr => condop(_op)
+    case _op: ConditionExpr => condop(_op) // TODO: if true: return 1, else: return 0
     case _op: DivExpr => _ / _
     case _op: MulExpr => _ * _
     case _op: OrExpr => ???
