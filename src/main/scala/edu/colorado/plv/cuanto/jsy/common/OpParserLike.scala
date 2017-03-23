@@ -10,9 +10,6 @@ import scala.util.parsing.combinator.RegexParsers
   * @author Bor-Yuh Evan Chang
   */
 trait OpParserLike extends RegexParsers with RichParsers {
-  /** Define expressions. */
-  def expr: Parser[Expr]
-
   /** Define atoms. */
   def opatom: Parser[Expr]
 
@@ -65,6 +62,6 @@ trait OpParserLike extends RegexParsers with RichParsers {
   /** ''atom'' ::= ''opatom'' | '(' ''expr'' ')' */
   def atom: Parser[Expr] =
     opatom |
-    "(" ~> expr <~ ")" |
+    "(" ~> binary <~ ")" |
     failure("expected an atom")
 }

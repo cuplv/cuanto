@@ -10,6 +10,9 @@ package jsy {
   /** Expressions ''e''. */
   trait Expr extends Positional
 
+  /** Unit expression '()'. */
+  case object Unit extends Expr
+
   /** Unary expressions ''e'' ::= ''uop'' ''e,,1,,''. */
   case class Unary(op: Uop, e1: Expr) extends Expr
 

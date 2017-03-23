@@ -18,13 +18,7 @@ trait ParserLike extends OpParserLike with JsyParserLike {
 
 /** The parser for just this numerical sub-language. */
 object Parser extends UnitOpParser with ParserLike with boolean.ParserLike with arithmetic.ParserLike {
-  override def start: Parser[Expr] = expr
-
-  /** Parser for expressions ''expr'': [[Expr]].
-    *
-    * ''expr'' ::= ''binary''
-    */
-  override def expr: Parser[Expr] = binary
+  override def start: Parser[Expr] = binary
 
   /** Define precedence of left-associative binary operators. */
   override lazy val bop: OpPrecedence =
