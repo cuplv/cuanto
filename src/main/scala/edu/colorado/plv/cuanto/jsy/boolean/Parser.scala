@@ -5,12 +5,27 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
 
 /** Parse into the boolean sub-language.
   *
+  * Relies on [[edu.colorado.plv.cuanto.jsy.common.OpParserLike]] to parse unary and binary expressions.
+  *
+  * The atoms are `true` and `false`
+  *
+  * $booleanOpatom
+  *
+  * The unary and binary operators are negation, or, and and:
+  *
+  * $booleanUop
+  *
+  * $booleanBop
+  *
+  * @define booleanOpatom ''opatom'' ::= `true` | `false`
+  * @define booleanUop '''uop'' ::= `!``
+  * @define booleanBop ''bop'' ::= `||` | `&&`
   * @author Bor-Yuh Evan Chang
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
   override def start: Parser[Expr] = expr
 
-  /** ''atom'' ::= ''float'' */
+  /** $booleanOpatom */
   abstract override def opatom: Parser[Expr] =
     positioned {
       "true" ^^^ B(true) |
@@ -18,14 +33,14 @@ trait ParserLike extends OpParserLike with JsyParserLike {
     } |
     super.opatom
 
-  /** ''uop'' ::= '-' */
+  /** $booleanUop */
   abstract override def uop: Parser[Uop] =
     "!" ^^ { _ => Not } |
     super.uop
 
-  /** Precedence: { '||' } < { '&&' }.
+  /** Precedence: { `||` } < { `&&` }.
     *
-    * ''bop'' ::= '\\' | '&&'
+    * $booleanBop
     */
   lazy val booleanBop: OpPrecedence = List(
     /* lowest */
@@ -35,7 +50,11 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   )
 }
 
-/** The parser for just this boolean sub-language */
+/** The parser for just this boolean sub-language
+  *
+  * @see [[ParserLike]]
+  * @author Bor-Yuh Evan Chang
+  */
 object Parser extends UnitOpParser with ParserLike {
   override def start: Parser[Expr] = expr
 

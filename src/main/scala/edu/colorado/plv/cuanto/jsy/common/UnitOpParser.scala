@@ -4,8 +4,8 @@ package common
 import edu.colorado.plv.cuanto.parsing.RichParsers
 import scala.util.parsing.combinator.{Parsers, RegexParsers}
 
-/** Define a unit [[OpParserLike]] that is
-  * [[Parsers]].failure on everything.
+/** Define a unit [[edu.colorado.plv.cuanto.jsy.common.OpParserLike]] that is
+  * [[scala.util.parsing.combinator.Parsers]].failure on everything.
   *
   * @author Bor-Yuh Evan Chang
   */

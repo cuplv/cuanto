@@ -8,7 +8,7 @@ import edu.colorado.plv.cuanto.parsing
   */
 object implicits {
 
-  /** Effectful: parses a [[String]] into an [[Expr]].
+  /** Effectful: parses a string into an [[edu.colorado.plv.cuanto.jsy.Expr]].
     *
     * @see [[Parser]].parse for the interface that returns a [[scala.util.Try]].
     * @throws parsing.SyntaxError when not syntactically valid.

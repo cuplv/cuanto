@@ -52,10 +52,10 @@ import scala.util.parsing.combinator.RegexParsers
   *       }
   *     override def uop: Parser[Uop] =
   *       "-" ^^ { _ => Neg }
-  *     override def bop: OpPrecedence = List(
+  *     override def bop: OpPrecedence = Seq(
   *       /* lowest */
-  *       List("+" -> Plus, "-" -> Minus),
-  *       List("*" -> Times, "/" -> Div)
+  *       Seq("+" -> Plus, "-" -> Minus),
+  *       Seq("*" -> Times, "/" -> Div)
   *       /* highest */
   *     )
   *   }
@@ -74,7 +74,7 @@ trait OpParserLike extends RegexParsers with RichParsers {
   /** Define unary operators. */
   def uop: Parser[Uop]
 
-  /** Type alias for list precedence of binary operators.
+  /** Type alias for the list defining the precedence of binary operators.
     *
     * @see [[bop]] for defining the precedence of binary operators.
     */
