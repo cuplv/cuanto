@@ -44,6 +44,8 @@ object Interpreter {
     case _: NegExpr => _ * -1
   }
 
+  def bool2Int(b: Boolean): Int = if (b) 1 else 0
+
   /** Interpret an arithemetic binary operator node, getting back a
     * function that performs the operation */
   def bop(op: BinopExpr): (Int, Int) => Int = op match {
@@ -52,7 +54,8 @@ object Interpreter {
     case _op: CmpExpr => ???
     case _op: CmpgExpr => ???
     case _op: CmplExpr => ???
-    case _op: ConditionExpr => condop(_op) // TODO: if true: return 1, else: return 0
+    case _op: ConditionExpr =>
+      (a: Int, b: Int) => bool2Int(condop(_op)(a,b))
     case _op: DivExpr => _ / _
     case _op: MulExpr => _ * _
     case _op: OrExpr => ???
