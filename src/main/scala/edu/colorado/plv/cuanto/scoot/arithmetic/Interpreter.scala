@@ -12,7 +12,7 @@ import scala.collection.immutable.HashMap
 object Interpreter {
 
   /** An "execution environment" or state, mapping variables (of type
-    * `Local` to integer values */
+    * `Local`) to integer values */
   type Env = Map[Local,Int]
 
   /** An environment with no assigned variables */
