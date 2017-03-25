@@ -18,7 +18,7 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
   * $booleanBop
   *
   * @define booleanOpatom ''opatom'' ::= `true` | `false`
-  * @define booleanUop '''uop'' ::= `!``
+  * @define booleanUop ''uop'' ::= `!`
   * @define booleanBop ''bop'' ::= `||` | `&&`
   * @author Bor-Yuh Evan Chang
   */
