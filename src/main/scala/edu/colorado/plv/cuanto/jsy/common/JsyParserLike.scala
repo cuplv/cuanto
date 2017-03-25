@@ -6,7 +6,11 @@ import edu.colorado.plv.cuanto.parsing.{ParserLike, RichParsers}
 import scala.util.parsing.combinator.JavaTokenParsers
 import scala.util.parsing.input.Reader
 
-/** Trait for a JavaScripty parser.
+/** Common trait for a JavaScripty parser.
+  *
+  * Mixes [[scala.util.parsing.combinator.JavaTokenParsers]] for basic
+  * tokens (e.g., identifiers, numbers) with some utilities in
+  * [[RichParsers]] and a top-level interface in [[ParserLike]].
   *
   * @author Bor-Yuh Evan Chang
   */

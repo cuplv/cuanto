@@ -3,7 +3,7 @@ package edu.colorado.plv.cuanto.parsing
 import scala.util.parsing.combinator.Parsers
 import scala.util.parsing.input.Position
 
-/** Mix in some utilities for [[Parsers]].
+/** Mix in some utilities for [[scala.util.parsing.combinator.Parsers]].
   *
   * @author Bor-Yuh Evan Chang
   */

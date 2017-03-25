@@ -26,17 +26,17 @@ trait ParserLike[+T] { _: Parsers =>
     }
   }
 
-  /** Parse a complete phrase from `in`: [[CharSequence]]. */
+  /** Parse a complete phrase from `in`: [[java.lang.CharSequence]]. */
   def parse(in: CharSequence): Try[T] =
     parse(scan(new CharSequenceReader(in)), "<string>")
 
-  /** Parse a complete phrase from `in`: [[InputStream]]. */
+  /** Parse a complete phrase from `in`: [[java.io.InputStream]]. */
   def parse(in: InputStream, source: String = "<stream>"): Try[T] = {
     val reader = StreamReader(new InputStreamReader(in))
     parse(scan(reader), source)
   }
 
-  /** Parse a complete phrase from `in`: [[File]]. */
+  /** Parse a complete phrase from `in`: [[java.io.File]]. */
   def parse(in: File): Try[T]  =
     parse(new FileInputStream(in), in.getName)
 

@@ -5,24 +5,40 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
 
 /** Parse into the arithmetic sub-language.
   *
+  * Relies on [[edu.colorado.plv.cuanto.jsy.common.OpParserLike]] to parse unary and binary expressions.
+  *
+  * The atoms are floating pointer literals:
+  *
+  * $arithmeticOpatom
+  *
+  * The unary and binary operators are negation, plus, minus, times,
+  * and divide:
+  *
+  * $arithmeticUop
+  *
+  * $arithmeticBop
+  *
+  * @define arithmeticOpatom ''opatom'' ::= ''float''
+  * @define arithmeticUop ''uop'' ::= '-'
+  * @define arithmeticBop ''bop'' ::= '+' | '-' | '*' | '/'
   * @author Bor-Yuh Evan Chang
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
-  /** ''opatom'' ::= ''float'' */
+  /** $arithmeticOpatom */
   abstract override def opatom: Parser[Expr] =
     positioned {
       floatingPointNumber ^^ (s => N(s.toDouble))
     } |
     super.opatom
 
-  /** ''uop'' ::= '-' */
+  /** $arithmeticUop */
   abstract override def uop: Parser[Uop] =
     "-" ^^ { _ => Neg } |
     super.uop
 
   /** Precedence: { '+', '-' } < { '*', '/' }.
     *
-    * ''bop'' ::= '+' | '-' | '*' | '/'
+    * $arithmeticBop
     */
   lazy val arithmeticBop: OpPrecedence = List(
       /* lowest */
@@ -32,7 +48,11 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   )
 }
 
-/** The parser for just this arithmetic sub-language. */
+/** The parser for just this arithmetic sub-language.
+  *
+  * @see [[ParserLike]]
+  * @author Bor-Yuh Evan Chang
+  */
 object Parser extends UnitOpParser with ParserLike {
   override def start: Parser[Expr] = expr
 
