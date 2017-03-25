@@ -5,7 +5,7 @@ import scala.util.parsing.input.Positional
 /**
   * @author Bor-Yuh Evan Chang
   */
-package object jsy {
+package jsy {
 
   /** Expressions ''e''. */
   trait Expr extends Positional
