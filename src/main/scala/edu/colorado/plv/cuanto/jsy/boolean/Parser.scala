@@ -1,54 +1,56 @@
 package edu.colorado.plv.cuanto.jsy
-package arithmetic
+package boolean
 
 import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpParser}
 
-/** Parse into the arithmetic sub-language.
+/** Parse into the boolean sub-language.
   *
   * Relies on [[edu.colorado.plv.cuanto.jsy.common.OpParserLike]] to parse unary and binary expressions.
   *
-  * The atoms are floating pointer literals:
+  * The atoms are `true` and `false`
   *
-  * $arithmeticOpatom
+  * $booleanOpatom
   *
-  * The unary and binary operators are negation, plus, minus, times,
-  * and divide:
+  * The unary and binary operators are negation, or, and and:
   *
-  * $arithmeticUop
+  * $booleanUop
   *
-  * $arithmeticBop
+  * $booleanBop
   *
-  * @define arithmeticOpatom ''opatom'' ::= ''float''
-  * @define arithmeticUop ''uop'' ::= '-'
-  * @define arithmeticBop ''bop'' ::= '+' | '-' | '*' | '/'
+  * @define booleanOpatom ''opatom'' ::= `true` | `false`
+  * @define booleanUop '''uop'' ::= `!``
+  * @define booleanBop ''bop'' ::= `||` | `&&`
   * @author Bor-Yuh Evan Chang
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
-  /** $arithmeticOpatom */
+  override def start: Parser[Expr] = expr
+
+  /** $booleanOpatom */
   abstract override def opatom: Parser[Expr] =
     positioned {
-      floatingPointNumber ^^ (s => N(s.toDouble))
+      "true" ^^^ B(true) |
+      "false" ^^^ B(false)
     } |
     super.opatom
 
-  /** $arithmeticUop */
+  /** $booleanUop */
   abstract override def uop: Parser[Uop] =
-    "-" ^^ { _ => Neg } |
+    "!" ^^ { _ => Not } |
     super.uop
 
-  /** Precedence: { '+', '-' } < { '*', '/' }.
+  /** Precedence: { `||` } < { `&&` }.
     *
-    * $arithmeticBop
+    * $booleanBop
     */
-  lazy val arithmeticBop: OpPrecedence = List(
-      /* lowest */
-      List("+" -> Plus, "-" -> Minus),
-      List("*" -> Times, "/" -> Div)
-      /* highest */
+  lazy val booleanBop: OpPrecedence = List(
+    /* lowest */
+    List("||" -> Or),
+    List("&&" -> And)
+    /* highest */
   )
 }
 
-/** The parser for just this arithmetic sub-language.
+/** The parser for just this boolean sub-language
   *
   * @see [[ParserLike]]
   * @author Bor-Yuh Evan Chang
@@ -63,5 +65,5 @@ object Parser extends UnitOpParser with ParserLike {
   override def expr: Parser[Expr] = binary
 
   /** Define precedence of left-associative binary operators. */
-  override lazy val bop: OpPrecedence = arithmeticBop
+  override lazy val bop: OpPrecedence = booleanBop
 }

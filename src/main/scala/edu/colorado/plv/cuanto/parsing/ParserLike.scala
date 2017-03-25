@@ -6,24 +6,11 @@ import scala.util.Try
 import scala.util.parsing.combinator.Parsers
 import scala.util.parsing.input._
 
-/** Represent an error with location information. */
-class PositionedError(kind: String, msg: String, source: String, pos: Position) extends Exception {
-  override def toString =
-    if (pos != NoPosition)
-      "%s\n%s:%s:%s: %s\n%s".format(kind, source, pos.line, pos.column, msg, pos.longString)
-    else
-      "%s\n%s: %s".format(kind, source, msg)
-}
-
 /** Mix-in to define a convenient interface for parsers.
   *
   * @author Bor-Yuh Evan Chang
   */
-trait ParserLike[+T] { this: Parsers =>
-  /** Helper parser to expose the position. */
-  def withpos[T](q: => Parser[T]): Parser[(Position, T)] = Parser { in =>
-    q(in) map { t => (in.pos,t) }
-  }
+trait ParserLike[+T] { _: Parsers =>
 
   /** Define the scanner. */
   protected def scan(in: Reader[Char]): Input
@@ -31,10 +18,7 @@ trait ParserLike[+T] { this: Parsers =>
   /** Define the start symbol. */
   def start: Parser[T]
 
-  /** A syntax error exception. */
-  case class SyntaxError(msg: String, source: String, pos: Position) extends PositionedError("SyntaxError", msg, source, pos)
-
-  /** Parse a complete phrase using [[start]]. */
+  /** Parse a complete phrase using `start`. */
   def parse(in: Input, source: String): Try[T] = Try {
     phrase(start)(in) match {
       case Success(t, _) => t
@@ -55,4 +39,5 @@ trait ParserLike[+T] { this: Parsers =>
   /** Parse a complete phrase from `in`: [[java.io.File]]. */
   def parse(in: File): Try[T]  =
     parse(new FileInputStream(in), in.getName)
+
 }

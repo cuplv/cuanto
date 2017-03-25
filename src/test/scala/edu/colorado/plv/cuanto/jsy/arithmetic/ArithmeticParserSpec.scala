@@ -1,19 +1,13 @@
-package edu.colorado.plv.cuanto.jsy.arithmetic
+package edu.colorado.plv.cuanto.jsy
+package arithmetic
 
-import org.scalactic.Equality
-import org.scalatest.prop.PropertyChecks
+import edu.colorado.plv.cuanto.jsy.arithmetic.Parser.parse
+import edu.colorado.plv.cuanto.testing.implicits.tryEquality
 import org.scalacheck.Gen
+import org.scalatest.prop.PropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
 
-import scala.util.Try
-
-class ParserSpec extends FlatSpec with Matchers with PropertyChecks {
-  import edu.colorado.plv.cuanto.jsy.arithmetic.ast._
-  import edu.colorado.plv.cuanto.jsy.arithmetic.Parser.parse
-
-  implicit def tryEquality[T]: Equality[Try[T]] = { (a: Try[T], b: Any) =>
-    Try(a.get == b.asInstanceOf[T]).getOrElse(false)
-  }
+class ArithmeticParserSpec extends FlatSpec with Matchers with PropertyChecks {
 
   "jsy.arithmetic.Parser" should "parse 3.14" in {
     parse("3.14") shouldEqual N(3.14)
