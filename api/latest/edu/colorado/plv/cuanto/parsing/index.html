@@ -189,6 +189,18 @@
                         <a href="PositionedError.html" title="Represent an error with location information.">
                           PositionedError
                         </a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="trait" href="RichParsers.html" title="Mix in some utilities for scala.util.parsing.combinator.Parsers."></a>
+                        <a href="RichParsers.html" title="Mix in some utilities for scala.util.parsing.combinator.Parsers.">
+                          RichParsers
+                        </a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="SyntaxError.html" title="A syntax error exception."></a>
+                        <a href="SyntaxError.html" title="A syntax error exception.">
+                          SyntaxError
+                        </a>
                       </li><li name="edu.colorado.plv.cuanto.recursing" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="recursing"></a><a id="recursing:recursing"></a>
       <span class="permalink">
@@ -260,7 +272,7 @@
       <span class="symbol">
         <a title="Mix-in to define a convenient interface for parsers." href="ParserLike.html">
               <span class="name">ParserLike</span>
-            </a><span class="tparams">[<span name="T">+T</span>]</span><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>
+            </a><span class="tparams">[<span name="T">+T</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       
       <p class="shortcomment cmt">Mix-in to define a convenient interface for parsers.</p>
@@ -282,6 +294,42 @@
       </span>
       
       <p class="shortcomment cmt">Represent an error with location information.</p>
+    </li><li name="edu.colorado.plv.cuanto.parsing.RichParsers" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="RichParsersextendsParsers"></a><a id="RichParsers:RichParsers"></a>
+      <span class="permalink">
+      <a href="../../../../../edu/colorado/plv/cuanto/parsing/index.html#RichParsersextendsParsers" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="Mix in some utilities for scala.util.parsing.combinator.Parsers." href="RichParsers.html">
+              <span class="name">RichParsers</span>
+            </a><span class="result"> extends <span class="extype" name="scala.util.parsing.combinator.Parsers">Parsers</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Mix in some utilities for <span class="extype" name="scala.util.parsing.combinator.Parsers">scala.util.parsing.combinator.Parsers</span>.</p>
+    </li><li name="edu.colorado.plv.cuanto.parsing.SyntaxError" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SyntaxErrorextendsPositionedErrorwithProductwithSerializable"></a><a id="SyntaxError:SyntaxError"></a>
+      <span class="permalink">
+      <a href="../../../../../edu/colorado/plv/cuanto/parsing/index.html#SyntaxErrorextendsPositionedErrorwithProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="A syntax error exception." href="SyntaxError.html">
+              <span class="name">SyntaxError</span>
+            </a><span class="params">(<span name="msg">msg: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="source">source: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="pos">pos: <span class="extype" name="scala.util.parsing.input.Position">Position</span></span>)</span><span class="result"> extends <a href="PositionedError.html" class="extype" name="edu.colorado.plv.cuanto.parsing.PositionedError">PositionedError</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">A syntax error exception.</p>
     </li></ol>
             </div>
 

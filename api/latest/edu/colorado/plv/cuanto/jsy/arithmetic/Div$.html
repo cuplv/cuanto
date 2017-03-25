@@ -181,27 +181,75 @@
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="edu.colorado.plv.cuanto.jsy">jsy</a></dd></dl></div>
     </li><li class="current-entities indented6">
                         <span class="separator"></span>
+                        <a class="object" href="" title="Div bop ::= /."></a>
+                        <a href="" title="Div bop ::= /.">
+                          Div
+                        </a>
+                      </li><li class="current-entities indented6">
+                        <span class="separator"></span>
                         <a class="object" href="Interpreter$.html" title="Implement interpreters in the standard interpreter styles as examples."></a>
                         <a href="Interpreter$.html" title="Implement interpreters in the standard interpreter styles as examples.">
                           Interpreter
                         </a>
                       </li><li class="current-entities indented6">
                         <span class="separator"></span>
-                        <a class="object" href="Parser$.html" title="Parse into the arithmetic sub-language."></a>
-                        <a href="Parser$.html" title="Parse into the arithmetic sub-language.">
+                        <a class="object" href="Minus$.html" title="Minus bop ::= -."></a>
+                        <a href="Minus$.html" title="Minus bop ::= -.">
+                          Minus
+                        </a>
+                      </li><li class="current-entities indented6">
+                        <span class="separator"></span>
+                        <a class="class" href="N.html" title="Numbers e ::= n."></a>
+                        <a href="N.html" title="Numbers e ::= n.">
+                          N
+                        </a>
+                      </li><li class="current-entities indented6">
+                        <span class="separator"></span>
+                        <a class="object" href="Neg$.html" title="Neg uop ::= -."></a>
+                        <a href="Neg$.html" title="Neg uop ::= -.">
+                          Neg
+                        </a>
+                      </li><li class="current-entities indented6">
+                        <span class="separator"></span>
+                        <a class="object" href="Parser$.html" title="The parser for just this arithmetic sub-language."></a>
+                        <a href="Parser$.html" title="The parser for just this arithmetic sub-language.">
                           Parser
                         </a>
                       </li><li class="current-entities indented6">
                         <span class="separator"></span>
-                        <a class="object" href="" title="Define an arithmetic sub-language."></a>
-                        <a href="" title="Define an arithmetic sub-language.">
-                          ast
+                        <a class="trait" href="ParserLike.html" title="Parse into the arithmetic sub-language."></a>
+                        <a href="ParserLike.html" title="Parse into the arithmetic sub-language.">
+                          ParserLike
+                        </a>
+                      </li><li class="current-entities indented6">
+                        <span class="separator"></span>
+                        <a class="object" href="Plus$.html" title="Plus bop ::= +."></a>
+                        <a href="Plus$.html" title="Plus bop ::= +.">
+                          Plus
+                        </a>
+                      </li><li class="current-entities indented6">
+                        <span class="separator"></span>
+                        <a class="object" href="Times$.html" title="Times bop ::= *."></a>
+                        <a href="Times$.html" title="Times bop ::= *.">
+                          Times
+                        </a>
+                      </li><li class="current-entities indented6">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$Value$.html" title="Define extractor for values."></a>
+                        <a href="package$$Value$.html" title="Define extractor for values.">
+                          Value
                         </a>
                       </li><li class="current-entities indented6">
                         <span class="separator"></span>
                         <a class="object" href="implicits$.html" title=""></a>
                         <a href="implicits$.html" title="">
                           implicits
+                        </a>
+                      </li><li class="current-entities indented6">
+                        <span class="separator"></span>
+                        <a class="object" href="syntax$.html" title="Define basic syntactic operations."></a>
+                        <a href="syntax$.html" title="Define basic syntactic operations.">
+                          syntax
                         </a>
                       </li>
               </ul>
@@ -212,8 +260,8 @@
       <div id="definition">
         <div class="big-circle object">o</div>
         <p id="owner"><a href="../../../../../index.html" class="extype" name="edu">edu</a>.<a href="../../../../index.html" class="extype" name="edu.colorado">colorado</a>.<a href="../../../index.html" class="extype" name="edu.colorado.plv">plv</a>.<a href="../../index.html" class="extype" name="edu.colorado.plv.cuanto">cuanto</a>.<a href="../index.html" class="extype" name="edu.colorado.plv.cuanto.jsy">jsy</a>.<a href="index.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic">arithmetic</a></p>
-        <h1>ast<span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html" title="Permalink">
+        <h1>Div<span class="permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span></h1>
@@ -226,17 +274,16 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <span class="name">ast</span>
+        <span class="name">Div</span><span class="result"> extends <a href="../Bop.html" class="extype" name="edu.colorado.plv.cuanto.jsy.Bop">Bop</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
       </span>
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Define an arithmetic sub-language.
-</p></div><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Div <i>bop</i> ::= <code>/</code>.</p></div><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
-          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Any" class="extype" target="_top">Any</a></div>
+          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a>, <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Equals" class="extype" target="_top">Equals</a>, <a href="../Bop.html" class="extype" name="edu.colorado.plv.cuanto.jsy.Bop">Bop</a>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -262,7 +309,7 @@
                   <span class="filtertype">Inherited<br />
                   </span>
                   <ol id="linearization">
-                    <li class="in" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast"><span>ast</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                    <li class="in" name="edu.colorado.plv.cuanto.jsy.arithmetic.Div"><span>Div</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="edu.colorado.plv.cuanto.jsy.Bop"><span>Bop</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                   </ol>
                 </div><div class="ancestors">
               <span class="filtertype"></span>
@@ -282,118 +329,7 @@
         <div id="allMembers">
         
 
-        <div id="types" class="types members">
-              <h3>Type Members</h3>
-              <ol><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Binary" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Binaryextendsast.ExprwithProductwithSerializable"></a><a id="Binary:Binary"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#Binaryextendsast.ExprwithProductwithSerializable" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a title="Binary expressions e ::= eSubscript(Text(1)) bop eSubscript(Text(2))." href="ast$$Binary.html">
-              <span class="name">Binary</span>
-            </a><span class="params">(<span name="op">op: <a href="ast$$Bop.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Bop">Bop</a></span>, <span name="e1">e1: <a href="ast$$Expr.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr">Expr</a></span>, <span name="e2">e2: <a href="ast$$Expr.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr">Expr</a></span>)</span><span class="result"> extends <a href="ast$$Expr.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr">Expr</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">Binary expressions <i>e</i> ::= <i>e<sub>1</sub></i> <i>bop</i> <i>e<sub>2</sub></i>.</p>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Bop" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="BopextendsAnyRef"></a><a id="Bop:Bop"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#BopextendsAnyRef" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier">sealed </span>
-        <span class="kind">trait</span>
-      </span>
-      <span class="symbol">
-        <a title="Binary operators bop." href="ast$$Bop.html">
-              <span class="name">Bop</span>
-            </a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">Binary operators <i>bop</i>.</p>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="ExprextendsPositional"></a><a id="Expr:Expr"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#ExprextendsPositional" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">trait</span>
-      </span>
-      <span class="symbol">
-        <a title="Expressions e." href="ast$$Expr.html">
-              <span class="name">Expr</span>
-            </a><span class="result"> extends <span class="extype" name="scala.util.parsing.input.Positional">Positional</span></span>
-      </span>
-      
-      <p class="shortcomment cmt">Expressions <i>e</i>.</p>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.N" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Nextendsast.ExprwithProductwithSerializable"></a><a id="N:N"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#Nextendsast.ExprwithProductwithSerializable" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a title="Numbers v ::= n." href="ast$$N.html">
-              <span class="name">N</span>
-            </a><span class="params">(<span name="n">n: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Double" class="extype" target="_top">Double</a></span>)</span><span class="result"> extends <a href="ast$$Expr.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr">Expr</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">Numbers <i>v</i> ::= <i>n</i>.</p>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Unary" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Unaryextendsast.ExprwithProductwithSerializable"></a><a id="Unary:Unary"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#Unaryextendsast.ExprwithProductwithSerializable" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a title="Unary expressions e ::= uop eSubscript(Text(1))." href="ast$$Unary.html">
-              <span class="name">Unary</span>
-            </a><span class="params">(<span name="op">op: <a href="ast$$Uop.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Uop">Uop</a></span>, <span name="e1">e1: <a href="ast$$Expr.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr">Expr</a></span>)</span><span class="result"> extends <a href="ast$$Expr.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr">Expr</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">Unary expressions <i>e</i> ::= <i>uop</i> <i>e<sub>1</sub></i>.</p>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Uop" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="UopextendsAnyRef"></a><a id="Uop:Uop"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#UopextendsAnyRef" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier">sealed </span>
-        <span class="kind">trait</span>
-      </span>
-      <span class="symbol">
-        <a title="Unary operators uop." href="ast$$Uop.html">
-              <span class="name">Uop</span>
-            </a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">Unary operators <i>uop</i>.</p>
-    </li></ol>
-            </div>
+        
 
         
 
@@ -403,7 +339,7 @@
                 <li name="scala.AnyRef#!=" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="!=(x$1:Any):Boolean"></a><a id="!=(Any):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#!=(x$1:Any):Boolean" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#!=(x$1:Any):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -412,14 +348,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef###" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="##():Int"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html###():Int" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html###():Int" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -435,7 +371,7 @@
     </li><li name="scala.AnyRef#==" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="==(x$1:Any):Boolean"></a><a id="==(Any):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#==(x$1:Any):Boolean" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#==(x$1:Any):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -444,14 +380,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#asInstanceOf[T0]:T0" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#asInstanceOf[T0]:T0" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -467,7 +403,7 @@
     </li><li name="scala.AnyRef#clone" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a><a id="clone():AnyRef"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#clone():Object" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#clone():Object" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -476,7 +412,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -489,7 +425,7 @@
     </li><li name="scala.AnyRef#eq" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a><a id="eq(AnyRef):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#eq(x$1:AnyRef):Boolean" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#eq(x$1:AnyRef):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -498,14 +434,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="scala.AnyRef#equals" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="equals(x$1:Any):Boolean"></a><a id="equals(Any):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#equals(x$1:Any):Boolean" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#equals(x$1:Any):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -514,14 +450,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#finalize():Unit" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#finalize():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -543,7 +479,7 @@
     </li><li name="scala.AnyRef#getClass" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#getClass():Class[_]" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#getClass():Class[_]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -556,26 +492,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="scala.AnyRef#hashCode" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="hashCode():Int"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#hashCode():Int" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Int" class="extype" target="_top">Int</a></span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#isInstanceOf[T0]:Boolean" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#isInstanceOf[T0]:Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -588,26 +508,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast#isValue" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="isValue(e:edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr):Boolean"></a><a id="isValue(Expr):Boolean"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#isValue(e:edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr):Boolean" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">isValue</span><span class="params">(<span name="e">e: <a href="ast$$Expr.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr">Expr</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">Define values.</p>
     </li><li name="scala.AnyRef#ne" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a><a id="ne(AnyRef):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#ne(x$1:AnyRef):Boolean" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#ne(x$1:AnyRef):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -616,14 +520,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="scala.AnyRef#notify" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#notify():Unit" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#notify():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -639,7 +543,7 @@
     </li><li name="scala.AnyRef#notifyAll" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notifyAll():Unit"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#notifyAll():Unit" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#notifyAll():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -652,44 +556,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast#prettyDouble" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="prettyDouble(n:Double):String"></a><a id="prettyDouble(Double):String"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#prettyDouble(n:Double):String" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">prettyDouble</span><span class="params">(<span name="n">n: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Double" class="extype" target="_top">Double</a></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
-      </span>
-      
-      <p class="shortcomment cmt">Pretty-print doubles (as in JavaScript).</p>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast#prettyValue" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="prettyValue(v:edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr):String"></a><a id="prettyValue(Expr):String"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#prettyValue(v:edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr):String" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">prettyValue</span><span class="params">(<span name="v">v: <a href="ast$$Expr.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Expr">Expr</a></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
-      </span>
-      
-      <p class="shortcomment cmt">Pretty-print values.</p><div class="fullcomment"><div class="comment cmt"><p>Pretty-print values.</p><p>We do not override the toString method so that the abstract syntax
-can be printed as is.
-</p></div></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#synchronized[T0](x$1:=&gt;T0):T0" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#synchronized[T0](x$1:=&gt;T0):T0" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -702,26 +572,10 @@ can be printed as is.
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#toString" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="toString():String"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#toString():String" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#wait():Unit" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#wait():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -743,7 +597,7 @@ can be printed as is.
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait(x$1:Long,x$2:Int):Unit"></a><a id="wait(Long,Int):Unit"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#wait(x$1:Long,x$2:Int):Unit" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#wait(x$1:Long,x$2:Int):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -765,7 +619,7 @@ can be printed as is.
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait(x$1:Long):Unit"></a><a id="wait(Long):Unit"></a>
       <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#wait(x$1:Long):Unit" title="Permalink">
+      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/Div$.html#wait(x$1:Long):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -784,114 +638,6 @@ can be printed as is.
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Div" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Div"></a><a id="Div:Div"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#Div" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="Div bop ::= /." href="ast$$Div$.html">
-              <span class="name">Div</span>
-            </a><span class="result"> extends <a href="ast$$Bop.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Bop">Bop</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">Div <i>bop</i> ::= <code>/</code>.</p>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Minus" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Minus"></a><a id="Minus:Minus"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#Minus" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="Minus bop ::= -." href="ast$$Minus$.html">
-              <span class="name">Minus</span>
-            </a><span class="result"> extends <a href="ast$$Bop.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Bop">Bop</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">Minus <i>bop</i> ::= <code>-</code>.</p>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Neg" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Neg"></a><a id="Neg:Neg"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#Neg" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="Neg uop ::= -." href="ast$$Neg$.html">
-              <span class="name">Neg</span>
-            </a><span class="result"> extends <a href="ast$$Uop.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Uop">Uop</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">Neg <i>uop</i> ::= <code>-</code>.</p>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Plus" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Plus"></a><a id="Plus:Plus"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#Plus" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="Plus bop ::= +." href="ast$$Plus$.html">
-              <span class="name">Plus</span>
-            </a><span class="result"> extends <a href="ast$$Bop.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Bop">Bop</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">Plus <i>bop</i> ::= <code>+</code>.</p>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Times" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Times"></a><a id="Times:Times"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#Times" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="Times bop ::= *." href="ast$$Times$.html">
-              <span class="name">Times</span>
-            </a><span class="result"> extends <a href="ast$$Bop.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Bop">Bop</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">Times <i>bop</i> ::= <code>*</code>.</p>
-    </li><li name="edu.colorado.plv.cuanto.jsy.arithmetic.ast.Value" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Value"></a><a id="Value:Value"></a>
-      <span class="permalink">
-      <a href="../../../../../../edu/colorado/plv/cuanto/jsy/arithmetic/ast$.html#Value" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="ast$$Value$.html">
-              <span class="name">Value</span>
-            </a>
-      </span>
-      
-      
     </li>
               </ol>
             </div>
@@ -902,10 +648,20 @@ can be printed as is.
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="scala.AnyRef">
-              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></h3>
+        <div class="parent" name="scala.Serializable">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></h3>
+            </div><div class="parent" name="java.io.Serializable">
+              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="scala.Product">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a></h3>
+            </div><div class="parent" name="scala.Equals">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Equals" class="extype" target="_top">Equals</a></h3>
+            </div><div class="parent" name="edu.colorado.plv.cuanto.jsy.Bop">
+              <h3>Inherited from <a href="../Bop.html" class="extype" name="edu.colorado.plv.cuanto.jsy.Bop">Bop</a></h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">
-              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Any" class="extype" target="_top">Any</a></h3>
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
             </div>
         
         </div>

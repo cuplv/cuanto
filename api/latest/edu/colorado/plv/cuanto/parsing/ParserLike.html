@@ -173,6 +173,18 @@
                         <a href="PositionedError.html" title="Represent an error with location information.">
                           PositionedError
                         </a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="trait" href="RichParsers.html" title="Mix in some utilities for scala.util.parsing.combinator.Parsers."></a>
+                        <a href="RichParsers.html" title="Mix in some utilities for scala.util.parsing.combinator.Parsers.">
+                          RichParsers
+                        </a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="SyntaxError.html" title="A syntax error exception."></a>
+                        <a href="SyntaxError.html" title="A syntax error exception.">
+                          SyntaxError
+                        </a>
                       </li>
               </ul>
             </div>
@@ -196,7 +208,7 @@
         <span class="kind">trait</span>
       </span>
       <span class="symbol">
-        <span class="name">ParserLike</span><span class="tparams">[<span name="T">+T</span>]</span><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>
+        <span class="name">ParserLike</span><span class="tparams">[<span name="T">+T</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4>
 
@@ -206,12 +218,12 @@
           <span class="toggle">
             Linear Supertypes
           </span>
-          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Any" class="extype" target="_top">Any</a></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div><div class="toggleContainer block">
             <span class="toggle">
               Known Subclasses
             </span>
-            <div class="subClasses hiddenContent"><a href="../jsy/arithmetic/Parser$.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.Parser">Parser</a></div>
+            <div class="subClasses hiddenContent"><a href="../jsy/arithmetic/Parser$.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.Parser">Parser</a>, <a href="../jsy/arithmetic/ParserLike.html" class="extype" name="edu.colorado.plv.cuanto.jsy.arithmetic.ParserLike">ParserLike</a>, <a href="../jsy/boolean/Parser$.html" class="extype" name="edu.colorado.plv.cuanto.jsy.boolean.Parser">Parser</a>, <a href="../jsy/boolean/ParserLike.html" class="extype" name="edu.colorado.plv.cuanto.jsy.boolean.ParserLike">ParserLike</a>, <a href="../jsy/common/JsyParserLike.html" class="extype" name="edu.colorado.plv.cuanto.jsy.common.JsyParserLike">JsyParserLike</a>, <a href="../jsy/numerical/Parser$.html" class="extype" name="edu.colorado.plv.cuanto.jsy.numerical.Parser">Parser</a>, <a href="../jsy/numerical/ParserLike.html" class="extype" name="edu.colorado.plv.cuanto.jsy.numerical.ParserLike">ParserLike</a></div>
           </div></div>
         
 
@@ -257,28 +269,7 @@
         <div id="allMembers">
         
 
-        <div id="types" class="types members">
-              <h3>Type Members</h3>
-              <ol><li name="edu.colorado.plv.cuanto.parsing.ParserLike.SyntaxError" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="SyntaxErrorextendsPositionedErrorwithProductwithSerializable"></a><a id="SyntaxError:(ParserLike.this)#SyntaxError"></a>
-      <span class="permalink">
-      <a href="../../../../../edu/colorado/plv/cuanto/parsing/ParserLike.html#SyntaxErrorextendsPositionedErrorwithProductwithSerializable" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a title="A syntax error exception." href="ParserLike$SyntaxError.html">
-              <span class="name">SyntaxError</span>
-            </a><span class="params">(<span name="msg">msg: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="source">source: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="pos">pos: <span class="extype" name="scala.util.parsing.input.Position">Position</span></span>)</span><span class="result"> extends <a href="PositionedError.html" class="extype" name="edu.colorado.plv.cuanto.parsing.PositionedError">PositionedError</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">A syntax error exception.</p>
-    </li></ol>
-            </div>
+        
 
         <div class="values members">
               <h3>Abstract Value Members</h3>
@@ -332,7 +323,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -364,7 +355,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -396,7 +387,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -418,7 +409,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -434,7 +425,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -520,7 +511,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -619,7 +610,7 @@
         <span class="name">parse</span><span class="params">(<span name="in">in: (<a href="" class="extype" name="edu.colorado.plv.cuanto.parsing.ParserLike">ParserLike</a>.this)#<span class="extype" name="scala.util.parsing.combinator.Parsers.Input">Input</span></span>, <span name="source">source: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.util.Try" class="extype" target="_top">Try</a>[<span class="extype" name="edu.colorado.plv.cuanto.parsing.ParserLike.T">T</span>]</span>
       </span>
       
-      <p class="shortcomment cmt">Parse a complete phrase using <a href="#start:ParserLike.this.Parser[T]" class="extmbr" name="edu.colorado.plv.cuanto.parsing.ParserLike#start">start</a>.</p>
+      <p class="shortcomment cmt">Parse a complete phrase using <code>start</code>.</p>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
       <span class="permalink">
@@ -718,22 +709,6 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="edu.colorado.plv.cuanto.parsing.ParserLike#withpos" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="withpos[T](q:=&gt;ParserLike.this.Parser[T]):ParserLike.this.Parser[(scala.util.parsing.input.Position,T)]"></a><a id="withpos[T](⇒(ParserLike.this)#Parser[T]):(ParserLike.this)#Parser[(Position,T)]"></a>
-      <span class="permalink">
-      <a href="../../../../../edu/colorado/plv/cuanto/parsing/ParserLike.html#withpos[T](q:=&gt;ParserLike.this.Parser[T]):ParserLike.this.Parser[(scala.util.parsing.input.Position,T)]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">withpos</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="q">q: ⇒ (<a href="" class="extype" name="edu.colorado.plv.cuanto.parsing.ParserLike">ParserLike</a>.this)#<span class="extype" name="scala.util.parsing.combinator.Parsers.Parser">Parser</span>[<span class="extype" name="edu.colorado.plv.cuanto.parsing.ParserLike.withpos.T">T</span>]</span>)</span><span class="result">: (<a href="" class="extype" name="edu.colorado.plv.cuanto.parsing.ParserLike">ParserLike</a>.this)#<span class="extype" name="scala.util.parsing.combinator.Parsers.Parser">Parser</span>[(<span class="extype" name="scala.util.parsing.input.Position">Position</span>, <span class="extype" name="edu.colorado.plv.cuanto.parsing.ParserLike.withpos.T">T</span>)]</span>
-      </span>
-      
-      <p class="shortcomment cmt">Helper parser to expose the position.</p>
     </li>
               </ol>
             </div>
@@ -745,9 +720,9 @@
 
         <div id="inheritedMembers">
         <div class="parent" name="scala.AnyRef">
-              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></h3>
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">
-              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.12.1/index.html#scala.Any" class="extype" target="_top">Any</a></h3>
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
             </div>
         
         </div>
