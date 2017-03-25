@@ -19,7 +19,7 @@ class FixFun[E,R] private(private val gen: (E => R) => PartialFunction[E,R]) ext
   def apply(e: E): R = fun(e)
 
   /** Explicitly lift the partial function potentially failing with
-    * a [[MatchError]]. Does not catch any other exceptions.
+    * a [[scala.MatchError]]. Does not catch any other exceptions.
     */
   def lift: E => Try[R] = { e: E =>
     try { Success(apply(e)) }

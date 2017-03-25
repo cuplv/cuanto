@@ -18,7 +18,7 @@ trait ParserLike[+T] { _: Parsers =>
   /** Define the start symbol. */
   def start: Parser[T]
 
-  /** Parse a complete phrase using [[start]]. */
+  /** Parse a complete phrase using `start`. */
   def parse(in: Input, source: String): Try[T] = Try {
     phrase(start)(in) match {
       case Success(t, _) => t
