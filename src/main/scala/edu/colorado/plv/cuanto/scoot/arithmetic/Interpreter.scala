@@ -13,7 +13,7 @@ object Interpreter {
 
   type Env = Map[Local,Int]
 
-  val newEnv: Env = new HashMap[Local,Int]()
+  val emptyEnv: Env = new HashMap[Local,Int]()
 
   def some[A](a: A): Option[A] = Some(a)
 
@@ -26,25 +26,23 @@ object Interpreter {
     denote(ss).flatMap(_ get v)
 
   def denote(ss: Traversable[Stmt]): Option[Env] =
-    ss.foldLeft(some(newEnv))((env,stmt) => env.flatMap(step(stmt)))
+    ss.foldLeft(some(emptyEnv))((env,stmt) => env.flatMap(step(stmt)))
 
   /** Interpreter component for evaluating an arithmetic expression
     * encoded as a single `Value` */
-  def denote(env: Env, v: Value): Option[Int] = v match {
+  def denote(v: Value, env: Env = emptyEnv): Option[Int] = v match {
     case v: Local => env get v
     case v: IntConstant => Some(v.value)
     case v: BinopExpr => for {
       op <- bop(v)
-      arg1 <- denote(env, v.getOp1())
-      arg2 <- denote(env, v.getOp2())
+      arg1 <- denote(v.getOp1(), env)
+      arg2 <- denote(v.getOp2(), env)
     } yield op(arg1, arg2)
     case v: UnopExpr => for {
       op <- uop(v)
-      arg <- denote(env, v.getOp())
+      arg <- denote(v.getOp(), env)
     } yield op(arg)
   }
-
-  def denote(v: Value): Option[Int] = denote(newEnv, v)
 
   /** Interpret an arithmetic unary operator node, getting back a
     * function that performs the operation */

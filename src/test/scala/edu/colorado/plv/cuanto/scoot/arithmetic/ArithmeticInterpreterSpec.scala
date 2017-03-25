@@ -5,23 +5,46 @@ import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.PropertyChecks
 
 class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChecks {
-  import Builder.{init, add, sub, mul, div, neg}
+  import Builder._
+  import Interpreter._
 
-  val denoteTests = Table(
+  val va = local("va")
+  val vb = local("vb")
+
+  val testEnv = Map((va,3),(vb,15))
+
+  val exprTests = Table(
     "expression" -> "denotation",
-    init(1) -> 1,
-    neg(init(1)) -> -1,
-
-    add(init(1),1) -> 2,
-    sub(init(1),1) -> 0,
-    mul(init(1),1) -> 1,
-    div(init(1),1) -> 1,
-    add(add(init(3),2),1) -> 6,
-    add(mul(init(3),2),1) -> 7
+    int(1) -> 1,
+    neg(int(1)) -> -1,
+    add(int(1))(int(1)) -> 2,
+    sub(int(3))(int(1)) -> 2,
+    mul(int(3))(int(2)) -> 6,
+    div(int(8))(int(4)) -> 2
   )
 
-  forAll (denoteTests) { (e, n) =>
-    Interpreter.denote(e) should equal (n)
+  val exprLocalTests = Table(
+    "expression" -> "denotation",
+    add(va)(int(1)) -> 4,
+    div(vb)(va) -> 5
+  )
+
+  "The Scoot interpreter" should "interpret stateless Values" in {
+    forAll (exprTests) { (e, n) =>
+      denote(e,testEnv) should equal (Some(n))
+    }
+  }
+
+  it should "interpret Values containing in-scope Locals" in {
+    forAll (exprLocalTests) { (e, n) =>
+      denote(e,testEnv) should equal (Some(n))
+    }
+  }
+
+  it should "give None when asked to interpret undefined Locals" in {
+    forAll (exprLocalTests) { (e, n) =>
+      denote(e) should equal (None)
+    }
   }
 
 }
