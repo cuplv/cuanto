@@ -6,30 +6,43 @@ import soot.jimple._
 
 import scala.collection.immutable.HashMap
 
-/** Implement an interpreter for soot objects that represent
-  * integer arithemtic expressions
+/** Implement an interpreter for sequences of Jimple assignment
+  * statements that represent integer arithmetic programs
   */
 object Interpreter {
 
+  /** An "execution environment" or state, mapping variables (of type
+    * `Local` to integer values */
   type Env = Map[Local,Int]
 
+  /** An environment with no assigned variables */
   val emptyEnv: Env = new HashMap[Local,Int]()
 
-  def some[A](a: A): Option[A] = Some(a)
+  private def some[A](a: A): Option[A] = Some(a)
 
-  /** Step an environment forward over a single statment */
-  def step(stmt: Stmt)(env: Env): Option[Env] = ???
+  /** Step an environment forward over a single statement */
+  def step(stmt: AssignStmt)(env: Env): Option[Env] = {
+    val varNameO: Option[Local] = stmt.getLeftOp() match {
+      case l: Local => Some(l)
+      case _ => None
+    }
+    val newValueO: Option[Int] = denote(stmt.getRightOp(), env)
+    for {
+      varName <- varNameO
+      newValue <- newValueO
+    } yield env + (varName -> newValue)
+  }
 
-  /** Interpreter for the value of a variable mutated over a sequence of
-    * statements */
-  def denote(ss: Traversable[Stmt], v: Local): Option[Int] =
+
+  /** Interpret the integer value of a variable mutated over a sequence
+    * of assignment statements */
+  def denote(ss: Traversable[AssignStmt], v: Local): Option[Int] =
     denote(ss).flatMap(_ get v)
 
-  def denote(ss: Traversable[Stmt]): Option[Env] =
+  def denote(ss: Traversable[AssignStmt]): Option[Env] =
     ss.foldLeft(some(emptyEnv))((env,stmt) => env.flatMap(step(stmt)))
 
-  /** Interpreter component for evaluating an arithmetic expression
-    * encoded as a single `Value` */
+  /** Interpret arithmetic expressions encoded as a single `Value` */
   def denote(v: Value, env: Env = emptyEnv): Option[Int] = v match {
     case v: Local => env get v
     case v: IntConstant => Some(v.value)
