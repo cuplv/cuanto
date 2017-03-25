@@ -1,6 +1,7 @@
 import Dependencies._
 
 enablePlugins(SiteScaladocPlugin)
+enablePlugins(GhpagesPlugin)
 
 lazy val root = (project in file(".")).
   settings(
@@ -37,6 +38,10 @@ lazy val root = (project in file(".")).
     
     // Puts Scaladoc output in `target/site/api/latest`
     siteSubdirName in SiteScaladoc := "api/latest",
+    
+    // Publishing via sbt-site, sbt-ghpages, and Travis
+    scmInfo := Some(ScmInfo(url("https://github.com/cuplv/cuanto"), "git@github.com:cuplv/cuanto.git")),
+    git.remoteRepo := scmInfo.value.get.connection,
 
     // Dependencies
     libraryDependencies ++= Seq(
