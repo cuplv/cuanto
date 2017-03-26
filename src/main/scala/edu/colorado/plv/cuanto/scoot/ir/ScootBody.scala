@@ -1,19 +1,18 @@
-package edu.colorado.plv.cuanto.scootir
-import soot.Body
-import soot.Local
-import soot.PatchingChain
-import soot.util.Chain
+package edu.colorado.plv.cuanto.scoot.ir
+
+import soot.{Body, Local, PatchingChain}
 import soot.jimple.Stmt
-//Todo: import soot
+import soot.util.Chain
+
+import scala.collection.JavaConverters._
 
 /**
   * Created by Jared on 3/21/2017.
   */
-//Todo: import soot and type this correctly
 class ScootBody(dt: Body) {
   //Todo: what is the preferred functional style for getters?
   //accessing internal data of Body should return our lifted structures, so transform in each "getter"
-  def stmts: List[ScootStmt] = {
+  lazy val stmts: List[ScootStmt] = {
     val stmtList: PatchingChain[Stmt] = dt.getUnits.asInstanceOf[PatchingChain[Stmt]]
     //transform Chain to Scala list?
     val it = stmtList.iterator()
@@ -26,16 +25,16 @@ class ScootBody(dt: Body) {
     retList.reverse.map(a => new ScootStmt(a))
   }
 
-  def locals: List[ScootLocal] = {
+  lazy val locals: List[ScootLocal] = {
     val localList: Chain[Local] = dt.getLocals
     //transform Chain to Scala list?
     val it = localList.iterator()
     val retList: List[Local] = List()
-    while(it.hasNext()) {
-      it.next()::retList
+    while (it.hasNext()) {
+      it.next() :: retList
     }
     retList.reverse.map(a => new ScootLocal(a))
-  }
+  }.asJava
 
   //Todo: get stmts as CFG? create graph representation?
 }
