@@ -118,7 +118,13 @@ trait OpParserLike extends RegexParsers with RichParsers {
     */
   def atom: Parser[Expr] =
     opatom |
-    "(" ~> expr <~ ")" |         // parentheses
-    "{" ~> expr <~ "}" |         // blocks (just treat them as parentheses)
+    parenthesized |
+    block |
     failure("expected an atom")
+
+  def parenthesized: Parser[Expr] =
+    "(" ~> expr <~ ")"
+
+  def block: Parser[Expr] =
+    "{" ~> expr <~ "}"  // blocks (just treat them as parentheses)
 }
