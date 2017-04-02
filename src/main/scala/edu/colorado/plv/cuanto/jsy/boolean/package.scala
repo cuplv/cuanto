@@ -9,7 +9,7 @@ package boolean {
   /* Literals and Values */
 
   /** Booleans ''e'' ::= ''b''. */
-  case class B(b: Boolean) extends Val
+  case class B(b: Boolean) extends Expr
 
   /* Operators */
 
