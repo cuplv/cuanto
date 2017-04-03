@@ -1,5 +1,8 @@
 import Dependencies._
 
+enablePlugins(SiteScaladocPlugin)
+enablePlugins(GhpagesPlugin)
+
 lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
@@ -32,6 +35,13 @@ lazy val root = (project in file(".")).
       scalaVersion := "2.12.1",
       version      := "0.1.0-SNAPSHOT"
     )),
+    
+    // Puts Scaladoc output in `target/site/api/latest`
+    siteSubdirName in SiteScaladoc := "api/latest",
+    
+    // Publishing via sbt-site, sbt-ghpages, and Travis
+    scmInfo := Some(ScmInfo(url("https://github.com/cuplv/cuanto"), "git@github.com:cuplv/cuanto.git")),
+    git.remoteRepo := scmInfo.value.get.connection,
 
     // Dependencies
     libraryDependencies ++= Seq(

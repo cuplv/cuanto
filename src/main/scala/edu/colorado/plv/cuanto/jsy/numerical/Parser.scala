@@ -3,7 +3,10 @@ package numerical
 
 import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpParser}
 
-/** Parse into the numerical sub-language.
+/** Extend with the numerical sub-language.
+  *
+  * The numerical sub-language simply adds comparison operators:
+  * `===`, `!==`, `<=`, `<`, `>=`, and `>`.
   *
   * @author Bor-Yuh Evan Chang
   */
@@ -16,11 +19,17 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   )
 }
 
-/** The parser for just this numerical sub-language. */
+/** The parser for just this numerical sub-language.
+  *
+  * Mixes the [[arithmetic.ParserLike]] sub-language with the
+  * [[boolean.ParserLike]] sub-language with comparison operators.
+  *
+  * @author Bor-Yuh Evan Chang
+  */
 object Parser extends UnitOpParser with ParserLike with boolean.ParserLike with arithmetic.ParserLike {
-  override def start: Parser[Expr] = binary
-
-  /** Define precedence of left-associative binary operators. */
+  override def start: Parser[Expr] = expr
+  override def expr: Parser[Expr] = iteop
+  override def itesub: Parser[Expr] = expr
   override lazy val bop: OpPrecedence =
     /* lowest */
     booleanBop ++ (comparisonBop ++ arithmeticBop)

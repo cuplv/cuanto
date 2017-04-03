@@ -4,17 +4,24 @@
 
 We follow the common Gitflow Workflow. A quick [tutorial][Atlassian. Gitflow Workflow] on the Gitflow Workflow is available from Atlassian.
 
-
 In brief, the core of the workflow consists of the following:
 
 - Basing feature branches off of the `develop` branch.
 
-  ```$ git checkout -b some-feature develop```
+  `$ git checkout -b some-feature develop`
 
 - Merging into the `develop` branch via pull requests.
 - Reserving the `master` branch for releases.
 
 [Atlassian. Gitflow Workflow]: https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow
+
+## Commits and Commit Messages
+
+We follow standard conventions for making commits and writing effective Git commit messages. First read the brief [How to Write a Git Commit Message] and then [Contributing to a Project][ProGit: Contributing to a Project] from the [ProGit] book. In short, make logically incremental commits and write substantitive messages that convey _why_ something was changed versus simply saying _what_ was changed. 
+
+[How to Write a Git Commit Message]: https://chris.beams.io/posts/git-commit/
+[ProGit: Contributing to a Project]: https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project "Scott Chacon and Ben Straub. ProGit: Distributed Git: Contributing to a Project."
+[ProGit]: https://git-scm.com/book/
 
 ## Coding Style
 
@@ -54,23 +61,23 @@ and then
 
 - Build
 
-  ```> compile```
+  `> compile`
 
 - Test
 
-  ```> test```
+  `> test`
 
 - Generate API documentation
 
-  ```> doc```
+  `> doc`
 
 - Start a Scala console
 
-  ```> console```  
+  `> console`  
 
 - Prefix any command with `~` to re-execute the command when any file in the project is updated; for example,
 
-  ```> ~test```
+  `> ~test`
 
 ### IntelliJ Import
 

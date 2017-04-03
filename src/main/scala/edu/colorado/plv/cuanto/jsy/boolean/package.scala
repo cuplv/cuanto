@@ -25,7 +25,8 @@ package boolean {
   /** Or ''uop'' ::= `||`. */
   case object Or extends Bop
 
-  /** Elimination: if-then-else ''e'' ::= ''e,,1,,'' ? ''e,,2,,'' : ''e,,3,,''. */
+  /** Elimination: ''e'' ::= ''e,,1,,'' ? ''e,,2,,'' : ''e,,3,,''
+    * | `if` `(e,,1,,)` ''e,,2,,'' `else` ''e,,3,,'' . */
   case class If(e1: Expr, e2: Expr, e3: Expr) extends Expr
 
 }
