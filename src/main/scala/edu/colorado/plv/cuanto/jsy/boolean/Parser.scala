@@ -28,8 +28,6 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
   * @author Bor-Yuh Evan Chang
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
-<<<<<<< HEAD
-=======
   /** Parameter: define the non-terminal for the sub-expressions
     * of the if-then-else expression, that is,
     *
@@ -43,7 +41,6 @@ trait ParserLike extends OpParserLike with JsyParserLike {
       case e1 ~ None => e1
       case e1 ~ Some((pos, e2 ~ e3)) => If(e1, e2, e3) setPos pos
     }
->>>>>>> jsy-boolean
 
   /** $booleanOpatom */
   abstract override def opatom: Parser[Expr] =

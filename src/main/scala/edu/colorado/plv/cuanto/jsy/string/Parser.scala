@@ -28,7 +28,8 @@ trait ParserLike extends OpParserLike with JsyParserLike {
 
 /** The parser for just this string sub-language. */
 object Parser extends UnitOpParser with ParserLike {
-  override def start: Parser[Expr] = binary
+  override def start: Parser[Expr] = expr
+  override def expr: Parser[Expr] = binary
 
   /** Define precedence of left-associative binary operators. */
   override lazy val bop: OpPrecedence = stringBop
