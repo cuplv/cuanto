@@ -15,22 +15,18 @@ import scala.util.parsing.combinator.RegexParsers
   * This trait implements a parser for the following abstract syntax
   * consisting of atoms, unary, and binary expressions.
   *
-  * ''expr'' ::= ''atom'' | ''uop'' ''expr'' | ''expr'' ''bop'' ''expr''
+  *   - ''expr'' ::= ''atom'' | ''uop'' ''expr'' | ''expr'' ''bop'' ''expr''
   *
   * ==Concrete Syntax==
   *
   * Specifically, it implements a parser given a specification for the atoms,
   * unary, and binary operators for the following concrete syntax:
   *
-  * ''binary,,1,,'' ::= ''binary,,2,,'' { ''bop,,1,,'' ''binary,,2,,'' }
-  *
-  *  ...
-  *
-  * ''binary,,n,,'' ::= ''unary'' { ''bop,,n,,'' ''unary'' }
-  *
-  * ''unary'' ::= ''uop'' ''unary'' | ''atom''
-  *
-  * ''atom'' ::= ''opatom'' | `(` ''expr'' `)`
+  *   - ''binary,,1,,'' ::= ''binary,,2,,'' { ''bop,,1,,'' ''binary,,2,,'' }
+  *   - ...
+  *   - ''binary,,n,,'' ::= ''unary'' { ''bop,,n,,'' ''unary'' }
+  *   - ''unary'' ::= ''uop'' ''unary'' | ''atom''
+  *   - ''atom'' ::= ''opatom'' | `(` ''expr'' `)` | `{` ''expr'' `}`
   *
   * The { α } is in the meta-language to indicate 0-or-more α's (i.e., EBNF).
   *
@@ -65,13 +61,13 @@ import scala.util.parsing.combinator.RegexParsers
   * @author Bor-Yuh Evan Chang
   */
 trait OpParserLike extends RegexParsers with RichParsers {
-  /** Define expressions. */
+  /** Parameter: define expressions. */
   def expr: Parser[Expr]
 
-  /** Define atoms. */
+  /** Parameter: define atoms. */
   def opatom: Parser[Expr]
 
-  /** Define unary operators. */
+  /** Parameter: define unary operators. */
   def uop: Parser[Uop]
 
   /** Type alias for the list defining the precedence of binary operators.
@@ -80,14 +76,17 @@ trait OpParserLike extends RegexParsers with RichParsers {
     */
   type OpPrecedence = Seq[Seq[(String,Bop)]]
 
-  /** Define precedence of left-associative binary operators.
+  /** Parameter: define precedence of left-associative binary operators.
     *
     * Specified from lowest to highest, consisting of pairs of
     * concrete-abstract syntax.
     */
   val bop: OpPrecedence
 
-  /** Parser for binary expressions. */
+  /** Yields a parser for binary expressions with an instantiation for `bop`.
+    *
+    * @see bop
+    */
   def binary: Parser[Expr] = {
     def binaryOps(ops: OpPrecedence): Parser[Expr] = {
       def binaryCase(opsyn: (String, Bop)): Parser[(Expr, Expr) => Expr] = {
@@ -103,16 +102,29 @@ trait OpParserLike extends RegexParsers with RichParsers {
     binaryOps(bop)
   }
 
-  /** Parser for unary expressions. */
+  /** Yields a parser for unary expressions with an instantiation for `uop`
+    *
+    * @see uop
+    */
   def unary: Parser[Expr] =
     positioned {
       uop ~ unary ^^ { case op ~ e => Unary(op, e) }
     } |
     atom
 
-  /** Parser for atoms. */
+  /** Parse parenthesized expressions and delegates to `opatom`.
+    *
+    * @see opatom
+    */
   def atom: Parser[Expr] =
     opatom |
-    "(" ~> expr <~ ")" |
+    parenthesized |
+    block |
     failure("expected an atom")
+
+  def parenthesized: Parser[Expr] =
+    "(" ~> expr <~ ")"
+
+  def block: Parser[Expr] =
+    "{" ~> expr <~ "}"  // blocks (just treat them as parentheses)
 }
