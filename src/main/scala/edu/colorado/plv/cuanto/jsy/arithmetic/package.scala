@@ -9,7 +9,7 @@ package arithmetic {
   /* Literals and values. */
 
   /** Numbers ''e'' ::= ''n''. */
-  case class N(n: Double) extends Expr
+  case class N(n: Double) extends Val
 
   /* Unary and binary operators. */
 

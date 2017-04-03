@@ -35,7 +35,13 @@ lazy val root = (project in file(".")).
       scalaVersion := "2.12.1",
       version      := "0.1.0-SNAPSHOT"
     )),
-    
+
+    // Scaladoc
+    scalacOptions in (Compile, doc) ++= Seq(
+      "-groups", // Group similar functions together (based on the @group annotation)
+      "-implicits" // Document members inherited by implicit conversions.
+    ),
+
     // Puts Scaladoc output in `target/site/api/latest`
     siteSubdirName in SiteScaladoc := "api/latest",
     

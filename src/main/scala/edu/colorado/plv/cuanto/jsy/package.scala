@@ -10,10 +10,7 @@ package jsy {
   /** Unit expression '()'. */
   case object Unit extends Expr
 
-  /** Unary expressions ''e'' ::= $jsyUnaryProduction . */
   case class Unary(op: Uop, e1: Expr) extends Expr
-
-  /** Binary expressions ''e'' ::= $jsyBinaryProduction. */
   case class Binary(op: Bop, e1: Expr, e2: Expr) extends Expr
 
   /** Unary operators ''uop''. */
@@ -21,6 +18,9 @@ package jsy {
 
   /** Binary operators ''bop''. */
   trait Bop
+
+  /** Values ''v''. */
+  trait Val extends Expr
 
 }
 
@@ -59,7 +59,7 @@ package jsy {
   * ==Abstract Syntax==
   *
   * As a notation convenience, we write productions with concrete and
-  * abstract syntax using ϵ at the meta-level to separate concrete and
+  * abstract syntax using ≡ at the meta-level to separate concrete and
   * abstract syntax.
   *
   *   - ''e'' ϵ `Expr` ::= ''v''
@@ -69,11 +69,10 @@ package jsy {
   *   - ''bop'' ϵ `Bop`
   *   - ''v'' ϵ `Val`
   *
-  * @define jsyUnaryProduction ''uop'' ''e,,1,,'' ϵ `Unary(''uop'', ''e,,1,,'')`
-  * @define jsyBinaryProduction ''e,,1,,'' ''bop'' ''e,,2,,'' ϵ `Binary(''bop'', ''e,,1,,'', ''e,,2,,'')`
+  * @define jsyUnaryProduction ''uop'' ''e,,1,,'' ≡ `Unary(''uop'', ''e,,1,,'')`
+  * @define jsyBinaryProduction ''e,,1,,'' ''bop'' ''e,,2,,'' ≡ `Binary(''bop'', ''e,,1,,'', ''e,,2,,'')`
   *
   * @author Bor-Yuh Evan Chang
   */
 package object jsy
-
 
