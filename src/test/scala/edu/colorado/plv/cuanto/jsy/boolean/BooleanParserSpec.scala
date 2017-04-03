@@ -30,11 +30,33 @@ class BooleanParserSpec extends FlatSpec with Matchers with PropertyChecks {
         B(true),
         Binary(And, B(false), B(true))
       )
+    },
+    "true ? false : true" -> {
+      If(B(true), B(false), B(true))
+    },
+    "if (true) { false } else { true }" -> {
+      If(B(true), B(false), B(true))
+    }
+  )
+
+  val flexibles = Table(
+    "concrete" -> "abstract",
+    "if (true) false else true" -> {
+      If(B(true), B(false), B(true))
+    },
+    "if (true) false else if (true) false else true" -> {
+      If(B(true), B(false), If(B(true), B(false), B(true)))
     }
   )
 
   forAll (positives) { (conc, abs) =>
     it should s"parse $conc into $abs" in {
+      parse(conc) shouldEqual abs
+    }
+  }
+
+  forAll (flexibles) { (conc, abs) =>
+    it should s"flexibly parse $conc into $abs" in {
       parse(conc) shouldEqual abs
     }
   }

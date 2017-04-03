@@ -28,14 +28,8 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   */
 object Parser extends UnitOpParser with ParserLike with boolean.ParserLike with arithmetic.ParserLike {
   override def start: Parser[Expr] = expr
-
-  /** Parser for expressions ''expr'': [[Expr]].
-    *
-    * ''expr'' ::= ''binary''
-    */
-  override def expr: Parser[Expr] = binary
-
-  /** Define precedence of left-associative binary operators. */
+  override def expr: Parser[Expr] = iteop
+  override def itesub: Parser[Expr] = expr
   override lazy val bop: OpPrecedence =
     /* lowest */
     booleanBop ++ (comparisonBop ++ arithmeticBop)
