@@ -7,17 +7,18 @@ package jsy {
   /** Expressions ''e''. */
   trait Expr extends Positional
 
-  /** Unit expression '()'. */
-  case object Unit extends Expr
-
   case class Unary(op: Uop, e1: Expr) extends Expr
   case class Binary(op: Bop, e1: Expr, e2: Expr) extends Expr
 
   /** Unary operators ''uop''. */
-  trait Uop
+  trait Uop {
+    def apply(e1: Expr): Expr = Unary(this, e1)
+  }
 
   /** Binary operators ''bop''. */
-  trait Bop
+  trait Bop {
+    def apply(e1: Expr, e2: Expr): Expr = Binary(this, e1, e2)
+  }
 
   /** Values ''v''. */
   trait Val extends Expr
