@@ -25,6 +25,7 @@ object Arithmetic {
       op <- uop(v)
       arg <- r(v.getOp())
     } yield { e: Env => op(arg(e)) }
+    case _ => None
   }
 
   /** Interpret an arithmetic unary operator node, getting back a
