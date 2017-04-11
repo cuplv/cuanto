@@ -1,6 +1,6 @@
 package edu.colorado.plv.cuanto.scoot.ir
 
-import soot.{Value, ValueBox, Type}
+import soot.{Value, Type}
 import scala.collection.JavaConverters._
 
 /**

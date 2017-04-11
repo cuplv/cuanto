@@ -4,8 +4,6 @@ import soot.{Body, Local, PatchingChain}
 import soot.jimple.Stmt
 import soot.util.Chain
 
-import scala.collection.JavaConverters._
-
 /**
   * Created by Jared on 3/21/2017.
   */
