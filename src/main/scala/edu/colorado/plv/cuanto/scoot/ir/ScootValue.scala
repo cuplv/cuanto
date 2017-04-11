@@ -7,6 +7,7 @@ import scala.collection.JavaConverters._
   * Created by Jared on 3/25/2017.
   */
 class ScootValue(dt: Value) {
+  //TODO: transform to lifted ValueBox
   def used: List[ValueBox] = dt.getUseBoxes().asScala.toList
 
   def valType: Type = dt.getType()

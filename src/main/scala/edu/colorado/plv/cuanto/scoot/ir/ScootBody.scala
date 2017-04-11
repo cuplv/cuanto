@@ -34,7 +34,7 @@ class ScootBody(dt: Body) {
       it.next() :: retList
     }
     retList.reverse.map(a => new ScootLocal(a))
-  }.asJava
+  }
 
   //Todo: get stmts as CFG? create graph representation?
 }
