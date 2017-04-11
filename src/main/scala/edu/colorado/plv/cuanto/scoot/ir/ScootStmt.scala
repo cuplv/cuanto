@@ -16,11 +16,11 @@ class ScootStmt(dt: Stmt) {
   def fieldRef: Option[ScootFieldRef] = Option(dt.getFieldRef())
 
   //now general Unit functions
-  def useBoxes: List[ValueBox] = dt.getUseBoxes().asScala.toList
+  def useBoxes: List[ScootValue] = dt.getUseBoxes().asScala.toList.map(a => new ScootValue(a.getValue()))
 
-  def defBoxes: List[ValueBox] = dt.getDefBoxes().asScala.toList
+  def defBoxes: List[ScootValue] = dt.getDefBoxes().asScala.toList.map(a => new ScootValue(a.getValue()))
 
-  def unitBoxes: List[UnitBox] = dt.getUnitBoxes().asScala.toList
+  def unitBoxes: List[ScootStmt] = dt.getUnitBoxes().asScala.toList.map(a => new ScootStmt(a.getUnit()))
 
   def fallsThrough: Boolean = dt.fallsThrough()
 
