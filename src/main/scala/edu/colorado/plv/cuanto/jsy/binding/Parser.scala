@@ -51,7 +51,7 @@ object ParserLike {
 
   /** Statements.
     *
-    * Statements only exist in the concrete syntax, so are eliminated during parsing.
+    * Statements only exist in the concrete syntax, so they are eliminated during parsing.
     */
   sealed abstract class Stmt extends Positional
 
