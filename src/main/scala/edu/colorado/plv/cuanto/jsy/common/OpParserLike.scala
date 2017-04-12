@@ -61,6 +61,7 @@ import scala.util.parsing.combinator.RegexParsers
   * @author Bor-Yuh Evan Chang
   */
 trait OpParserLike extends RegexParsers with RichParsers {
+
   /** Parameter: define expressions. */
   def expr: Parser[Expr]
 
@@ -69,6 +70,11 @@ trait OpParserLike extends RegexParsers with RichParsers {
 
   /** Parameter: define unary operators. */
   def uop: Parser[Uop]
+
+  /** Parameter: define statements (the sub-expression of blocks).
+    * The default is [[expr]].
+    */
+  def stmt: Parser[Expr] = expr
 
   /** Type alias for the list defining the precedence of binary operators.
     *
@@ -123,8 +129,13 @@ trait OpParserLike extends RegexParsers with RichParsers {
     failure("expected an atom")
 
   def parenthesized: Parser[Expr] =
-    "(" ~> expr <~ ")"
+    positioned {
+      "(" ~> expr <~ ")"
+    }
 
   def block: Parser[Expr] =
-    "{" ~> expr <~ "}"  // blocks (just treat them as parentheses)
+    positioned {
+      "{" ~> stmt <~ "}"
+    }
+
 }
