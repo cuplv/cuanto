@@ -25,6 +25,9 @@ object SootLoading {
 
 
   def getAnalysisResult[T](paths: List[String], main: Option[String] = None,analysis: Scene=>T): Option[T] ={
+    // I spent an hour on this stupid error: https://github.com/Sable/soot/issues/686
+    System.setProperty("os.name", "Whatever")
+
     lock.lock()
     Options.v().keep_line_number()
     Options.v().set_src_prec(Options.src_prec_class)
@@ -44,8 +47,10 @@ object SootLoading {
     soot.Main.main(Array("-unfriendly-mode"))
     lock.unlock()
     G.reset()
-    getJimple.result
 
+    System.setProperty("os.name", "Mac OS X")
+
+    getJimple.result
   }
 
 }

@@ -14,10 +14,10 @@ import scala.collection.mutable
 /**
   * Created by Lumber on 3/19/2017.
   */
-class JimpleInterpreter(memory: mutable.HashMap[Local, Int]) extends SceneTransformer {
+class JimpleInterpreter() extends SceneTransformer {
     val DEBUG = true
-    // var memory: HashMap[Local, Int] = new HashMap()
     var pc: Stmt = _
+    var memory: HashMap[Local, Int] = HashMap()
 
     override def internalTransform(s: String, map: util.Map[String, String]): Unit = {
         // val mainClass = Scene.v().getMainClass
@@ -71,7 +71,7 @@ class JimpleInterpreter(memory: mutable.HashMap[Local, Int]) extends SceneTransf
                         _stmt.getLeftOp match {
                             case left: Local =>
                                     // memory = memory + (left -> getVal(_stmt.getRightOp))
-                                    memory.update(left, getVal(_stmt.getRightOp))
+                                    memory += left -> getVal(_stmt.getRightOp)
                             case left@_ => println(left.getClass); assert(false, "Left op of AssignStmt is not Local")
                         }
                     case _stmt: IdentityStmt => // Ignore
@@ -159,8 +159,8 @@ class JimpleInterpreter(memory: mutable.HashMap[Local, Int]) extends SceneTransf
                     case __expr: UshrExpr => 0
                     case __expr: XorExpr => 0
                 }
-            case _expr: CastExpr => 0
-            case _expr: InstanceOfExpr => 0
+            case _expr: CastExpr => ???
+            case _expr: InstanceOfExpr => ???
             case _expr: InvokeExpr => 0
             case _expr: NewArrayExpr => 0
             case _expr: NewExpr => 0
@@ -173,10 +173,10 @@ class JimpleInterpreter(memory: mutable.HashMap[Local, Int]) extends SceneTransf
     @deprecated("")
     def getConstantVal(constant: Constant): Int = {
         constant match {
-            case cons: ClassConstant => 0
-            case cons: MetaConstant => 0
-            case cons: MethodHandle => 0
-            case cons: NullConstant => 0
+            case cons: ClassConstant => ???
+            case cons: MetaConstant => ???
+            case cons: MethodHandle => ???
+            case cons: NullConstant => ???
             case cons: NumericConstant =>
                 cons match {
                     case _cons: ArithmeticConstant =>
@@ -190,8 +190,8 @@ class JimpleInterpreter(memory: mutable.HashMap[Local, Int]) extends SceneTransf
                             case __cons: FloatConstant => __cons.value.toInt
                         }
                 }
-            case cons: StringConstant => 0
-            case cons: UntypedConstant => 0
+            case cons: StringConstant => ???
+            case cons: UntypedConstant => ???
         }
     }
 }
