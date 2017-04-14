@@ -9,14 +9,14 @@ import scala.collection.mutable
 /**
   * Created by s on 3/17/17.
   */
-object SootLoading {
+object PrepAnalysis {
     val fileSep: String = System.getProperty("file.separator")
     val pathSep: String = System.getProperty("path.separator")
     val javaLibraryPath: String = System.getProperty("java.home") + fileSep + "lib" + fileSep
     val jcePath: String = javaLibraryPath + "jce.jar"
     val rtPath: String = javaLibraryPath + "rt.jar"
 
-    def init(paths: List[String], mainClass: Option[String] = None, mainMethod: Option[String] = None) = {
+    def init(paths: List[String], mainClass: Option[String] = None, mainMethod: Option[String] = None): Any = {
         G.reset()
 
         Options.v().keep_line_number()
@@ -41,5 +41,6 @@ object SootLoading {
         soot.Main.main(Array("-unfriendly-mode"))
 
         G.reset()
+        jimpleInt.result
     }
 }
