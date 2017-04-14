@@ -13,10 +13,8 @@ class JimpleInterpreter() extends SceneTransformer {
   var pc: Stmt = _
 
   val memory = new MutableMemory
-  val result: MutableMemory = memory
 
   override def internalTransform(s: String, map: util.Map[String, String]): Unit = {
-    // val mainClass = Scene.v().getMainClass
     val mainMethod = Scene.v().getMainMethod
 
     memory.createNewStack()
@@ -24,7 +22,7 @@ class JimpleInterpreter() extends SceneTransformer {
     assert(memory.stackDepth == 1, "Stack depth is: " + memory.stackDepth)
 
     if (DEBUG) {
-      println(mainMethod.releaseActiveBody())
+      // println(mainMethod.releaseActiveBody()) // why would this lead to exception?
       memory.getCurrentStack.foreach {
         case (variable, value) => println(variable + ": " + value)
       }

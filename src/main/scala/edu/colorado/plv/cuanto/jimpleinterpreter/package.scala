@@ -54,9 +54,9 @@ package object jimpleinterpreter {
     null
   }
 
-  @deprecated("")
+  @deprecated("Concretely interpret a method invocation")
   def concreteInterpret(method: SootMethod, memory: MutableMemory, argList: List[Int]): Option[Int] = {
-    var ret: Option[Int] = None
+    var ret: Option[Int] = None // return value of the method being interpreted
     val body = method.retrieveActiveBody()
     var pc = body.getUnits.getFirst match {
       case s: Stmt => s
@@ -72,18 +72,17 @@ package object jimpleinterpreter {
 
   @deprecated("")
   private def _concreteInterpret(statement: Stmt, body: Body, memory: MutableMemory, argList: List[Int]): (Stmt, Option[Int]) = {
-    val DEBUG = true
+    val DEBUG = false
     if (DEBUG) println("[" + body.getMethod.getName + "] " + statement)
 
-    var ret: Option[Int] = None
+    var ret: Option[Int] = None // return value of a return statement
 
     val pc = statement match {
       case stmt: DefinitionStmt =>
         stmt match {
           case _stmt: AssignStmt =>
             _stmt.getLeftOp match {
-              case left: Local =>
-                memory.setVal(left, memory.getVal(_stmt.getRightOp))
+              case left: Local => memory.setVal(left, memory.getVal(_stmt.getRightOp))
               case left@_ => println(left.getClass); assert(false, "Left op of AssignStmt is not Local")
             }
           case _stmt: IdentityStmt =>

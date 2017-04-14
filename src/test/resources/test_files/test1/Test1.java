@@ -2,6 +2,8 @@ public class Test1 {
 	public static void main(String[] args) {
 		int a = test01();
 		int b = test02();
+		int c = test01();
+		return;
 	}
 
 	static int test01() {

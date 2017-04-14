@@ -24,11 +24,7 @@ class MutableMemory {
     ret
   }
 
-  def createNewStack(): HashMap[Value, Int] = {
-    val newStack = HashMap[Value, Int]()
-    wholeStack = wholeStack.push(newStack)
-    newStack
-  }
+  def createNewStack(): Unit = { wholeStack = wholeStack.push(HashMap[Value, Int]()) }
 
   @deprecated("")
   def setVal(value: Value, i: Int): Unit = {
@@ -60,7 +56,7 @@ class MutableMemory {
   @deprecated("")
   def getVal(value: Value): Int = {
     value match {
-      case _value: Local => getCurrentStack.getOrElse(_value, 0) // Uninitialized value of any variable is 0
+      case _value: Local => getCurrentStack.getOrElse(_value, -1) // Uninitialized value of any variable is -1 (Hopefully this will help debug)
       case _value: Constant => getConstantVal(_value)
       case _value: Expr => eval(_value)
       case _value: Ref =>
@@ -131,10 +127,6 @@ class MutableMemory {
     val argList: List[Int] = expr.getArgs.asScala.map { arg => getVal(arg) }.toList
 
     createNewStack()
-    /*map.foreach {
-      case (value, i) => setVal(value, i)
-    }*/
-
     val ret = concreteInterpret(expr.getMethod, this, argList)
     popCurrentStack()
     ret
