@@ -25,7 +25,7 @@ object Denotational {
     type V = W
     import eval.{toOps,represent}
 
-    val fun: FixFun[Expr, V] = FixFun(rec => {
+    override lazy val fun: FixFun[Expr, V] = FixFun(rec => {
       case N(n) => n
       case Unary(Neg, e1) => - rec(e1)
       case Binary(Plus, e1, e2) => rec(e1) + rec(e2)
