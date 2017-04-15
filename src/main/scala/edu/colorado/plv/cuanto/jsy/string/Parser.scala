@@ -5,20 +5,17 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
 
 /** Parse into the string sub-language.
   *
+  * Relies on [[edu.colorado.plv.cuanto.jsy.common.OpParserLike]] to parse unary and binary expressions.
+  *
   * @author Kyle Headley
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
-  /** ''opatom'' ::= ''"string"'' */
   abstract override def opatom: Parser[Expr] =
     positioned {
-      stringLiteral ^^ (s => S(s.substring(1, s.length()-1)))
+      stringLiteral ^^ { s => S(s.substring(1, s.length - 1)) }
     } |
     super.opatom
 
-  /** Precedence: { '+' }
-    *
-    * ''bop'' ::= '+'
-    */
   lazy val stringBop: OpPrecedence = List(
       /* lowest */
       List("+" -> Concat)
@@ -26,11 +23,13 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   )
 }
 
-/** The parser for just this string sub-language. */
+/** The parser for just this string sub-language.
+  *
+  * @see [[ParserLike]]
+  * @author Kyle Headley
+  */
 object Parser extends UnitOpParser with ParserLike {
   override def start: Parser[Expr] = expr
   override def expr: Parser[Expr] = binary
-
-  /** Define precedence of left-associative binary operators. */
   override lazy val bop: OpPrecedence = stringBop
 }
