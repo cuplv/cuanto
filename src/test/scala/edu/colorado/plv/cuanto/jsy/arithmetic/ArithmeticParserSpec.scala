@@ -21,6 +21,7 @@ class ArithmeticParserSpec extends FlatSpec with Matchers with PropertyChecks {
 
   val positives = Table(
     "concrete" -> "abstract",
+    "x" -> Var("x"),
     "(3.14)" -> N(3.14),
     "1 + 1" -> Binary(Plus, N(1), N(1)),
     "1 - 1" -> Binary(Minus, N(1), N(1)),

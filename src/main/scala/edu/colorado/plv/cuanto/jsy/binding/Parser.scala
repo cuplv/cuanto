@@ -38,8 +38,7 @@ trait ParserLike extends OpParserLike with JsyParserLike {
 
   abstract override def opatom: Parser[Expr] =
     positioned {
-      "undefined" ^^^ Unit |
-      ident ^^ Var
+      "undefined" ^^^ Unit
     } |
     block |
     super.opatom

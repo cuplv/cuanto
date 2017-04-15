@@ -3,7 +3,7 @@ package edu.colorado.plv.cuanto.jsy.common
 import edu.colorado.plv.cuanto.jsy._
 import edu.colorado.plv.cuanto.parsing.RichParsers
 
-import scala.util.parsing.combinator.RegexParsers
+import scala.util.parsing.combinator.JavaTokenParsers
 
 /** Parser components that handle unary and binary operators.
   *
@@ -60,7 +60,7 @@ import scala.util.parsing.combinator.RegexParsers
   *
   * @author Bor-Yuh Evan Chang
   */
-trait OpParserLike extends RegexParsers with RichParsers {
+trait OpParserLike extends JavaTokenParsers with RichParsers {
 
   /** Parameter: define expressions. */
   def expr: Parser[Expr]
@@ -124,6 +124,7 @@ trait OpParserLike extends RegexParsers with RichParsers {
     */
   def atom: Parser[Expr] =
     opatom |
+    positioned(ident ^^ Var) |
     parenthesized |
     block |
     failure("expected an atom")
