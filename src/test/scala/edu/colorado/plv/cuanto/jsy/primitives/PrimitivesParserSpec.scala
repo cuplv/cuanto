@@ -4,18 +4,16 @@ package primitives
 import edu.colorado.plv.cuanto.CuantoSpec
 import edu.colorado.plv.cuanto.jsy.arithmetic._
 import edu.colorado.plv.cuanto.jsy.binding._
-import edu.colorado.plv.cuanto.jsy.string._
+import edu.colorado.plv.cuanto.jsy.common.ParserBehaviors
 import edu.colorado.plv.cuanto.jsy.primitives.Parser.parse
-import edu.colorado.plv.cuanto.testing.implicits.tryEquality
+import edu.colorado.plv.cuanto.jsy.string._
 
 /**
   * @author Bor-Yuh Evan Chang
   */
-class PrimitivesParserSpec extends CuantoSpec {
+class PrimitivesParserSpec extends CuantoSpec with ParserBehaviors {
 
-  behavior of "jsy.primitives.Parser"
-
-  val positives = Table(
+  override lazy val positives = Table(
     "concrete" -> "abstract",
     """{ let x = 3
       |  let y = "abc"
@@ -24,10 +22,6 @@ class PrimitivesParserSpec extends CuantoSpec {
       -> Bind(Var("x"), N(3), Bind(Var("y"), S("abc"), Binary(Plus, Var("x"), Var("y"))))
   )
 
-  forAll (positives) { (conc, abs) =>
-    it should s"parse $conc into $abs" in {
-      parse(conc) shouldEqual abs
-    }
-  }
+  "jsy.primitives.Parser" should behave like parser(parse)
 
 }

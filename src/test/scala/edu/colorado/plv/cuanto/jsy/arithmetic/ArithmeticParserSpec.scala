@@ -1,13 +1,12 @@
 package edu.colorado.plv.cuanto.jsy
 package arithmetic
 
+import edu.colorado.plv.cuanto.CuantoSpec
 import edu.colorado.plv.cuanto.jsy.arithmetic.Parser.parse
+import edu.colorado.plv.cuanto.jsy.common.ParserBehaviors
 import edu.colorado.plv.cuanto.testing.implicits.tryEquality
-import org.scalacheck.Gen
-import org.scalatest.prop.PropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
 
-class ArithmeticParserSpec extends FlatSpec with Matchers with PropertyChecks {
+class ArithmeticParserSpec extends CuantoSpec with ParserBehaviors {
 
   "jsy.arithmetic.Parser" should "parse 3.14" in {
     parse("3.14") shouldEqual N(3.14)
@@ -19,7 +18,7 @@ class ArithmeticParserSpec extends FlatSpec with Matchers with PropertyChecks {
     }
   }
 
-  val positives = Table(
+  override lazy val positives = Table(
     "concrete" -> "abstract",
     "x" -> Var("x"),
     "(3.14)" -> N(3.14),
@@ -31,34 +30,12 @@ class ArithmeticParserSpec extends FlatSpec with Matchers with PropertyChecks {
     "1 + 2 * 3" -> Binary(Plus, N(1), Binary(Times, N(2), N(3)))
   )
 
-  forAll (positives) { (conc, abs) =>
-    it should s"parse $conc into $abs" in {
-      parse(conc) shouldEqual abs
-    }
-  }
-
-  it should "parse floating-point literals" in {
-    forAll (Gen.posNum[Double]) { d =>
-      parse(d.toString) shouldEqual N(d)
-    }
-  }
-
-  it should "parse integer literals" in {
-    forAll (Gen.posNum[Int]) { i =>
-      parse(i.toString) shouldEqual N(i.toDouble)
-    }
-  }
-
-  val negatives = Table(
+  override lazy val negatives = Table(
     "concrete",
     "-",
     "-+*"
   )
 
-  forAll (negatives) { conc =>
-    it should s"not parse $conc" in {
-      parse(conc) should be a 'failure
-    }
-  }
+  it should behave like parser(parse)
 
 }
