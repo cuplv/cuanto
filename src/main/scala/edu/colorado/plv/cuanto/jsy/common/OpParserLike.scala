@@ -89,24 +89,29 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     */
   val bop: OpPrecedence
 
+  /** A generic parser component that yields a parser for
+    * left-associative binary operators.
+    *
+    * @param ops the binary operators, specifying precedence
+    * @param sub the parser for sub-expressions
+    */
+  def binaryLeft(ops: OpPrecedence, sub: Parser[Expr]): Parser[Expr] = {
+    def binaryCase(opsyn: (String, Bop)): Parser[(Expr, Expr) => Expr] = {
+      val (csyn, asyn) = opsyn
+      withpos(csyn) ^^ { case (pos, _) => (e1: Expr, e2: Expr) => Binary(asyn, e1, e2) setPos pos }
+    }
+    def level(ops: Seq[(String, Bop)]): Parser[(Expr, Expr) => Expr] = {
+      val op1 :: t = ops
+      t.foldLeft(binaryCase(op1)) { (acc, op) => acc | binaryCase(op) }
+    }
+    ops.foldRight(sub) { (lops, acc) => acc * level(lops) }
+  }
+
   /** Yields a parser for binary expressions with an instantiation for `bop`.
     *
     * @see bop
     */
-  def binary: Parser[Expr] = {
-    def binaryOps(ops: OpPrecedence): Parser[Expr] = {
-      def binaryCase(opsyn: (String, Bop)): Parser[(Expr, Expr) => Expr] = {
-        val (csyn, asyn) = opsyn
-        withpos(csyn) ^^ { case (pos, _) => (e1: Expr, e2: Expr) => Binary(asyn, e1, e2) setPos pos }
-      }
-      def level(ops: Seq[(String, Bop)]): Parser[(Expr, Expr) => Expr] = {
-        val op1 :: t = ops
-        t.foldLeft(binaryCase(op1)) { (acc, op) => acc | binaryCase(op) }
-      }
-      ops.foldRight(unary) { (lops, acc) => acc * level(lops) }
-    }
-    binaryOps(bop)
-  }
+  def binary: Parser[Expr] = binaryLeft(bop, unary)
 
   /** Yields a parser for unary expressions with an instantiation for `uop`
     *

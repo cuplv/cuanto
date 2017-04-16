@@ -71,6 +71,10 @@ trait ParserLike extends OpParserLike with JsyParserLike {
     List("&&" -> And)
     /* highest */
   )
+
+  override def start: Parser[Expr] = expr
+  override def expr: Parser[Expr] = iteop
+  override lazy val bop: OpPrecedence = booleanBop
 }
 
 /** The parser for just this boolean sub-language.
@@ -79,8 +83,5 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   * @author Bor-Yuh Evan Chang
   */
 object Parser extends UnitOpParser with ParserLike {
-  override def start: Parser[Expr] = expr
-  override def expr: Parser[Expr] = iteop
   override def itesub: Parser[Expr] = iteop
-  override lazy val bop: OpPrecedence = booleanBop
 }

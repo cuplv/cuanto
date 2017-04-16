@@ -43,7 +43,16 @@ trait ParserLike extends OpParserLike with JsyParserLike {
     block |
     super.opatom
 
-  lazy val bindingBop: OpPrecedence = List(List("," -> Seq))
+  lazy val seqBop: OpPrecedence = List(List("," -> Seq))
+
+  /** Parameter: define the non-terminal for the sub-expressions of sequencing expressions. */
+  def seqsub: Parser[Expr]
+
+  /** ''seq'' ::= ''seqsub,,1,,'' `,` ''seqsub,,2,,'' */
+  def seq: Parser[Expr] = binaryLeft(seqBop, seqsub)
+
+  override def start: Parser[Expr] = stmt
+  override def expr: Parser[Expr] = seq
 }
 
 object ParserLike {
@@ -70,7 +79,6 @@ object ParserLike {
 
 /** The parser for just bindings. */
 object Parser extends UnitOpParser with ParserLike {
-  override def start: Parser[Expr] = stmt
-  override def expr: Parser[Expr] = binary
-  override lazy val bop: OpPrecedence = bindingBop
+  override lazy val bop: OpPrecedence = Nil
+  override def seqsub: Parser[Expr] = binary
 }

@@ -21,6 +21,7 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
   * @define arithmeticOpatom ''opatom'' ::= ''float''
   * @define arithmeticUop ''uop'' ::= '-'
   * @define arithmeticBop ''bop'' ::= '+' | '-' | '*' | '/'
+  *
   * @author Bor-Yuh Evan Chang
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
@@ -46,6 +47,10 @@ trait ParserLike extends OpParserLike with JsyParserLike {
       List("*" -> Times, "/" -> Div)
       /* highest */
   )
+
+  override def start: Parser[Expr] = expr
+  override def expr: Parser[Expr] = binary
+  override lazy val bop: OpPrecedence = arithmeticBop
 }
 
 /** The parser for just this arithmetic sub-language.
@@ -53,10 +58,4 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   * @see [[ParserLike]]
   * @author Bor-Yuh Evan Chang
   */
-object Parser extends UnitOpParser with ParserLike {
-  override def start: Parser[Expr] = expr
-  override def expr: Parser[Expr] = binary
-
-  /** Define precedence of left-associative binary operators. */
-  override lazy val bop: OpPrecedence = arithmeticBop
-}
+object Parser extends UnitOpParser with ParserLike
