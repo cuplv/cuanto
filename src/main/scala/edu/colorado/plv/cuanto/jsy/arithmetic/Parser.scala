@@ -18,6 +18,12 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
   *
   * $arithmeticBop
   *
+  * For each sub-language, we define a `ParserLike` trait like this one that defines parser components,
+  * as well as a `Parser` object that closes the parser for parsing this particular sub-language. These
+  * traits can then be mixed to compose new sub-language parsers, such as in [[numerical.Parser]].
+  *
+  * @see [[Parser]] for the parser for parsing this sub-language.
+  *
   * @define arithmeticOpatom ''opatom'' ::= ''float''
   * @define arithmeticUop ''uop'' ::= '-'
   * @define arithmeticBop ''bop'' ::= '+' | '-' | '*' | '/'
