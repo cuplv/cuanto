@@ -4,9 +4,6 @@ package boolean
 import edu.colorado.plv.cuanto.CuantoSpec
 import edu.colorado.plv.cuanto.jsy.boolean.Parser.parse
 import edu.colorado.plv.cuanto.jsy.common.ParserBehaviors
-import edu.colorado.plv.cuanto.testing.implicits.tryEquality
-import org.scalatest.prop.PropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
 
 /**
   * @author Bor-Yuh Evan Chang
