@@ -1,10 +1,10 @@
 package edu.colorado.plv.cuanto.scoot.ir
 
-import soot.Local
+import soot.{Local, Value}
 
 /**
   * Created by Jared on 4/11/2017.
   */
-class ScootLocal(override dt: Local) extends ScootValue{
+class ScootLocal(dt: Local) extends ScootValue(dt: Value) {
   def name: String = dt.getName()
 }

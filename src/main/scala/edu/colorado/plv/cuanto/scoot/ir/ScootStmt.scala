@@ -1,7 +1,6 @@
 package edu.colorado.plv.cuanto.scoot.ir
 
 import soot.jimple.Stmt
-import soot.{ValueBox, UnitBox}
 import scala.collection.JavaConverters._
 
 /**
@@ -9,11 +8,11 @@ import scala.collection.JavaConverters._
   */
 class ScootStmt(dt: Stmt) {
   //Stmt-specific first, followed by general Unit functions
-  def invokeExpr: Option[ScootInvokeExpr] = Option(dt.getInvokeExpr())
+  //def invokeExpr: Option[ScootInvokeExpr] = Option(dt.getInvokeExpr())
 
-  def arrayRef: Option[ScootArrayRef] = Option(dt.getArrayRef())
+  //def arrayRef: Option[ScootArrayRef] = Option(dt.getArrayRef())
 
-  def fieldRef: Option[ScootFieldRef] = Option(dt.getFieldRef())
+  //def fieldRef: Option[ScootFieldRef] = Option(dt.getFieldRef())
 
   //now general Unit functions
   def useBoxes: List[ScootValue] = dt.getUseBoxes().asScala.toList.map(a => new ScootValue(a.getValue()))
