@@ -11,7 +11,7 @@ trait Abstraction {
   type A
 
   val bottom: A
-  def isBottom(e: A): Boolean
+  def isBottom(e: A): Boolean = e == bottom
 
   def implies(e1: A, e2: A): Boolean
   def join(e1: A, e2: A): A
