@@ -7,6 +7,7 @@ import scala.collection.JavaConverters._
 
 /**
   * Created by s on 3/17/17.
+  * Used by SootLoading, do not directly instantiate.
   */
 class GetJimple[T](analysis: Scene => T) extends SceneTransformer {
   var result: Option[T] = None
