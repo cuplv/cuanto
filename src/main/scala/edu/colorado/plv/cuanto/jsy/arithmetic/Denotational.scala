@@ -24,7 +24,7 @@ object Denotational {
     */
   def Make[W](eval: Evalable[W]): Denotational { type V = W } = new Denotational {
     type V = W
-    import eval.{toOps,represent}
+    import eval.{toArithmeticOps,represent}
 
     val fun: FixFun[Expr, V] = FixFun(rec => {
       case N(n) => n
@@ -44,10 +44,13 @@ object Denotational {
     override def minus(v1: Double, v2: Double) = v1 - v2
     override def times(v1: Double, v2: Double) = v1 * v2
     override def divide(v1: Double, v2: Double) = v1 / v2
-    override def represent(d: Double) = d
+    override def represent(v: Any) = v match {
+      case d:Double => d
+      case _ => throw new IllegalArgumentException("Only doubles are representable in the arithmetic sub-language")
+    }
   })
 
   /** Instantiate an abstract interpreter module. */
-  def Abstract[D](domain : Abstraction with Evalable[D] with Abstractable[Double,D]) = Denotational.Make[D](domain)
+  def Abstract[D](domain : Abstraction with Evalable[D] with Abstractable[D]) = Denotational.Make[D](domain)
 
 }

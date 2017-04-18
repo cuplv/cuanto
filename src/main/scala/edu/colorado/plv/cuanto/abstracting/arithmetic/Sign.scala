@@ -16,7 +16,7 @@ case object Bot  extends Sign
 case object Top  extends Sign
 case object Zero extends Sign
 
-object Sign extends Abstraction with arithmetic.Evalable[Sign] with Abstractable[Double, Sign] {
+object Sign extends Abstraction with arithmetic.Evalable[Sign] with Abstractable[Sign] {
   type A = Sign
   val bottom: Sign = Bot
 
@@ -33,10 +33,11 @@ object Sign extends Abstraction with arithmetic.Evalable[Sign] with Abstractable
     case _ => Top
   }
 
-  def represent(d: Double): Sign = d match {
+  def represent(v: Any): Sign = v match {
     case 0 => Zero
-    case x if x > 0 => Pos
-    case _ => Neg
+    case x:Double if x > 0 => Pos
+    case x:Double if x < 0 => Neg
+    case _ => throw new UnsupportedOperationException("Can't represent a non-numerical value as a double")
   }
 
   def divide(v1: Sign, v2: Sign): Sign = (v1, v2) match {

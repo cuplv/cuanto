@@ -7,7 +7,7 @@ import edu.colorado.plv.cuanto.abstracting.Abstractable
   * @tparam V is the value type
   * @author Bor-Yuh Evan Chang
   */
-trait Evalable[V] extends Abstractable[Double,V] {
+trait Evalable[V] extends Abstractable[V] {
   def negate(v1: V): V
   def plus(v1: V, v2: V): V
   def minus(v1: V, v2: V): V = plus(v1, negate(v2))
@@ -22,5 +22,5 @@ trait Evalable[V] extends Abstractable[Double,V] {
     final def unary_- : V = negate(v1)
     override def toString = v1.toString
   }
-  implicit def toOps(v1: V): Ops = new Ops(v1)
+  implicit def toArithmeticOps(v1: V): Ops = new Ops(v1)
 }

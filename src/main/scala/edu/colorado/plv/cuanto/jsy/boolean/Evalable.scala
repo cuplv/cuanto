@@ -1,13 +1,14 @@
 package edu.colorado.plv.cuanto.jsy.boolean
 
 import edu.colorado.plv.cuanto.abstracting.Abstractable
+import scala.language.postfixOps
 
 /** Abstract value type that can be evaluated with boolean operations.
   *
   * @tparam V is the value type
   * @author Benno Stein
   */
-trait Evalable[V] extends Abstractable[Boolean,V] {
+trait Evalable[V] extends Abstractable[V] {
 
   /** Return the set of possible truth values for this value v*/
   def truthiness(v: V): Set[Boolean]
@@ -23,5 +24,5 @@ trait Evalable[V] extends Abstractable[Boolean,V] {
     final def unary_! : V = not(v1)
     override def toString = v1 toString
   }
-  implicit def toOps(v1: V): Ops = new Ops(v1)
+  implicit def toBooleanOps(v1: V): Ops = new Ops(v1)
 }

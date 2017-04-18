@@ -23,7 +23,7 @@ object Denotational {
     */
   def Make[W](eval: Evalable[W]): Denotational { type V = W } = new Denotational {
     type V = W
-    import eval.{toOps, represent}
+    import eval.{toBooleanOps, represent}
 
     val fun: FixFun[Expr, V] = FixFun(rec => {
       case B(b) => b
@@ -55,10 +55,12 @@ object Denotational {
     override def or (l:Boolean, r:Boolean):Boolean = l || r
     override def ite(cond:Boolean, l:Boolean, r:Boolean):Boolean = if(cond) l else r
     override def truthiness(b:Boolean):Set[Boolean] = Set(b)
-    override def represent(b:Boolean):Boolean = b
+    override def represent(v: Any) = v match {
+      case b:Boolean => b
+      case _ => throw new IllegalArgumentException("Only booleans are representable in the boolean sub-language")
+    }
   })
 
   /** Instantiate an abstract interpreter module. */
-  def Abstract[D](domain : Abstraction with Evalable[D] with Abstractable[Double,D]) = Denotational.Make[D](domain)
-
+  def Abstract[D](domain : Abstraction with Evalable[D] with Abstractable[D]) = Denotational.Make[D](domain)
 }
