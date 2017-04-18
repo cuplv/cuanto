@@ -16,7 +16,7 @@ package object mutation {
       case l: Local => Some(l)
       case _ => None
     }
-    val newValueO: Option[Result] = expression.interpret(stmt.getRightOp(), env)
+    val newValueO: Option[R] = expression.interpret(stmt.getRightOp(), env)
     for {
       varName <- varNameO
       newValue <- newValueO
@@ -25,7 +25,7 @@ package object mutation {
 
   /** Interpret the integer value of a variable mutated over a sequence
     * of assignment statements */
-  def interpret(ss: Traversable[AssignStmt], v: String): Option[Result] =
+  def interpret(ss: Traversable[AssignStmt], v: String): Option[R] =
     interpret(ss).flatMap(_ get v)
 
   def interpret(ss: Traversable[AssignStmt]): Option[Env] =

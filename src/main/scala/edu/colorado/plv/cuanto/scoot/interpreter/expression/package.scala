@@ -1,20 +1,19 @@
-package edu.colorado.plv.cuanto.scoot.interpreter
+package edu.colorado.plv.cuanto
+package scoot.interpreter
 
 import scala.collection.immutable.{Map, HashMap}
 import soot._
 
-package expression {
-  trait Result
-  case class IntR(i: Int) extends Result
-}
+import scoot.domains._
 
 package object expression {
-  type Env = Map[String,Result]
-  type RFun = Env => Option[Result]
+  type R = Result[IntDom]
+  type Env = Map[String,R]
+  type RFun = Env => Option[R]
 
-  val emptyEnv: Env = new HashMap[String,Result]()
+  val emptyEnv: Env = new HashMap[String,R]()
 
-  def interpret(v: Value, env: Env = emptyEnv): Option[Result] = (for {
+  def interpret(v: Value, env: Env = emptyEnv): Option[R] = (for {
     rfun <- interpR(v)
   } yield rfun(env)).flatten
 

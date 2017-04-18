@@ -1,9 +1,6 @@
-package edu.colorado.plv.cuanto
-package scoot.domains
+package edu.colorado.plv.cuanto.scoot
 
-import abstracting.{Abstractable, Abstraction}
-
-package object domains {
-  sealed trait Result
-  case class Arith[A <: ArithDom](a: A) extends Result
+package domains {
+  trait Result[A <: ArithDom]
+  case class Arith[A <: ArithDom](a: A) extends Result[A]
 }

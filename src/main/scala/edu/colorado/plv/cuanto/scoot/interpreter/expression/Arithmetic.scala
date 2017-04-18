@@ -1,10 +1,11 @@
-package edu.colorado.plv.cuanto.scoot.interpreter
-package expression
+package edu.colorado.plv.cuanto.scoot
+package interpreter.expression
 
 import soot._
 import soot.jimple._
 
-////////////////////////////////////////////////////////////////////////
+import domains._
+import domains.IntDom
 
 object Arithmetic {
 
@@ -15,7 +16,7 @@ object Arithmetic {
   def interpNode(v: Value)(r: Value => Option[RFun]):
       Option[RFun] = v match {
     // case v: Local => env get v
-    case v: IntConstant => Some(_ => Some(IntR(v.value)))
+    case v: IntConstant => Some(_ => Some(Arith(IntDom(v.value))))
     case v: BinopExpr => for {
       op <- bop(v)
       arg1 <- r(v.getOp1())
@@ -31,13 +32,13 @@ object Arithmetic {
   /** Interpret an arithmetic unary operator node, getting back a
     * function that performs the operation */
   private def uop(op: UnopExpr):
-      Option[Option[Result] => Option[Result]] = {
-    def tryOp(f: Int => Int)(a: Option[Result]): Option[Result] = a match {
-      case Some(IntR(a)) => Some(IntR(f(a)))
+      Option[Option[R] => Option[R]] = {
+    def tryOp(f: IntDom => IntDom)(a: Option[R]): Option[R] = a match {
+      case Some(Arith(a)) => Some(Arith(f(a)))
       case _ => None
     }
     op match {
-      case _: NegExpr => Some(tryOp(_ * -1))
+      case _: NegExpr => Some(tryOp((i: IntDom) => i.neg(i)))
       case _ => None
     }
   }
@@ -45,18 +46,18 @@ object Arithmetic {
   /** Interpret an arithemetic binary operator node, getting back a
     * function that performs the operation */
   private def bop(op: BinopExpr):
-      Option[(Option[Result], Option[Result]) => Option[Result]] = {
-    def tryOp(f: (Int,Int) => Int)(a: Option[Result], b: Option[Result]):
-        Option[Result] =
+      Option[(Option[R], Option[R]) => Option[R]] = {
+    def tryOp(f: (IntDom,IntDom) => IntDom)(a: Option[R], b: Option[R]):
+        Option[R] =
       (a,b) match {
-        case (Some(IntR(a)),(Some(IntR(b)))) => Some(IntR(f(a,b)))
+        case (Some(Arith(a)),(Some(Arith(b)))) => Some(Arith(f(a,b)))
         case _ => None
       }
     op match {
-      case _: AddExpr => Some(tryOp(_ + _))
-      case _: SubExpr => Some(tryOp(_ - _))
-      case _: DivExpr => Some(tryOp(_ / _))
-      case _: MulExpr => Some(tryOp(_ * _))
+      case _: AddExpr => Some(tryOp((i1: IntDom,i2: IntDom) => i1.add(i1)(i2)))
+      case _: SubExpr => Some(tryOp((i1: IntDom,i2: IntDom) => i1.sub(i1)(i2)))
+      case _: DivExpr => Some(tryOp((i1: IntDom,i2: IntDom) => i1.div(i1)(i2)))
+      case _: MulExpr => Some(tryOp((i1: IntDom,i2: IntDom) => i1.mul(i1)(i2)))
       case _ => None
     }
   }

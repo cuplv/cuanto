@@ -1,16 +1,16 @@
-package edu.colorado.plv.cuanto.scoot.interpreter
-package mutation
+package edu.colorado.plv.cuanto.scoot
+package interpreter.mutation
 
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.PropertyChecks
 
-import expression._
+import domains._
 
 ////////////////////////////////////////////////////////////////////////
 
 class MutationInterpreterSpec extends FlatSpec with Matchers
     with PropertyChecks {
-  import expression.Builder._
+  import interpreter.expression.Builder._
 
   val other = local("other")
 
@@ -33,7 +33,7 @@ class MutationInterpreterSpec extends FlatSpec with Matchers
 
   it should "interpret a variable mutated through a sequence of AssignStmts" in {
     forAll (stmtTests) { (e, n) =>
-      mutation.interpret(e,acc.getName()) should equal (Some(IntR(n))) }
+      mutation.interpret(e,acc.getName()) should equal (Some(Arith[IntDom](IntDom(n)))) }
   }
 
   /** Here, "bad program" means that either the variable being tracked

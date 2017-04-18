@@ -1,8 +1,10 @@
-package edu.colorado.plv.cuanto.scoot.interpreter
-package expression
+package edu.colorado.plv.cuanto.scoot
+package interpreter.expression
 
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.PropertyChecks
+
+import domains._
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -13,7 +15,7 @@ class ExpressionInterpreterSpec extends FlatSpec with Matchers
   val va = local("va")
   val vb = local("vb")
 
-  val testEnv = Map(("va",IntR(3)),("vb",IntR(15)))
+  val testEnv = Map(("va",Arith[IntDom](IntDom(3))),("vb",Arith[IntDom](IntDom(15))))
 
   val exprTests = Table(
     "expression" -> "denotation",
@@ -33,13 +35,13 @@ class ExpressionInterpreterSpec extends FlatSpec with Matchers
 
   "The Scoot interpreter" should "interpret stateless Values" in {
     forAll (exprTests) { (e, n) =>
-      interpret(e,testEnv) should equal (Some(IntR(n)))
+      interpret(e,testEnv) should equal (Some(Arith[IntDom](IntDom(n))))
     }
   }
 
   it should "interpret Values containing in-scope Locals" in {
     forAll (exprLocalTests) { (e, n) =>
-      interpret(e,testEnv) should equal (Some(IntR(n)))
+      interpret(e,testEnv) should equal (Some(Arith[IntDom](IntDom(n))))
     }
   }
 
