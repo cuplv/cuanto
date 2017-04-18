@@ -2,8 +2,7 @@ package edu.colorado.plv.cuanto.scoot.interpreter
 package expression
 
 import soot.{Value, IntType, Local, Immediate}
-import soot.jimple.{Jimple, AssignStmt, IntConstant, AddExpr, SubExpr,
-  MulExpr, DivExpr, NegExpr}
+import soot.jimple._
 
 /** Write convenience functions for constructing soot Value objects
   * that represent arithemtic expressions (for testing, mainly)

@@ -7,7 +7,7 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
   *
   * Relies on [[edu.colorado.plv.cuanto.jsy.common.OpParserLike]] to parse unary and binary expressions.
   *
-  * The atoms are `true` and `false`
+  * The atoms are `true`, `false`, and ''ifthenelse''.
   *
   * $booleanOpatom
   *
@@ -17,25 +17,48 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
   *
   * $booleanBop
   *
-  * @define booleanOpatom ''opatom'' ::= `true` | `false`
-  * @define booleanUop '''uop'' ::= `!``
+  * The ternary ''e,,1,,'' `?` ''e,,2,,'' `:` ''e,,3,,'' has the lowest precedence.
+  *
+  * @define booleanIteop ''iteop'' ::=  ''binary'' `?` ''expr'' `:` ''itesub''
+  * @define booleanIfthenelse ''ifthenelse'' ::= `if` ''e'' `then` ''e'' `else` ''itesub''
+  * @define booleanOpatom ''opatom'' ::= `true` | `false` | `ifthenelse`
+  * @define booleanUop ''uop'' ::= `!`
   * @define booleanBop ''bop'' ::= `||` | `&&`
+  *
   * @author Bor-Yuh Evan Chang
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
-  override def start: Parser[Expr] = expr
+  /** Parameter: define the non-terminal for the sub-expressions
+    * of the if-then-else expression, that is,
+    *
+    *   - $booleanIteop
+    *   - $booleanIfthenelse
+    */
+  def itesub: Parser[Expr]
+
+  def iteop: Parser[Expr] =
+    binary ~ opt(withpos(("?" ~> expr) ~ (":" ~> itesub))) ^^ {
+      case e1 ~ None => e1
+      case e1 ~ Some((pos, e2 ~ e3)) => If(e1, e2, e3) setPos pos
+    }
 
   /** $booleanOpatom */
   abstract override def opatom: Parser[Expr] =
     positioned {
       "true" ^^^ B(true) |
-      "false" ^^^ B(false)
+      "false" ^^^ B(false) |
+      ifthenelse
     } |
     super.opatom
 
+  def ifthenelse: Parser[Expr] =
+    ("if" ~> parenthesized) ~ expr ~ ("else" ~> itesub) ^^ {
+      case e1 ~ e2 ~ e3 => If(e1, e2, e3)
+    }
+
   /** $booleanUop */
   abstract override def uop: Parser[Uop] =
-    "!" ^^ { _ => Not } |
+    "!" ^^^ Not |
     super.uop
 
   /** Precedence: { `||` } < { `&&` }.
@@ -50,20 +73,14 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   )
 }
 
-/** The parser for just this boolean sub-language
+/** The parser for just this boolean sub-language.
   *
   * @see [[ParserLike]]
   * @author Bor-Yuh Evan Chang
   */
 object Parser extends UnitOpParser with ParserLike {
   override def start: Parser[Expr] = expr
-
-  /** Parser for expressions ''expr'': [[Expr]].
-    *
-    * ''expr'' ::= ''binary''
-    */
-  override def expr: Parser[Expr] = binary
-
-  /** Define precedence of left-associative binary operators. */
+  override def expr: Parser[Expr] = iteop
+  override def itesub: Parser[Expr] = iteop
   override lazy val bop: OpPrecedence = booleanBop
 }
