@@ -1,44 +1,37 @@
 package edu.colorado.plv.cuanto.jsy
 
-/** Define an boolean sub-language.
-  *
-  * @author Bor-Yuh Evan Chang
-  */
-package object boolean {
+package boolean {
 
   /* Literals and Values */
 
-  /** Booleans ''e'' ::= ''b''. */
-  case class B(b: Boolean) extends Expr
+  /** @group Abstract Syntax Nodes */
+  case class B(b: Boolean) extends Val
 
   /* Operators */
 
-  /** Unary operators ''uop''. */
-
-  /** Not ''uop'' ::= `!`. */
+  /** @group Abstract Syntax Nodes */
   case object Not extends Uop
-
-  /** Binary operators ''bop''. */
-
-  /** And ''uop'' ::= `&&`. */
+  /** @group Abstract Syntax Nodes */
   case object And extends Bop
-  /** Or ''uop'' ::= `||`. */
+  /** @group Abstract Syntax Nodes */
   case object Or extends Bop
-
-  /** Equal ''bop'' ::= `==`. */
-  case object Eq extends Bop
-  /** Not equal ''bop'' ::= `!=`. */
-  case object Ne extends Bop
-  /** Less than or equal ''bop'' ::= `<=`. */
-  case object Le extends Bop
-  /** Less than ''bop'' ::= `<`. */
-  case object Lt extends Bop
-  /** Greater than or equal ''bop'' ::= `>=`. */
-  case object Ge extends Bop
-  /** Greater than ''bop'' ::= `>`. */
-  case object Gt extends Bop
-
-  /** Elimination: if-then-else ''e'' ::= ''e,,1,,'' ? ''e,,2,,'' : ''e,,3,,''. */
+  /** @group Abstract Syntax Nodes */
   case class If(e1: Expr, e2: Expr, e3: Expr) extends Expr
 
 }
+
+/** Define the Boolean sub-language.
+  *
+  * This package defines the abstract syntax nodes for Boolean expressions.
+  *
+  * ==Abstract Syntax==
+  *
+  *   - ''v'' ::= ''b'' ≡ `B(''b'')`
+  *   - ''uop'' ::= `!` ≡ `Not`
+  *   - ''bop'' ::= `&&` ≡ `And` | `||` ≡ `Or`
+  *   - ''e'' ::=  `if` `(''e,,1,,'')` ''e,,2,,'' `else` ''e,,3,,'' ≡ `If(''e,,1,,'', ''e,,2,,'', ''e,,3,,'')`
+  *   - ''b'' ϵ `Boolean` ::= `true` | `false`
+  *
+  * @author Bor-Yuh Evan Chang
+  */
+package object boolean
