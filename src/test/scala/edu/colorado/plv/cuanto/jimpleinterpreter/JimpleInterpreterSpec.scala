@@ -14,7 +14,7 @@ class JimpleInterpreterSpec extends FlatSpec with Matchers {
 
   val memory: MutableMemory = Driver.run(List(testFilePaths), Some("Test1"))
 
-  def getVariableVal(name: String, memory: MutableMemory): Int = {
+  private def getVal(name: String, memory: MutableMemory): Int = {
     memory.getCurrentStack.foreach {
       case (namep, valuep) =>
         namep match {
@@ -28,8 +28,8 @@ class JimpleInterpreterSpec extends FlatSpec with Matchers {
   "Jimple interpreter" should "concretely and correctly interpret the Jimple code" in {}
 
   it should "" in {
-    getVariableVal("i0", memory) shouldEqual 1048576
-    getVariableVal("i1", memory) shouldEqual 55
-    getVariableVal("i2", memory) shouldEqual 1048576
+    getVal("i0", memory) shouldEqual 1048576
+    getVal("i1", memory) shouldEqual 55
+    getVal("i2", memory) shouldEqual 1048576
   }
 }

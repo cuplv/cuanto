@@ -131,7 +131,8 @@ package object jimpleinterpreter {
     (pc, ret)
   }
 
-  def invoke(expr: InvokeExpr, memory: MutableMemory): Option[Int] = {
+  @deprecated("")
+  private def invoke(expr: InvokeExpr, memory: MutableMemory): Option[Int] = {
     val argList: List[Int] = expr.getArgs.asScala.map { arg => memory.getVal(arg) }.toList
 
     memory.createNewStack()

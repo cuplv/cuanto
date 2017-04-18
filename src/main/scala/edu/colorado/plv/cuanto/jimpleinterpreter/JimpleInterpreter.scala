@@ -10,7 +10,6 @@ import soot.{Body, Local, Scene, SceneTransformer}
   */
 class JimpleInterpreter() extends SceneTransformer {
   val DEBUG = true
-  var pc: Stmt = _
 
   val memory = new MutableMemory
 
