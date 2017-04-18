@@ -13,7 +13,7 @@ class Body(dt: soot.Body) {
     val stmtList: PatchingChain[Stmt] = dt.getUnits.asInstanceOf[PatchingChain[Stmt]]
     //transform Chain to Scala list?
     val it = stmtList.iterator()
-    val retList: List[Stmt] = List()
+    val retList: List[soot.jimple.Stmt] = List()
     while(it.hasNext()) {
       it.next()::retList
     }
