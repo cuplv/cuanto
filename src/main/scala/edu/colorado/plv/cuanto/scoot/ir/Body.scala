@@ -10,7 +10,7 @@ class Body(dt: soot.Body) {
   //Todo: what is the preferred functional style for getters?
   //accessing internal data of Body should return our lifted structures, so transform in each "getter"
   lazy val stmts: List[Stmt] = {
-    val stmtList: PatchingChain[Stmt] = dt.getUnits.asInstanceOf[PatchingChain[Stmt]]
+    val stmtList: PatchingChain[soot.jimple.Stmt] = dt.getUnits.asInstanceOf[PatchingChain[soot.jimple.Stmt]]
     //transform Chain to Scala list?
     val it = stmtList.iterator()
     val retList: List[soot.jimple.Stmt] = List()
