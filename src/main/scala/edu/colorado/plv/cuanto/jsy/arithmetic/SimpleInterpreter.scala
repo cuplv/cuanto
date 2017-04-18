@@ -5,7 +5,8 @@ package arithmetic
   *
   * @author Bor-Yuh Evan Chang
   */
-object Interpreter {
+@deprecated("examples", "0.0.0")
+object SimpleInterpreter {
 
   def denote(uop: Uop): Double => Double = uop match {
     case Neg => { - _ }

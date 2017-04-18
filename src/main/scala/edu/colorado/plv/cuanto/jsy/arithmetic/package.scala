@@ -4,12 +4,12 @@ package edu.colorado.plv.cuanto.jsy
   *
   * @author Bor-Yuh Evan Chang
   */
-package object arithmetic {
+package arithmetic {
 
   /* Literals and values. */
 
   /** Numbers ''e'' ::= ''n''. */
-  case class N(n: Double) extends Expr
+  case class N(n: Double) extends Val
 
   /* Unary and binary operators. */
 
@@ -27,6 +27,10 @@ package object arithmetic {
 
   /** Div ''bop'' ::= `/`. */
   case object Div extends Bop
+
+}
+
+package object arithmetic {
 
   /** Define values. */
   def isValue(e: Expr): Boolean = e match {
