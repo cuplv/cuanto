@@ -6,12 +6,14 @@ import soot.jimple._
 
 ////////////////////////////////////////////////////////////////////////
 
+/** Sub-interpreter for arithmetic nodes */
 object Arithmetic {
 
-  def omerge[A,B](t: (Option[A],Option[B])): Option[(A,B)] =
+  private def omerge[A,B](t: (Option[A],Option[B])): Option[(A,B)] =
     for (a <- t._1; b <- t._2) yield (a,b)
 
 
+  /** Interpret an arithmetic operator node */
   def interpNode(v: Value)(r: Value => Option[RFun]):
       Option[RFun] = v match {
     // case v: Local => env get v
