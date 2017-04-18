@@ -12,7 +12,12 @@ import scala.collection.JavaConverters._
   * Created by lumber on 4/13/17.
   */
 package object jimpleinterpreter {
-  @deprecated("")
+  /**
+    * Return the value of the constant variable
+    * @param constant a constant variable
+    * @return the value of the constant variable
+    */
+  @deprecated()
   def getConstantVal(constant: Constant): Int = {
     constant match {
       case cons: ClassConstant => ???
@@ -37,8 +42,14 @@ package object jimpleinterpreter {
     }
   }
 
+  /**
+    * Return the next statement to be sequentially interpreted
+    * @param stmt current statement
+    * @param body the method body that contains current statement
+    * @return the next statement to be sequentially interpreted
+    */
   // TODO: is there a better way to do this?
-  @deprecated("")
+  @deprecated()
   private def getNextStmt(stmt: Stmt, body: Body): Stmt = {
     val it = body.getUnits.iterator()
     while (it.hasNext) {
@@ -57,7 +68,14 @@ package object jimpleinterpreter {
     null
   }
 
-  @deprecated("Concretely interpret a method invocation")
+  /**
+    * Concretely interpret a method invocation
+    * @param method a method to be interpreted
+    * @param memory current memory
+    * @param argList the list of actual arguments to be passed to the method that is going to be interpreted
+    * @return the return value of the method that is finished for interpreting (could be None for a return type of void)
+    */
+  @deprecated()
   def concreteInterpret(method: SootMethod, memory: MutableMemory, argList: List[Int]): Option[Int] = {
     var ret: Option[Int] = None // return value of the method being interpreted
     val body = method.retrieveActiveBody()
@@ -73,7 +91,15 @@ package object jimpleinterpreter {
     ret
   }
 
-  @deprecated("")
+  /**
+    * Concretely interpret a jimple statement
+    * @param statement the jimple statement to be interpreted
+    * @param body the method body that contains the statement to be interpreted
+    * @param memory current memory
+    * @param argList if the jimple statement contains a method invocation, then this is the list of actual arguments to be passed to the method that is going to be invoked. Otherwise, this parameter is not used.
+    * @return the next statement to be interpreted and the return value of the method invocation (could be None for a return type of void)
+    */
+  @deprecated()
   private def _concreteInterpret(statement: Stmt, body: Body, memory: MutableMemory, argList: List[Int]): (Stmt, Option[Int]) = {
     val DEBUG = false
     if (DEBUG) println("[" + body.getMethod.getName + "] " + statement)
@@ -131,7 +157,13 @@ package object jimpleinterpreter {
     (pc, ret)
   }
 
-  @deprecated("")
+  /**
+    * Interpret an invoke expression
+    * @param expr the invoke expression
+    * @param memory current memory
+    * @return the return value of the method invocation (could be None for a return type of void)
+    */
+  @deprecated()
   private def invoke(expr: InvokeExpr, memory: MutableMemory): Option[Int] = {
     val argList: List[Int] = expr.getArgs.asScala.map { arg => memory.getVal(arg) }.toList
 
@@ -141,7 +173,13 @@ package object jimpleinterpreter {
     ret
   }
 
-  @deprecated("")
+  /**
+    * Evaluate the expression
+    * @param expr the expression to be evaluated
+    * @param memory current memory
+    * @return the evaluation of the expression
+    */
+  @deprecated()
   def eval(expr: Expr, memory: MutableMemory): Int = {
     expr match {
       // case _expr: AnyNewExpr => ???
