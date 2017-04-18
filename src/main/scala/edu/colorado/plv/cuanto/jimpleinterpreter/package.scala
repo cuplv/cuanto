@@ -3,7 +3,10 @@ package edu.colorado.plv.cuanto
 import soot.{Body, Local, SootMethod}
 import soot.dexpler.typing.UntypedConstant
 import soot.jimple._
+import soot.shimple.ShimpleExpr
 import soot.shimple.toolkits.scalar.SEvaluator.MetaConstant
+
+import scala.collection.JavaConverters._
 
 /**
   * Created by lumber on 4/13/17.
@@ -110,7 +113,7 @@ package object jimpleinterpreter {
       case stmt: ReturnStmt => ret = Some(memory.getVal(stmt.getOp)); null
       case stmt: ReturnVoidStmt => null
       case stmt: InvokeStmt => // Ignore
-        memory.invoke(stmt.getInvokeExpr)
+        invoke(stmt.getInvokeExpr, memory)
         getNextStmt(stmt, body)
       case stmt: SwitchStmt => // Ignore
         getNextStmt(stmt, body)
@@ -126,5 +129,63 @@ package object jimpleinterpreter {
         getNextStmt(stmt, body)
     }
     (pc, ret)
+  }
+
+  def invoke(expr: InvokeExpr, memory: MutableMemory): Option[Int] = {
+    val argList: List[Int] = expr.getArgs.asScala.map { arg => memory.getVal(arg) }.toList
+
+    memory.createNewStack()
+    val ret = concreteInterpret(expr.getMethod, memory, argList)
+    memory.popCurrentStack()
+    ret
+  }
+
+  @deprecated("")
+  def eval(expr: Expr, memory: MutableMemory): Int = {
+    expr match {
+      // case _expr: AnyNewExpr => ???
+      case _expr: BinopExpr =>
+        _expr match {
+          case __expr: AddExpr =>
+            memory.getVal(__expr.getOp1) + memory.getVal(__expr.getOp2)
+          case __expr: AndExpr => ???
+          case __expr: CmpExpr => ???
+          case __expr: CmpgExpr => ???
+          case __expr: CmplExpr => ???
+          case __expr: ConditionExpr =>
+            val left = memory.getVal(__expr.getOp1)
+            val right = memory.getVal(__expr.getOp2)
+            __expr match {
+              case ___expr: EqExpr => if (left == right) 1 else 0
+              case ___expr: GeExpr => if (left >= right) 1 else 0
+              case ___expr: GtExpr => if (left > right) 1 else 0
+              case ___expr: LeExpr => if (left <= right) 1 else 0
+              case ___expr: LtExpr => if (left < right) 1 else 0
+              case ___expr: NeExpr => if (left != right) 1 else 0
+            }
+          case __expr: DivExpr =>
+            memory.getVal(__expr.getOp1) / memory.getVal(__expr.getOp2)
+          case __expr: MulExpr =>
+            memory.getVal(__expr.getOp1) * memory.getVal(__expr.getOp2)
+          case __expr: OrExpr => ???
+          case __expr: RemExpr => ???
+          case __expr: ShlExpr => ???
+          case __expr: SubExpr =>
+            memory.getVal(__expr.getOp1) - memory.getVal(__expr.getOp2)
+          case __expr: UshrExpr => ???
+          case __expr: XorExpr => ???
+        }
+      case _expr: CastExpr => ???
+      case _expr: InstanceOfExpr => ???
+      case _expr: InvokeExpr => invoke(_expr, memory) match {
+        case Some(x) => x
+        case None => ???
+      }
+      case _expr: NewArrayExpr => ???
+      case _expr: NewExpr => ???
+      case _expr: NewMultiArrayExpr => ???
+      case _expr: ShimpleExpr => ???
+      case _expr: UnopExpr => ???
+    }
   }
 }
