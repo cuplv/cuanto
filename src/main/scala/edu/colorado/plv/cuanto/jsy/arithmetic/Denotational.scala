@@ -2,6 +2,7 @@ package edu.colorado.plv.cuanto.jsy
 package arithmetic
 
 import edu.colorado.plv.cuanto.recursing.FixFun
+import edu.colorado.plv.cuanto.abstracting.{Abstraction, Abstractable}
 
 /** Signature for a denotational interpreter. */
 trait Denotational {
@@ -12,7 +13,7 @@ trait Denotational {
   val fun: FixFun[Expr, V]
 
   /** Evaluate an expression to a value. */
-  def apply(e: Expr): V = fun(e)
+  def apply: Expr => V = fun
 }
 
 object Denotational {
@@ -45,4 +46,8 @@ object Denotational {
     override def divide(v1: Double, v2: Double) = v1 / v2
     override def represent(d: Double) = d
   })
+
+  /** Instantiate an abstract interpreter module. */
+  def Abstract[D](domain : Abstraction with Evalable[D] with Abstractable[Double,D]) = Denotational.Make[D](domain)
+
 }
