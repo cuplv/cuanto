@@ -6,6 +6,8 @@ import soot.jimple._
 
 import expression._
 
+/** Interpreter for soot Units that modify the evaluation
+  * environment */
 package object mutation {
 
   private def some[A](a: A): Option[A] = Some(a)
