@@ -8,3 +8,8 @@ class DefinitionStmt(dt: soot.jimple.DefinitionStmt) extends Stmt(dt: soot.jimpl
 
   lazy val rightOp : Value = new Value(dt.getRightOp())
 }
+
+object DefinitionStmt {
+  def unapply(s: DefinitionStmt): Option[(Value, Value)] =
+    Some((s.leftOp, s.rightOp))
+}

@@ -45,16 +45,16 @@ object Interpreter {
 
   /** Interpret arithmetic expressions encoded as a single `Value` */
   def denote(v: Value, env: Env = emptyEnv): Option[Int] = v match {
-    case v: Local => env get v
+    case Local(n) => env get v.asInstanceOf[Local]
     //case v: IntConstant => Some(v.value)
-    case BinopExpr(op1, op2) => for {
-      op <- bop(v)
-      arg1 <- denote(op1, env)
-      arg2 <- denote(op2, env)
+    case BinopExpr(e1, e2) => for {
+      op <- bop(v.asInstanceOf[BinopExpr])
+      arg1 <- denote(e1, env)
+      arg2 <- denote(e2, env)
     } yield op(arg1, arg2)
-    case v: UnopExpr => for {
-      op <- uop(v)
-      arg <- denote(v.op, env)
+    case UnopExpr(e) => for {
+      op <- uop(v.asInstanceOf[UnopExpr])
+      arg <- denote(e, env)
     } yield op(arg)
   }
 
