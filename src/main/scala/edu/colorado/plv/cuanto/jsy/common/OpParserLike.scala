@@ -3,7 +3,7 @@ package edu.colorado.plv.cuanto.jsy.common
 import edu.colorado.plv.cuanto.jsy._
 import edu.colorado.plv.cuanto.parsing.RichParsers
 
-import scala.util.parsing.combinator.RegexParsers
+import scala.util.parsing.combinator.JavaTokenParsers
 
 /** Parser components that handle unary and binary operators.
   *
@@ -60,7 +60,7 @@ import scala.util.parsing.combinator.RegexParsers
   *
   * @author Bor-Yuh Evan Chang
   */
-trait OpParserLike extends RegexParsers with RichParsers {
+trait OpParserLike extends JavaTokenParsers with RichParsers {
 
   /** Parameter: define expressions. */
   def expr: Parser[Expr]
@@ -89,24 +89,29 @@ trait OpParserLike extends RegexParsers with RichParsers {
     */
   val bop: OpPrecedence
 
+  /** A generic parser component that yields a parser for
+    * left-associative binary operators.
+    *
+    * @param ops the binary operators, specifying precedence
+    * @param sub the parser for sub-expressions
+    */
+  def binaryLeft(ops: OpPrecedence, sub: Parser[Expr]): Parser[Expr] = {
+    def binaryCase(opsyn: (String, Bop)): Parser[(Expr, Expr) => Expr] = {
+      val (csyn, asyn) = opsyn
+      withpos(csyn) ^^ { case (pos, _) => (e1: Expr, e2: Expr) => Binary(asyn, e1, e2) setPos pos }
+    }
+    def level(ops: Seq[(String, Bop)]): Parser[(Expr, Expr) => Expr] = {
+      val op1 :: t = ops
+      t.foldLeft(binaryCase(op1)) { (acc, op) => acc | binaryCase(op) }
+    }
+    ops.foldRight(sub) { (lops, acc) => acc * level(lops) }
+  }
+
   /** Yields a parser for binary expressions with an instantiation for `bop`.
     *
     * @see bop
     */
-  def binary: Parser[Expr] = {
-    def binaryOps(ops: OpPrecedence): Parser[Expr] = {
-      def binaryCase(opsyn: (String, Bop)): Parser[(Expr, Expr) => Expr] = {
-        val (csyn, asyn) = opsyn
-        withpos(csyn) ^^ { case (pos, _) => (e1: Expr, e2: Expr) => Binary(asyn, e1, e2) setPos pos }
-      }
-      def level(ops: Seq[(String, Bop)]): Parser[(Expr, Expr) => Expr] = {
-        val op1 :: t = ops
-        t.foldLeft(binaryCase(op1)) { (acc, op) => acc | binaryCase(op) }
-      }
-      ops.foldRight(unary) { (lops, acc) => acc * level(lops) }
-    }
-    binaryOps(bop)
-  }
+  def binary: Parser[Expr] = binaryLeft(bop, unary)
 
   /** Yields a parser for unary expressions with an instantiation for `uop`
     *
@@ -124,6 +129,7 @@ trait OpParserLike extends RegexParsers with RichParsers {
     */
   def atom: Parser[Expr] =
     opatom |
+    positioned(ident ^^ Var) |
     parenthesized |
     block |
     failure("expected an atom")
