@@ -9,4 +9,7 @@ class BinopExpr(dt: soot.jimple.BinopExpr) extends Expr(dt: soot.jimple.Expr) {
   def op2: Value = new Value(dt.getOp2())
 
   def symbol: String = dt.getSymbol()
+
+  def unapply(e: BinopExpr): Option[(Value, Value)] =
+    Some((e.op1, e.op2))
 }
