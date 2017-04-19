@@ -1,11 +1,5 @@
 package edu.colorado.plv.cuanto.jsy
 
-/** Define a sub-language of numerical constraints.
-  *
-  * Combines [[arithmetic]] and [[boolean]].
-  *
-  * @author Bor-Yuh Evan Chang
-  */
 package numerical {
 
   /** Equal ''bop'' ::= `==`. */
@@ -22,3 +16,11 @@ package numerical {
   case object Gt extends Bop
 
 }
+
+/** Define a sub-language of numerical constraints.
+  *
+  * Combines [[arithmetic]] and [[boolean]].
+  *
+  * @author Bor-Yuh Evan Chang
+  */
+package object numerical

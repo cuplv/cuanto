@@ -5,13 +5,7 @@ package binding {
   /** @group Abstract Syntax Nodes */
   case object Unit extends Val
 
-  /** A Var node in an expression is a variable use.
-    *
-    * The name of the variable is stored privately.
-    *
-    * @group Abstract Syntax Nodes
-    */
-  case class Var(private val x: String) extends Expr
+
 
   /** Let-binding.
     *

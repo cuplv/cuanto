@@ -1,21 +1,18 @@
 package edu.colorado.plv.cuanto.jsy
 package numerical
 
+import edu.colorado.plv.cuanto.CuantoSpec
 import edu.colorado.plv.cuanto.jsy.arithmetic._
 import edu.colorado.plv.cuanto.jsy.boolean._
+import edu.colorado.plv.cuanto.jsy.common.ParserBehaviors
 import edu.colorado.plv.cuanto.jsy.numerical.Parser.parse
-import edu.colorado.plv.cuanto.testing.implicits.tryEquality
-import org.scalatest.prop.PropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
 
 /**
   * @author Bor-Yuh Evan Chang
   */
-class NumericalParserSpec extends FlatSpec with Matchers with PropertyChecks {
+class NumericalParserSpec extends CuantoSpec with ParserBehaviors {
 
-  behavior of "jsy.numerical.Parser"
-
-  val positives = Table(
+  override lazy val positives = Table(
     "concrete" -> "abstract",
     /* constraints */
     "true !== false" -> Binary(Ne, B(true), B(false)),
@@ -28,10 +25,6 @@ class NumericalParserSpec extends FlatSpec with Matchers with PropertyChecks {
     "true !== 4 < 5" -> Binary(Ne, B(true), Binary(Lt, N(4), N(5)))
   )
 
-  forAll (positives) { (conc, abs) =>
-    it should s"parse $conc into $abs" in {
-      parse(conc) shouldEqual abs
-    }
-  }
+  "jsy.numerical.Parser" should behave like parser(parse)
 
 }
