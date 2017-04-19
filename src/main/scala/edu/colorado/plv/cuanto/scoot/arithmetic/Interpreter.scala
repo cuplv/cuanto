@@ -1,8 +1,9 @@
 package edu.colorado.plv.cuanto.scoot
 package arithmetic
 
-import soot._
-import soot.jimple._
+//import soot._
+//import soot.jimple._
+import ir._
 
 import scala.collection.immutable.HashMap
 
@@ -22,11 +23,11 @@ object Interpreter {
 
   /** Step an environment forward over a single statement */
   def step(stmt: AssignStmt)(env: Env): Option[Env] = {
-    val varNameO: Option[Local] = stmt.getLeftOp() match {
+    val varNameO: Option[Local] = stmt.leftOp match {
       case l: Local => Some(l)
       case _ => None
     }
-    val newValueO: Option[Int] = denote(stmt.getRightOp(), env)
+    val newValueO: Option[Int] = denote(stmt.rightOp, env)
     for {
       varName <- varNameO
       newValue <- newValueO
@@ -44,16 +45,16 @@ object Interpreter {
 
   /** Interpret arithmetic expressions encoded as a single `Value` */
   def denote(v: Value, env: Env = emptyEnv): Option[Int] = v match {
-    case v: Local => env get v
-    case v: IntConstant => Some(v.value)
-    case v: BinopExpr => for {
-      op <- bop(v)
-      arg1 <- denote(v.getOp1(), env)
-      arg2 <- denote(v.getOp2(), env)
+    case Local(n) => env get v.asInstanceOf[Local]
+    //case v: IntConstant => Some(v.value)
+    case BinopExpr(e1, e2) => for {
+      op <- bop(v.asInstanceOf[BinopExpr])
+      arg1 <- denote(e1, env)
+      arg2 <- denote(e2, env)
     } yield op(arg1, arg2)
-    case v: UnopExpr => for {
-      op <- uop(v)
-      arg <- denote(v.getOp(), env)
+    case UnopExpr(e) => for {
+      op <- uop(v.asInstanceOf[UnopExpr])
+      arg <- denote(e, env)
     } yield op(arg)
   }
 
