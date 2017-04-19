@@ -30,6 +30,12 @@ package jsy {
     */
   case class Var(private val x: String) extends Val
 
+  /** Types ''τ''. */
+  trait Typ extends Positional
+
+  /** The `any` type (i.e., dynamically-typed). */
+  case object TAny extends Typ
+
 }
 
 /** Defining the JavaScripty language platform.
@@ -77,6 +83,7 @@ package jsy {
   *   - ''bop'' ϵ `Bop`
   *   - ''v'' ϵ `Val` ::= ''x''
   *   - ''x'' ϵ `Var`
+  *   - ''τ'' ϵ `Typ` ::= `any` ≡ `TAny`
   *
   * @define jsyUnaryProduction ''uop'' ''e,,1,,'' ≡ `Unary(''uop'', ''e,,1,,'')`
   * @define jsyBinaryProduction ''e,,1,,'' ''bop'' ''e,,2,,'' ≡ `Binary(''bop'', ''e,,1,,'', ''e,,2,,'')`
