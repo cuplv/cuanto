@@ -25,7 +25,7 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   }
 
   def concreteDecl: Parser[Decl] =
-    ("let" ~> withpos(ident)) ~ withpos("=" ~> expr) ^^ {
+    (("let" | "const") ~> withpos(ident)) ~ withpos("=" ~> expr) ^^ {
       case (posx, x) ~ ((pos1, e1)) => Decl(e2 => Bind(Var(x) setPos posx, e1, e2) setPos pos1)
     }
 

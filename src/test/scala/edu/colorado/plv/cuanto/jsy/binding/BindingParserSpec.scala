@@ -28,6 +28,8 @@ class BindingParserSpec extends CuantoSpec with ParserBehaviors {
     // declarations
     "let x = two"
       -> Bind(Var("x"), Var("two"), Unit),
+    "const x = two"
+      -> Bind(Var("x"), Var("two"), Unit),
     "let x = two; let y = three"
       -> Bind(Var("x"), Var("two"),
            Bind(Var("y"), Var("three"), Unit)
