@@ -9,7 +9,7 @@ import scala.util.parsing.combinator.{Parsers, RegexParsers}
   *
   * @author Bor-Yuh Evan Chang
   */
-trait UnitOpParser extends OpParserLike { _: RichParsers with RegexParsers with Parsers =>
+trait UnitOpParser extends OpParserLike {
   override def opatom: Parser[Expr] = failure("expected opatom")
   override def uop: Parser[Uop] = failure("expected uop")
 }
