@@ -1,20 +1,17 @@
 package edu.colorado.plv.cuanto.jsy
 package binding
 
+import edu.colorado.plv.cuanto.CuantoSpec
 import edu.colorado.plv.cuanto.jsy.binding.Parser.parse
-import edu.colorado.plv.cuanto.testing.implicits.tryEquality
-import org.scalatest.prop.PropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import edu.colorado.plv.cuanto.jsy.common.ParserBehaviors
 
 /**
   * @author Kyle Headley
   * @author Bor-Yuh Evan Chang
   */
-class BindingParserSpec extends FlatSpec with Matchers with PropertyChecks {
+class BindingParserSpec extends CuantoSpec with ParserBehaviors {
 
-  behavior of "jsy.binding.Parser"
-
-  val positives = Table(
+  override lazy val positives = Table(
     "concrete" -> "abstract",
     // expressions
     "x" -> Var("x"),
@@ -39,35 +36,19 @@ class BindingParserSpec extends FlatSpec with Matchers with PropertyChecks {
     "x; y" -> Binary(Seq, Var("x"), Var("y"))
   )
 
-  val flexibles = Table(
+  override lazy val flexibles = Table(
     "concrete" -> "abstract",
     "{ let x = y y }"
       -> Bind(Var("x"), Var("y"), Var("y"))
   )
 
-  val negatives = Table(
+  override lazy val negatives = Table(
     "concrete",
     "123abc",
     "(let x = y)",
     "(x; y)"
   )
 
-  forAll (positives) { (conc, abs) =>
-    it should s"parse $conc into $abs" in {
-      parse(conc) shouldEqual abs
-    }
-  }
-
-  forAll (flexibles) { (conc, abs) =>
-    it should s"flexibly parse $conc into $abs" in {
-      parse(conc) shouldEqual abs
-    }
-  }
-
-  forAll (negatives) { conc =>
-    it should s"not parse $conc" in {
-      parse(conc) should be a 'failure
-    }
-  }
+  "jsy.binding.Parser" should behave like parser(parse)
 
 }
