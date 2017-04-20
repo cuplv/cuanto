@@ -6,3 +6,6 @@ package edu.colorado.plv.cuanto.scoot.ir
 class NegExpr(dt: soot.jimple.NegExpr) extends UnopExpr(dt: soot.jimple.UnopExpr)
   //empty interface
 
+object NegExpr {
+  def unapply(e: NegExpr): Option[Value] = Some(e.op)
+}

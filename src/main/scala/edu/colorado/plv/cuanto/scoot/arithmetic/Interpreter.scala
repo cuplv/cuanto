@@ -47,17 +47,29 @@ object Interpreter {
   def denote(v: Value, env: Env = emptyEnv): Option[Int] = v match {
     case Local(n) => env get v.asInstanceOf[Local]
     //case v: IntConstant => Some(v.value)
-    case BinopExpr(e1, e2) => for {
-      op <- bop(v.asInstanceOf[BinopExpr])
+    case AddExpr(e1, e2) => for {
       arg1 <- denote(e1, env)
       arg2 <- denote(e2, env)
-    } yield op(arg1, arg2)
-    case UnopExpr(e) => for {
-      op <- uop(v.asInstanceOf[UnopExpr])
+    } yield arg1 + arg2
+    case SubExpr(e1, e2) => for {
+      arg1 <- denote(e1, env)
+      arg2 <- denote(e2, env)
+    } yield arg1 - arg2
+    case MulExpr(e1, e2) => for {
+      arg1 <- denote(e1, env)
+      arg2 <- denote(e2, env)
+    } yield arg1 * arg2
+    case DivExpr(e1, e2) => for {
+      arg1 <- denote(e1, env)
+      arg2 <- denote(e2, env)
+    } yield arg1 / arg2
+    case NegExpr(e) => for {
       arg <- denote(e, env)
-    } yield op(arg)
+    } yield -arg
   }
 
+  //below are deprecated
+  /*
   /** Interpret an arithmetic unary operator node, getting back a
     * function that performs the operation */
   def uop(op: UnopExpr): Option[Int => Int] = op match {
@@ -73,6 +85,6 @@ object Interpreter {
     case _: DivExpr => Some(_ / _)
     case _: MulExpr => Some(_ * _)
     case _ => None
-  }
+  }*/
 
 }
