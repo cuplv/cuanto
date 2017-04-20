@@ -1,52 +1,30 @@
 package edu.colorado.plv.cuanto.jsy
 package arithmetic
 
-import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.prop.PropertyChecks
+import edu.colorado.plv.cuanto.CuantoSpec
+
+import scala.util.Try
 
 /**
   * @author Bor-Yuh Evan Chang
   */
-class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChecks {
-  import implicits.stringToExpr
-  import Interpreter._
-  import syntax._
+class ArithmeticInterpreterSpec extends CuantoSpec with ArithmeticInterpreterBehaviors {
+  import SimpleInterpreter._
 
-  val denoteTests = Table(
-    "expression" -> "denotation",
-    "1 + 1" -> 2,
-    "1 - 1" -> 0,
-    "1 * 1" -> 1,
-    "1 / 1" -> 1,
-    "1 + 2 + 3" -> 6,
-    "1 + 2 * 3" -> 7
-  )
+  behavior of "denote"
 
-  "denote" should "interpret 2" in {
-    denote("2") shouldEqual 2
-  }
-
-  forAll (denoteTests) { (e, n) =>
-    it should s"interpret $e to $n" in {
-      denote(e) shouldEqual n
-    }
-  }
+  it should behave like interpreter(e => Try(denote(e)))
 
   behavior of "bigstep"
 
-  forAll (denoteTests) { (e, n) =>
-    it should s"interpret $e to $n" in {
-      bigstep(e) shouldEqual N(n)
-    }
-  }
+  it should behave like interpreter(e => Try { val N(n) = bigstep(e); n })
 
   behavior of "smallstep"
 
-  forAll (denoteTests) { (e, n) =>
-    it should s"interpret $e to $n" in {
-      iterate[Expr](e)(smallstep) shouldEqual N(n)
-    }
-  }
+  it should behave like interpreter(e => Try {
+    val N(n) = iterate[Expr](e)(smallstep)
+    n
+  })
 
   behavior of "machine"
 
@@ -57,10 +35,13 @@ class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChec
     ep
   }
 
-  forAll (denoteTests) { (e, n) =>
-    it should s"interpret $e to $n" in {
-      evalMachine(e) shouldEqual N(n)
-    }
-  }
+  it should behave like interpreter(e => Try {
+    val N(n) = evalMachine(e)
+    n
+  })
+
+  behavior of "Denotational.Concrete"
+
+  it should behave like interpreter(e => Try(Denotational.Concrete(e)))
 
 }

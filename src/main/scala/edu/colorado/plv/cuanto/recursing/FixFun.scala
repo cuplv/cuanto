@@ -13,18 +13,20 @@ import scala.util.{Failure, Success, Try}
   */
 class FixFun[E,R] private(private val gen: (E => R) => PartialFunction[E,R]) extends (E => R) {
   /** The recursive function. */
-  lazy private val fun: E => R = FixFun.fix(gen)
+  private lazy val fun: E => R = FixFun.fix(gen)
 
   /** Apply the recursive function. */
   def apply(e: E): R = fun(e)
 
-  /** Explicitly lift the partial function potentially failing with
-    * a [[MatchError]]. Does not catch any other exceptions.
+  /** Apply the recursive function potentially failing with a
+    * [[scala.MatchError]]. Does not catch any other exceptions.
     */
-  def lift: E => Try[R] = { e: E =>
-    try { Success(apply(e)) }
+  def tryApply(e: E): Try[R] =
+    try Success(apply(e))
     catch { case e: MatchError => Failure(e) }
-  }
+
+  /** Explicitly lift the partial function via `tryApply`. */
+  def lift: E => Option[R] = { e => tryApply(e).toOption }
 
   /** Delegate to another visitor if not defined on this visitor.
     *

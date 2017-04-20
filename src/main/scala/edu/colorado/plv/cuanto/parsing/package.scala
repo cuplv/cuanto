@@ -5,7 +5,7 @@ import scala.util.parsing.input.{NoPosition, Position}
 /**
   * @author Bor-Yuh Evan Chang
   */
-package object parsing {
+package parsing {
 
   /** Represent an error with location information. */
   class PositionedError(kind: String, msg: String, source: String, pos: Position) extends Exception {

@@ -1,19 +1,16 @@
 package edu.colorado.plv.cuanto.jsy
 package boolean
 
+import edu.colorado.plv.cuanto.CuantoSpec
 import edu.colorado.plv.cuanto.jsy.boolean.Parser.parse
-import edu.colorado.plv.cuanto.testing.implicits.tryEquality
-import org.scalatest.prop.PropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import edu.colorado.plv.cuanto.jsy.common.ParserBehaviors
 
 /**
   * @author Bor-Yuh Evan Chang
   */
-class BooleanParserSpec extends FlatSpec with Matchers with PropertyChecks {
+class BooleanParserSpec extends CuantoSpec with ParserBehaviors {
 
-  behavior of "jsy.boolean.Parser"
-
-  val positives = Table(
+  override lazy val positives = Table(
     "concrete" -> "abstract",
     "true" -> B(true),
     "false" -> B(false),
@@ -30,13 +27,25 @@ class BooleanParserSpec extends FlatSpec with Matchers with PropertyChecks {
         B(true),
         Binary(And, B(false), B(true))
       )
+    },
+    "true ? false : true" -> {
+      If(B(true), B(false), B(true))
+    },
+    "if (true) { false } else { true }" -> {
+      If(B(true), B(false), B(true))
     }
   )
 
-  forAll (positives) { (conc, abs) =>
-    it should s"parse $conc into $abs" in {
-      parse(conc) shouldEqual abs
+  override lazy val flexibles = Table(
+    "concrete" -> "abstract",
+    "if (true) false else true" -> {
+      If(B(true), B(false), B(true))
+    },
+    "if (true) false else if (true) false else true" -> {
+      If(B(true), B(false), If(B(true), B(false), B(true)))
     }
-  }
+  )
+
+  "jsy.boolean.Parser" should behave like parser(parse)
 
 }
