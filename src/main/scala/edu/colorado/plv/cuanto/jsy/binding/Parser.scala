@@ -3,14 +3,12 @@ package binding
 
 import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpParser}
 
-import scala.util.parsing.input.Positional
-
 /** Parse variables and bindings.
   *
   * @author Bor-Yuh Evan Chang
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
-  import ParserLike._
+  import OpParserLike._
 
   override def stmt: Parser[Expr] = {
     rep(concreteStmt) ^^ { stmts =>
@@ -55,27 +53,7 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   override def expr: Parser[Expr] = seq
 }
 
-object ParserLike {
 
-  /** Statements.
-    *
-    * Statements only exist in the concrete syntax, so they are eliminated during parsing.
-    */
-  sealed abstract class Stmt extends Positional
-
-  /** An expression as a statement. */
-  case class E(e: Expr) extends Stmt
-
-  /** Declarations.
-    *
-    * A declaration is a parser that takes a continuation Expr to yield an Expr.
-    */
-  case class Decl(d: Expr => Expr) extends Stmt
-
-  /** Skip: unit statement */
-  case object Skip extends Stmt
-
-}
 
 /** The parser for just bindings. */
 object Parser extends UnitOpParser with ParserLike {
