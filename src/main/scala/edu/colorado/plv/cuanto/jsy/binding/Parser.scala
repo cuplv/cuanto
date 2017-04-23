@@ -10,7 +10,7 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
 trait ParserLike extends OpParserLike with JsyParserLike {
   import OpParserLike._
 
-  override def stmt: Parser[Expr] = {
+  override def exprBlock: Parser[Expr] = {
     rep(concreteStmt) ^^ { stmts =>
       stmts.foldRight(None: Option[Expr]) {
         case (Skip, eopt) => eopt
@@ -28,18 +28,16 @@ trait ParserLike extends OpParserLike with JsyParserLike {
     }
 
   def concreteStmt: Parser[Stmt] =
-    positioned {
-      ";" ^^^ Skip
-    } |
+    ";" ^^^ Skip |
     concreteDecl |
-    withpos(expr | block) ^^ { case (pos, e) =>  E(e) setPos pos }
+    (expr | block) ^^ E
 
-  abstract override def opatom: Parser[Expr] =
+  abstract override def opAtom: Parser[Expr] =
     positioned {
       "undefined" ^^^ Unit
     } |
     block |
-    super.opatom
+    super.opAtom
 
   lazy val seqBop: OpPrecedence = List(List("," -> Seq))
 
@@ -49,7 +47,7 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   /** ''seq'' ::= ''seqsub,,1,,'' `,` ''seqsub,,2,,'' */
   def seq: Parser[Expr] = binaryLeft(seqBop, seqsub)
 
-  override def start: Parser[Expr] = stmt
+  override def start: Parser[Expr] = exprBlock
   override def expr: Parser[Expr] = seq
 }
 

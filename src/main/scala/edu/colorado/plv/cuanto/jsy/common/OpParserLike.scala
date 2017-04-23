@@ -67,18 +67,18 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
   def expr: Parser[Expr]
 
   /** Parameter: define atoms. */
-  def opatom: Parser[Expr]
+  def opAtom: Parser[Expr]
 
   /** Parameter: define unary operators. */
   def uop: Parser[Uop]
 
-  /** Parameter: define statements (the sub-expression of blocks).
+  /** Parameter: define the sub-expression of blocks, such as a sequence of statements.
     * The default is [[expr]].
     */
-  def stmt: Parser[Expr] = expr
+  def exprBlock: Parser[Expr] = expr
 
   /** Parameter: define types. */
-  def optyp: Parser[Typ]
+  def opTyp: Parser[Typ]
 
   /** Type alias for the list defining the precedence of binary operators.
     *
@@ -132,7 +132,7 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     * @see opatom
     */
   def atom: Parser[Expr] =
-    opatom |
+    opAtom |
     positioned(ident ^^ Var) |
     parenthesized |
     block |
@@ -145,7 +145,7 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
 
   def block: Parser[Expr] =
     positioned {
-      "{" ~> stmt <~ "}"
+      "{" ~> exprBlock <~ "}"
     }
 
   /** Parse types and delegates to `optyp`.
@@ -154,7 +154,7 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     */
   def typ: Parser[Typ] =
     "any" ^^^ TAny |
-    optyp
+    opTyp
 
 }
 
@@ -164,10 +164,7 @@ object OpParserLike {
     *
     * Statements only exist in the concrete syntax, so they are eliminated during parsing.
     */
-  sealed abstract class Stmt extends Positional
-
-  /** An expression as a statement. */
-  case class E(e: Expr) extends Stmt
+  trait Stmt
 
   /** Declarations.
     *
@@ -177,5 +174,8 @@ object OpParserLike {
 
   /** Skip: unit statement */
   case object Skip extends Stmt
+
+  /** An expression as a statement. */
+  case class E(e: Expr) extends Stmt
 
 }

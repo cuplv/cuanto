@@ -43,13 +43,13 @@ trait ParserLike extends OpParserLike with JsyParserLike {
     }
 
   /** $booleanOpatom */
-  abstract override def opatom: Parser[Expr] =
+  abstract override def opAtom: Parser[Expr] =
     positioned {
       "true" ^^^ B(true) |
       "false" ^^^ B(false) |
       ifthenelse
     } |
-    super.opatom
+    super.opAtom
 
   def ifthenelse: Parser[Expr] =
     ("if" ~> parenthesized) ~ expr ~ ("else" ~> itesub) ^^ {

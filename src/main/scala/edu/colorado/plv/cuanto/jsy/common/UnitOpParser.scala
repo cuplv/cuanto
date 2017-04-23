@@ -7,7 +7,7 @@ package common
   * @author Bor-Yuh Evan Chang
   */
 trait UnitOpParser extends OpParserLike {
-  override def opatom: Parser[Expr] = failure("expected opatom")
+  override def opAtom: Parser[Expr] = failure("expected opatom")
   override def uop: Parser[Uop] = failure("expected uop")
-  override def optyp: Parser[Typ] = failure("expected optyp")
+  override def opTyp: Parser[Typ] = failure("expected optyp")
 }
