@@ -8,11 +8,11 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike}
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
 
-  /*abstract override def optyp: Parser[Typ] =
+  abstract override def optyp: Parser[Typ] =
     ("(" ~> repsep(pairoptsep(ident ^^ Var, ":", typ), ",") <~ ")") ~ ("=>" ~> typ) ^^ {
       case params ~ t => TFun(params, t)
     } |
-    super.optyp*/
+    super.optyp
 
 }
 

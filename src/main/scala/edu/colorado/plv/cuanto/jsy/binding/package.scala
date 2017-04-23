@@ -5,8 +5,6 @@ package binding {
   /** @group Abstract Syntax Nodes */
   case object Unit extends Val
 
-
-
   /** Let-binding.
     *
     * @param x the variable
@@ -17,6 +15,7 @@ package binding {
     */
   case class Bind(x: Var, e1: Expr, e2: Expr) extends Expr
 
+  /** Sequencing. */
   case object Seq extends Bop
 
 }
