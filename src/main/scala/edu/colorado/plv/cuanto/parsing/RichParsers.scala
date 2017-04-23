@@ -10,8 +10,16 @@ import scala.util.parsing.input.Position
 trait RichParsers extends Parsers {
 
   /** Helper parser to expose the position. */
-  def withpos[T](q: => Parser[T]): Parser[(Position, T)] = Parser { in =>
+  def withpos[A](q: => Parser[A]): Parser[(Position, A)] = Parser { in =>
     q(in) map { t => (in.pos,t) }
+  }
+
+  /** Pairs. */
+  def pairsep[A,B](a: => Parser[A], sep: => Parser[Any], b: => Parser[B]): Parser[(A,B)] = {
+    a ~ (sep ~> b) ^^ { case a ~ b => (a, b) }
+  }
+  def pairoptsep[A,B](a: => Parser[A], sep: => Parser[Any], b: => Parser[B]): Parser[(A,Option[B])] = {
+    a ~ opt(sep ~> b) ^^ { case a ~ b => (a, b) }
   }
 
 }
