@@ -76,6 +76,9 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     */
   def stmt: Parser[Expr] = expr
 
+  /** Parameter: define types. */
+  def optyp: Parser[Typ]
+
   /** Type alias for the list defining the precedence of binary operators.
     *
     * @see [[bop]] for defining the precedence of binary operators.
@@ -95,7 +98,7 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     * @param ops the binary operators, specifying precedence
     * @param sub the parser for sub-expressions
     */
-  def binaryLeft(ops: OpPrecedence, sub: Parser[Expr]): Parser[Expr] = {
+  def binaryLeft(ops: OpPrecedence, sub: => Parser[Expr]): Parser[Expr] = {
     def binaryCase(opsyn: (String, Bop)): Parser[(Expr, Expr) => Expr] = {
       val (csyn, asyn) = opsyn
       withpos(csyn) ^^ { case (pos, _) => (e1: Expr, e2: Expr) => Binary(asyn, e1, e2) setPos pos }
@@ -143,5 +146,13 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     positioned {
       "{" ~> stmt <~ "}"
     }
+
+  /** Parse types and delegates to `optyp`.
+    *
+    * @see optyp
+    */
+  def typ: Parser[Typ] =
+    "any" ^^^ TAny |
+    optyp
 
 }
