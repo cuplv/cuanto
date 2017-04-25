@@ -59,3 +59,6 @@ lazy val root = (project in file(".")).
     // Name
     name := "cuanto"
   )
+
+// Define an alias to run the test suite avoiding the slow tests
+addCommandAlias("testFast","testOnly -- -l org.scalatest.tags.Slow")
