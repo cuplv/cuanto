@@ -4,7 +4,6 @@ import edu.colorado.plv.cuanto.jsy._
 import edu.colorado.plv.cuanto.parsing.RichParsers
 
 import scala.util.parsing.combinator.JavaTokenParsers
-import scala.util.parsing.input.Positional
 
 /** Parser components that handle unary and binary operators.
   *
@@ -155,27 +154,5 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
   def typ: Parser[Typ] =
     "any" ^^^ TAny |
     opTyp
-
-}
-
-object OpParserLike {
-
-  /** Statements.
-    *
-    * Statements only exist in the concrete syntax, so they are eliminated during parsing.
-    */
-  trait Stmt
-
-  /** Declarations.
-    *
-    * A declaration is a parser that takes a continuation Expr to yield an Expr.
-    */
-  case class Decl(d: Expr => Expr) extends Stmt
-
-  /** Skip: unit statement */
-  case object Skip extends Stmt
-
-  /** An expression as a statement. */
-  case class E(e: Expr) extends Stmt
 
 }
