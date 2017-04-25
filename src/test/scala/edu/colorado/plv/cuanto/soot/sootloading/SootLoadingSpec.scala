@@ -2,6 +2,7 @@ package edu.colorado.plv.cuanto.scoot.sootloading
 
 import org.scalatest.FlatSpec
 import org.scalatest._
+import org.scalatest.tagobjects.Slow
 import soot.jimple.JimpleBody
 import soot.shimple.ShimpleBody
 import soot.{Body, Scene, SootClass, SootMethod}
@@ -20,7 +21,7 @@ class SootLoadingSpec extends FlatSpec with Matchers {
   /**
     * Test checks whether a sample program loads
     */
-  "SootLoading" should "successfully load test file" in {
+  "SootLoading" should "successfully load test file" taggedAs(Slow) in {
     val testClassExists = (scene: Scene) =>
       scene.getClasses.asScala.exists((clazz: SootClass) => {
         clazz.getName == "Test1" &&
@@ -44,7 +45,7 @@ class SootLoadingSpec extends FlatSpec with Matchers {
   /**
     * Test that the jimple body exists when the loading finishes
     */
-  "SootLoading" should "successfully load jimple" in {
+  "SootLoading" should "successfully load jimple" taggedAs(Slow) in {
     val testClassExists = (scene: Scene) =>
       scene.getClasses.asScala.exists((clazz: SootClass) => {
         clazz.getName == "Test1" &&
