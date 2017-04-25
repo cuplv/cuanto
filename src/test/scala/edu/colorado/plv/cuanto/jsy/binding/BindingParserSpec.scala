@@ -19,23 +19,23 @@ class BindingParserSpec extends CuantoSpec with ParserBehaviors {
     "abc123" -> Var("abc123"),
     "let x = two; x"
       -> Bind(MConst, Var("x"), Var("two"), Var("x")),
-    "undefined" -> Unit,
-    "undefined, undefined" -> Binary(Seq, Unit, Unit),
+    "undefined" -> Undef,
+    "undefined, undefined" -> Binary(Sequ, Undef, Undef),
     // blocks
     "{ x }" -> Var("x"),
     "{ let x = two; x }"
       -> Bind(MConst, Var("x"), Var("two"), Var("x")),
     // declarations
     "let x = two"
-      -> Bind(MConst, Var("x"), Var("two"), Unit),
+      -> Bind(MConst, Var("x"), Var("two"), Undef),
     "const x = two"
-      -> Bind(MConst, Var("x"), Var("two"), Unit),
+      -> Bind(MConst, Var("x"), Var("two"), Undef),
     "let x = two; let y = three"
       -> Bind(MConst, Var("x"), Var("two"),
-           Bind(MConst, Var("y"), Var("three"), Unit)
+           Bind(MConst, Var("y"), Var("three"), Undef)
          ),
     // statements
-    "x; y" -> Binary(Seq, Var("x"), Var("y"))
+    "x; y" -> Binary(Sequ, Var("x"), Var("y"))
   )
 
   override lazy val flexibles = Table(

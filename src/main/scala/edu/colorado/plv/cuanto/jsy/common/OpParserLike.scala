@@ -71,6 +71,9 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
   /** Parameter: define unary operators. */
   def uop: Parser[Uop]
 
+  /** Parameter: define unary sub-expressions. Default: [[atom]]. */
+  def unarysub: Parser[Expr] = atom
+
   /** Parameter: define the sub-expression of blocks, such as a sequence of statements.
     * The default is [[expr]].
     */
@@ -124,7 +127,7 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     positioned {
       uop ~ unary ^^ { case op ~ e => Unary(op, e) }
     } |
-    atom
+    unarysub
 
   /** Parse parenthesized expressions and delegates to `opatom`.
     *
@@ -132,10 +135,13 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     */
   def atom: Parser[Expr] =
     opAtom |
-    positioned(ident ^^ Var) |
+    variable |
     parenthesized |
     block |
     failure("expected an atom")
+
+  /** Parse a variable identifier. */
+  def variable: Parser[Var] = positioned(ident ^^ Var)
 
   def parenthesized: Parser[Expr] =
     "(" ~> expr <~ ")"

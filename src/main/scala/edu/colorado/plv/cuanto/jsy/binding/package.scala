@@ -4,8 +4,11 @@ import scala.util.parsing.input.Positional
 
 package binding {
 
-  /** @group Abstract Syntax Nodes */
-  case object Unit extends Val
+  /** The unit value (or `undefined` in JavaScript).
+    *
+    * @group Abstract Syntax Nodes
+    */
+  case object Undef extends Val
 
   /** Let-binding.
     *
@@ -36,7 +39,7 @@ package binding {
     *
     * @group Abstract Syntax Nodes
     */
-  case object Seq extends Bop
+  case object Sequ extends Bop
 
 }
 

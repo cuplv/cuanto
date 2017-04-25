@@ -3,13 +3,16 @@ package edu.colorado.plv.cuanto.jsy
 package functions {
 
   /** @group Abstract Syntax Nodes */
-  case class Fun(p: Option[Var], parameters: List[(Var, Option[Typ])], tann: Option[Typ], e0: Expr) extends Val
+  case class Fun(p: Option[Var], parameters: Parameters, tann: Option[Typ], e0: Expr) extends Val
 
   /** @group Abstract Syntax Nodes */
-  case class Call(e0: Expr, arguments: List[Expr]) extends Expr
+  case class Call(e0: Expr, arguments: Arguments) extends Expr
 
   /** @group Abstract Syntax Nodes */
-  case class TFun(parameters: List[(Var, Option[Typ])], t: Typ) extends Typ
+  case class TFun(parameters: Parameters, t: Typ) extends Typ
+
+  /** @group Abstract Syntax Nodes */
+  case object Return extends Uop
 
 }
 
@@ -28,4 +31,9 @@ package functions {
   *
   * @author Bor-Yuh Evan Chang
   */
-package object functions
+package object functions {
+
+  type Parameters = List[(Var, Option[Typ])]
+  type Arguments = List[Expr]
+
+}
