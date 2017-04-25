@@ -1,5 +1,7 @@
 package edu.colorado.plv.cuanto.jsy
 
+import scala.util.parsing.input.Positional
+
 package binding {
 
   /** @group Abstract Syntax Nodes */
@@ -7,15 +9,33 @@ package binding {
 
   /** Let-binding.
     *
+    * @param m the mode (see [[Mode]])
     * @param x the variable
     * @param e1 the binding expression
     * @param e2 the continuation expression
     *
     * @group Abstract Syntax Nodes
     */
-  case class Bind(x: Var, e1: Expr, e2: Expr) extends Expr
+  case class Bind(m: Mode, x: Var, e1: Expr, e2: Expr) extends Expr
 
-  /** Sequencing. */
+  /** Binding mode.
+    *
+    * In JavaScript, variables may be immutable or mutable.
+    *
+    * @group Abstract Syntax Nodes
+    */
+  trait Mode extends Positional
+
+  /** Mode `const`. Immutable variables.
+    *
+    * @group Abstract Syntax Nodes
+    */
+  case object MConst extends Mode
+
+  /** Sequencing.
+    *
+    * @group Abstract Syntax Nodes
+    */
   case object Seq extends Bop
 
 }

@@ -138,21 +138,17 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     failure("expected an atom")
 
   def parenthesized: Parser[Expr] =
-    positioned {
-      "(" ~> expr <~ ")"
-    }
+    "(" ~> expr <~ ")"
 
   def block: Parser[Expr] =
-    positioned {
-      "{" ~> statements <~ "}"
-    }
+    "{" ~> statements <~ "}"
 
   /** Parse types and delegates to `optyp`.
     *
     * @see optyp
     */
   def typ: Parser[Typ] =
-    "any" ^^^ TAny |
+    positioned("any" ^^^ TAny) |
     opTyp
 
 }

@@ -19,7 +19,7 @@ class PrimitivesParserSpec extends CuantoSpec with ParserBehaviors {
       |  let y = "abc"
       |  x + y }
     """.stripMargin
-      -> Bind(Var("x"), N(3), Bind(Var("y"), S("abc"), Binary(Plus, Var("x"), Var("y"))))
+      -> Bind(MConst, Var("x"), N(3), Bind(MConst, Var("y"), S("abc"), Binary(Plus, Var("x"), Var("y"))))
   )
 
   "jsy.primitives.Parser" should behave like parser(parse)

@@ -3,8 +3,6 @@ package binding
 
 import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpParser}
 
-import scala.util.parsing.input.Positional
-
 /** Parse variables and bindings.
   *
   * @author Bor-Yuh Evan Chang
@@ -53,9 +51,13 @@ trait ParserLike extends OpParserLike with JsyParserLike {
 
   /** Parse a declaration. */
   def decl: Parser[Decl] =
-    (("let" | "const") ~> withpos(ident)) ~ withpos("=" ~> expr) ^^ {
-      case (posx, x) ~ ((pos1, e1)) => Decl(e2 => Bind(Var(x) setPos posx, e1, e2) setPos pos1)
+    mode ~ withpos(ident) ~ withpos("=" ~> expr) ^^ {
+      case mode ~ ((posx, x)) ~ ((pos1, e1)) => Decl(e2 => Bind(mode, Var(x) setPos posx, e1, e2) setPos pos1)
     }
+
+  /** Parse a mode annotation. */
+  def mode: Parser[Mode] =
+    positioned(("const" | "let") ^^^ MConst)
 
   abstract override def opAtom: Parser[Expr] =
     positioned {
@@ -81,7 +83,7 @@ object ParserLike {
     *
     * Statements only exist in the concrete syntax, so they are eliminated during parsing.
     */
-  trait Stmt extends Positional
+  trait Stmt
 
   /** Skip: unit statement */
   case object Skip extends Stmt

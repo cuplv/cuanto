@@ -18,21 +18,21 @@ class BindingParserSpec extends CuantoSpec with ParserBehaviors {
     "two" -> Var("two"),
     "abc123" -> Var("abc123"),
     "let x = two; x"
-      -> Bind(Var("x"), Var("two"), Var("x")),
+      -> Bind(MConst, Var("x"), Var("two"), Var("x")),
     "undefined" -> Unit,
     "undefined, undefined" -> Binary(Seq, Unit, Unit),
     // blocks
     "{ x }" -> Var("x"),
     "{ let x = two; x }"
-      -> Bind(Var("x"), Var("two"), Var("x")),
+      -> Bind(MConst, Var("x"), Var("two"), Var("x")),
     // declarations
     "let x = two"
-      -> Bind(Var("x"), Var("two"), Unit),
+      -> Bind(MConst, Var("x"), Var("two"), Unit),
     "const x = two"
-      -> Bind(Var("x"), Var("two"), Unit),
+      -> Bind(MConst, Var("x"), Var("two"), Unit),
     "let x = two; let y = three"
-      -> Bind(Var("x"), Var("two"),
-           Bind(Var("y"), Var("three"), Unit)
+      -> Bind(MConst, Var("x"), Var("two"),
+           Bind(MConst, Var("y"), Var("three"), Unit)
          ),
     // statements
     "x; y" -> Binary(Seq, Var("x"), Var("y"))
@@ -41,7 +41,7 @@ class BindingParserSpec extends CuantoSpec with ParserBehaviors {
   override lazy val flexibles = Table(
     "concrete" -> "abstract",
     "{ let x = y y }"
-      -> Bind(Var("x"), Var("y"), Var("y"))
+      -> Bind(MConst, Var("x"), Var("y"), Var("y"))
   )
 
   override lazy val negatives = Table(
