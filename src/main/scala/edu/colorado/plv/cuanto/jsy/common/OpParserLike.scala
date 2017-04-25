@@ -74,7 +74,7 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
   /** Parameter: define the sub-expression of blocks, such as a sequence of statements.
     * The default is [[expr]].
     */
-  def exprBlock: Parser[Expr] = expr
+  def statements: Parser[Expr] = expr
 
   /** Parameter: define types. */
   def opTyp: Parser[Typ]
@@ -144,7 +144,7 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
 
   def block: Parser[Expr] =
     positioned {
-      "{" ~> exprBlock <~ "}"
+      "{" ~> statements <~ "}"
     }
 
   /** Parse types and delegates to `optyp`.
