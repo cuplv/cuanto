@@ -157,4 +157,8 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     positioned("any" ^^^ TAny) |
     opTyp
 
+  /** Parenthesized sequence. May optionally be unparenthesized if length 1. */
+  def parenrepsep[A,B](a: => Parser[A], sep: => Parser[Any]): Parser[List[A]] =
+    "(" ~> repsep(a, sep) <~ ")" |
+    a ^^ { a => List(a) }
 }

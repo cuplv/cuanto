@@ -6,7 +6,7 @@ package functions {
   case class Fun(p: Option[Var], parameters: Parameters, tann: Option[Typ], e0: Expr) extends Val
 
   /** @group Abstract Syntax Nodes */
-  case class Call(e0: Expr, arguments: Arguments) extends Expr
+  case class Call(e0: Expr, arguments: List[Expr]) extends Expr
 
   /** @group Abstract Syntax Nodes */
   case class TFun(parameters: Parameters, t: Typ) extends Typ
@@ -34,6 +34,5 @@ package functions {
 package object functions {
 
   type Parameters = List[(Var, Option[Typ])]
-  type Arguments = List[Expr]
 
 }

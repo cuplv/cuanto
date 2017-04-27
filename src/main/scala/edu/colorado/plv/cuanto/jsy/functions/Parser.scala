@@ -11,6 +11,21 @@ import scala.util.parsing.input.Positional
   */
 trait ParserLike extends binding.ParserLike {
 
+  def juxtaop: Parser[Expr => Expr] =
+    callop
+
+  def callop: Parser[Expr => Expr] =
+    withpos("(" ~> repsep(seqsub, ",") <~ ")") ^^ { case (pos,args) =>
+      { e0 => Call(e0, args) setPos pos }
+    }
+
+  def juxta: Parser[Expr] =
+    atom ~ rep(juxtaop) ^^ { case e0 ~ ops =>
+      ops.foldLeft(e0) { (acc, mk) => mk(acc) }
+    }
+
+  override def unarysub: Parser[Expr] = juxta
+
   def function: Parser[Expr] =
     arrow(expr, { (params, e: Expr) => Fun(None, params, None, e) }) |
     ("function" ~> opt(variable)) ~ parameters ~ opt(":" ~> typ) ~ functionBlock ^^ {
@@ -29,7 +44,7 @@ trait ParserLike extends binding.ParserLike {
     }
 
   def parameters: Parser[Parameters] =
-    "(" ~> repsep(pairoptsep(variable, ":", typ), ",") <~ ")"
+    parenrepsep(pairoptsep(variable, ":", typ), ",")
 
   abstract override def opAtom: Parser[Expr] =
     function |

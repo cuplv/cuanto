@@ -13,9 +13,11 @@ class FunctionsParserSpec extends CuantoSpec with ParserBehaviors {
 
   override lazy val positives = Table(
     "concrete" -> "abstract",
+    "x => x" -> Fun(None, Var("x") -> None :: Nil, None, Var("x")),
     "(x) => x" -> Fun(None, Var("x") -> None :: Nil, None, Var("x")),
     "(x: any) => x" -> Fun(None, Var("x") -> Some(TAny) :: Nil, None, Var("x")),
-    "function (x) { return x }" -> Fun(None, Var("x") -> None :: Nil, None, Sequ(Return(Var("x")), Undef))
+    "function (x) { return x }" -> Fun(None, Var("x") -> None :: Nil, None, Sequ(Return(Var("x")), Undef)),
+    "x(y)" -> Call(Var("x"), Var("y") :: Nil)
   )
 
   "jsy.functions.Parser" should behave like parser(parse)
