@@ -32,11 +32,11 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
   /** $arithmeticOpatom */
-  abstract override def opatom: Parser[Expr] =
+  abstract override def opAtom: Parser[Expr] =
     positioned {
       floatingPointNumber ^^ (s => N(s.toDouble))
     } |
-    super.opatom
+    super.opAtom
 
   /** $arithmeticUop */
   abstract override def uop: Parser[Uop] =
