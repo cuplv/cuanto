@@ -5,7 +5,6 @@ import edu.colorado.plv.cuanto.CuantoSpec
 import edu.colorado.plv.cuanto.jsy.arithmetic._
 import edu.colorado.plv.cuanto.jsy.binding._
 import edu.colorado.plv.cuanto.jsy.common.ParserBehaviors
-import edu.colorado.plv.cuanto.jsy.primitives.Parser.parse
 import edu.colorado.plv.cuanto.jsy.string._
 
 /**
@@ -22,6 +21,6 @@ class PrimitivesParserSpec extends CuantoSpec with ParserBehaviors {
       -> Bind(MConst, Var("x"), N(3), Bind(MConst, Var("y"), S("abc"), Binary(Plus, Var("x"), Var("y"))))
   )
 
-  "jsy.primitives.Parser" should behave like parser(parse)
+  "jsy.primitives.Parser" should behave like parser(Parser.parse)
 
 }
