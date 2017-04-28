@@ -6,7 +6,7 @@ package objects {
   case class Obj(fields: Map[Property, Val]) extends Expr
 
   /** @group Abstract Syntax Nodes */
-  case class GetProperty(prop: Property) extends Uop
+  case class GetProp(prop: Property) extends Uop
 
   /** @group Abstract Syntax Nodes */
   trait Property
@@ -14,13 +14,13 @@ package objects {
   /** Field.
     *
     * @group Abstract Syntax Nodes */
-  case class Field(f: String) extends Property
+  case class Fld(f: String) extends Property
 
   /** Dynamic property.
     *
     * @group Abstract Syntax Nodes
     */
-  case class Index(e: Expr) extends Property
+  case class Idx(e: Expr) extends Property
 
 }
 
