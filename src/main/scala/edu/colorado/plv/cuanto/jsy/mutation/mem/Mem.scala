@@ -14,26 +14,27 @@ case class A private (a: Int) extends Val
   * Memory is a mapping from addresses to values. It enforces the invariant that
   * addresses are allocated in this module.
   *
+  * @tparam V The value type stored in this memory
   * @author Bor-Yuh Evan Chang
   */
-class Mem private (map: Map[A, Expr], nextAddr: Int) {
-  def apply(key: A): Expr = map(key)
-  def get(key: A): Option[Expr] = map.get(key)
-  def +(kv: (A, Expr)): Mem = new Mem(map + kv, nextAddr)
+class Mem[V] private (map: Map[A, V], nextAddr: Int) {
+  def apply(key: A): V = map(key)
+  def get(key: A): Option[V] = map.get(key)
+  def +(kv: (A, V)): Mem[V] = new Mem[V](map + kv, nextAddr)
   def contains(key: A): Boolean = map.contains(key)
   override def toString: String = map.toString
 
-  private def alloc(v: Expr): (Mem, A) = {
+  private def alloc(v: V): (Mem[V], A) = {
     val fresha = A(nextAddr)
-    (new Mem(map + (fresha -> v), nextAddr + 1), fresha)
+    (new Mem[V](map + (fresha -> v), nextAddr + 1), fresha)
   }
 }
 
 object Mem {
-  val empty: Mem = new Mem(Map.empty, 1)
+  def empty[V]: Mem[V] = new Mem[V](Map.empty, 1)
 
   /** Get a fresh address. */
-  def alloc(v: Expr): State[Mem, A] = State.get flatMap { m =>
+  def alloc[V](v: V): State[Mem[V], A] = State.get flatMap { m =>
     val (mp, a) = m.alloc(v)
     State.set(mp) map { _ => a }
   }
