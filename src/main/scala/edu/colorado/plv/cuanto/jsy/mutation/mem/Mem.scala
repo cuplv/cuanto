@@ -7,7 +7,7 @@ import cats.data.State
   *
   * @group Intermediate AST Nodes
   */
-case class A private[mem] (a: Int) extends Val
+case class A private (a: Int) extends Val
 
 /** Memory.
   *
@@ -16,14 +16,14 @@ case class A private[mem] (a: Int) extends Val
   *
   * @author Bor-Yuh Evan Chang
   */
-class Mem private[mem](map: Map[A, Expr], nextAddr: Int) {
+class Mem private (map: Map[A, Expr], nextAddr: Int) {
   def apply(key: A): Expr = map(key)
   def get(key: A): Option[Expr] = map.get(key)
   def +(kv: (A, Expr)): Mem = new Mem(map + kv, nextAddr)
   def contains(key: A): Boolean = map.contains(key)
   override def toString: String = map.toString
 
-  private[Mem] def alloc(v: Expr): (Mem, A) = {
+  private def alloc(v: Expr): (Mem, A) = {
     val fresha = A(nextAddr)
     (new Mem(map + (fresha -> v), nextAddr + 1), fresha)
   }
