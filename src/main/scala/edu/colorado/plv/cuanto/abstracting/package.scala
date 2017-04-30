@@ -10,16 +10,15 @@ package abstracting {
     * An abstractable defines a representation function mapping
     * a single value to an abstract element.
     *
-    * @tparam C is the concrete value type
     * @tparam A is the abstract element type
     *
     */
-  trait Abstractable[C,A] {
+  trait Abstractable[A] {
     /** Representation function. */
-    implicit def represent(c: C): A
+    implicit def represent(v: Any): A
 
     /** Alias `represent`. */
-    @inline final implicit def beta(c: C): A = represent(c)
+    @inline final implicit def beta(v: Any): A = represent(v)
   }
 
 
