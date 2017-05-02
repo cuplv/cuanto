@@ -40,36 +40,39 @@ object Denotational {
     })
   }
 
-  /** Instantiate a concrete interpreter module. */
-  val Concrete = Denotational.Make(new Evalable[Either[Double,Boolean]] {
-    type V = Either[Double,Boolean]
+  /** Instantiate a concrete interpreter module, assuming all expressions are well-typed */
+  val Concrete = Denotational.Make(new Evalable[Any] {
+    type V = Any
 
-    override def not(v: V): V = v match { case Right(b) => Right(!b) ; case _ => throw new UnsupportedOperationException }
-    override def and(l: V, r: V): V = (l,r) match { case (Right(l), Right(r)) => Right(l && r) ; case _ => throw new UnsupportedOperationException }
-    override def or(l: V, r: V): V = (l,r) match { case (Right(l), Right(r)) => Right(l || r) ; case _ => throw new UnsupportedOperationException }
-    override def ite(cond: V, l: V, r: V): V = cond match { case Right(cond) => if(cond) l else r ; case _ => throw new UnsupportedOperationException }
+    override def and(l: V, r: V): V = (l,r) match { case (l:Boolean, r:Boolean) => l && r ; case _ => throw new UnsupportedOperationException }
+    override def or (l: V, r: V): V = (l,r) match { case (l:Boolean, r:Boolean) => l || r ; case _ => throw new UnsupportedOperationException }
+    override def not(v: V): V = v match { case b : Boolean => !b ; case _ => throw new UnsupportedOperationException }
+    override def ite(cond: V, l: V, r: V): V = if(cond match {
+      case b:Boolean => b
+      case n:Double => n != 0
+      case _ => throw new UnsupportedOperationException
+    }) l else r
 
-    override def divide(l: V, r: V): V = (l,r) match { case (Left(l),Left(r)) => Left( l / r ) ; case _ => throw new UnsupportedOperationException }
-    override def minus (l: V, r: V): V = (l,r) match { case (Left(l),Left(r)) => Left( l - r ) ; case _ => throw new UnsupportedOperationException }
-    override def plus  (l: V, r: V): V = (l,r) match { case (Left(l),Left(r)) => Left( l + r ) ; case _ => throw new UnsupportedOperationException }
-    override def times (l: V, r: V): V = (l,r) match { case (Left(l),Left(r)) => Left( l * r ) ; case _ => throw new UnsupportedOperationException }
-    override def negate(v : V): V = v match { case Left(v) => Left( - v) ; case _ => throw new UnsupportedOperationException }
+    override def divide(l: V, r: V): V = (l,r) match { case (l:Double, r:Double) => l / r ; case _ => throw new UnsupportedOperationException }
+    override def minus (l: V, r: V): V = (l,r) match { case (l:Double, r:Double) => l - r ; case _ => throw new UnsupportedOperationException }
+    override def plus  (l: V, r: V): V = (l,r) match { case (l:Double, r:Double) => l + r ; case _ => throw new UnsupportedOperationException }
+    override def times (l: V, r: V): V = (l,r) match { case (l:Double, r:Double) => l * r ; case _ => throw new UnsupportedOperationException }
+    override def negate(v : V): V = v match { case n:Double => -n ; case _ => throw new UnsupportedOperationException }
 
-    override def equ(l: V, r: V): V = (l,r) match { case (Left(l),Left(r)) => Right( l == r ) ; case _ => throw new UnsupportedOperationException }
-    override def neq(l: V, r: V): V = (l,r) match { case (Left(l),Left(r)) => Right( l != r ) ; case _ => throw new UnsupportedOperationException }
-    override def ge (l: V, r: V): V = (l,r) match { case (Left(l),Left(r)) => Right( l >= r ) ; case _ => throw new UnsupportedOperationException }
-    override def gt (l: V, r: V): V = (l,r) match { case (Left(l),Left(r)) => Right( l >  r ) ; case _ => throw new UnsupportedOperationException }
-    override def le (l: V, r: V): V = (l,r) match { case (Left(l),Left(r)) => Right( l <= r ) ; case _ => throw new UnsupportedOperationException }
-    override def lt (l: V, r: V): V = (l,r) match { case (Left(l),Left(r)) => Right( l <  r ) ; case _ => throw new UnsupportedOperationException }
+    override def equ(l: V, r: V): V = (l,r) match { case (l:Double, r:Double) => l == r ; case _ => throw new UnsupportedOperationException }
+    override def neq(l: V, r: V): V = (l,r) match { case (l:Double, r:Double) => l != r ; case _ => throw new UnsupportedOperationException }
+    override def ge (l: V, r: V): V = (l,r) match { case (l:Double, r:Double) => l >= r ; case _ => throw new UnsupportedOperationException }
+    override def gt (l: V, r: V): V = (l,r) match { case (l:Double, r:Double) => l >  r ; case _ => throw new UnsupportedOperationException }
+    override def le (l: V, r: V): V = (l,r) match { case (l:Double, r:Double) => l <= r ; case _ => throw new UnsupportedOperationException }
+    override def lt (l: V, r: V): V = (l,r) match { case (l:Double, r:Double) => l <  r ; case _ => throw new UnsupportedOperationException }
 
 
-    override def truthiness(v: V): Set[Boolean] = Set( v fold ( {d => d != 0}, {b => b} ) )
-
-    override def represent(v:Any): V = v match {
-      case d:Double  => Left(d)
-      case b:Boolean => Right(b)
-      case _ => throw new UnsupportedOperationException("Only doubles and booleans are representable in the numerical sublanguage")
+    override def truthiness(v: V): Set[Boolean] = v match {
+      case b: Boolean => Set( b )
+      case n: Double => Set( n != 0 ) // Standard number -> boolean conversion
     }
+
+    override def represent(v:Any): V = v
   })
 
   /** Instantiate an abstract interpreter module. */
