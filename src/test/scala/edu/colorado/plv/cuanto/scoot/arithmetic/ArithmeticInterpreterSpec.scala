@@ -3,6 +3,7 @@ package arithmetic
 
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.PropertyChecks
+import edu.colorado.plv.cuanto.scoot.ir._
 
 class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChecks {
   import Builder._
