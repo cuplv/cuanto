@@ -22,7 +22,7 @@ package object refutation {
   def getVars(e : Expr): Set[Var] = e match {
     case Binary(_, l, r) => getVars(l) union getVars(r)
     case v:Var => Set(v)
-    case If(cond,t,f) => getVars(cond) union getVars(t) union getVars(f)
+    case boolean.If(cond,t,f) => getVars(cond) union getVars(t) union getVars(f)
     case _ => Set()
   }
 }
