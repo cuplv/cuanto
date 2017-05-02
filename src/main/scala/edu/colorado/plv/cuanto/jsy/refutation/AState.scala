@@ -1,6 +1,8 @@
-package edu.colorado.plv.cuanto.jsy.refinement
+package edu.colorado.plv.cuanto.jsy.refutation
 
 import edu.colorado.plv.cuanto.jsy._
+import scala.util.Try
+
 /** Separation-logic abstract heap domain.
   *
   * Abstract heaps h ::= x |-> v | x.f |-> v | h_1 * h_2 | emp.
@@ -41,9 +43,20 @@ class AState(val h: AStore, val p: Pure) {
 
   def addPure(e: Expr*) = new AState(h, Pure(p ++ e))
 
-  def satisfiable(entry:Boolean=false): Boolean = {
+  def satisfiable(entry: Boolean = false): Boolean = {
     if(entry){
-      ( h==Emp || h==True ) && p.forall{ e => vars(e)}
+      ( h==Emp || h==True ) &&
+        p.forall{ e =>
+          Try(
+            numerical.Denotational.Concrete.apply(e) match {case b:Boolean => b ; case n:Double => n != 0} // JavaScript truthiness
+          ).getOrElse(false)
+        }
+    } else {
+      h.wellformed &&
+        p.forall {e => getVars(e).nonEmpty ||
+          Try(
+            numerical.Denotational.Concrete.apply(e) match {case b:Boolean => b ; case n:Double => n != 0} // JavaScript truthiness
+          ).getOrElse(false) }
     }
   }
 }

@@ -1,4 +1,4 @@
-package edu.colorado.plv.cuanto.jsy.refinement
+package edu.colorado.plv.cuanto.jsy.refutation
 
 import edu.colorado.plv.cuanto.jsy._
 /** Pure constraint domain
