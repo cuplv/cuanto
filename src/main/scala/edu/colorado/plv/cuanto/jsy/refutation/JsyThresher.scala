@@ -9,8 +9,8 @@ object JsyThresher{
 
   private def stepThrough(init: AState, program: Expr) : Iterable[AState] = program match {
     case Binary(binding.Sequ, e1, boolean.If(cond, t_branch, f_branch)) =>
-      (stepThrough(init, t_branch) map {st => st addPure cond}) ++
-        (stepThrough(init, f_branch) map {st => st addPure Unary(boolean.Not, cond)})
+      ((stepThrough(init, t_branch) map {st => st addPure cond}) ++
+        (stepThrough(init, f_branch) map {st => st addPure Unary(boolean.Not, cond)})) flatMap {st => stepThrough(st, e1)}
 
     case Binary(binding.Sequ, e1, e2) => step(e2)(init) flatMap { st => stepThrough(st, e1) }
 

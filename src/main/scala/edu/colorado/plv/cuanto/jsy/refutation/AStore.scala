@@ -16,16 +16,20 @@ sealed trait AStore {
 }
 
 object Emp extends AStore {
+  override def toString(): String = "emp"
   override def footprint = Set()
 }
 object True extends AStore {
+  override def toString(): String = "true"
   override def footprint = Set()
 }
 case class Sep(h1: AStore, h2: AStore) extends AStore {
+  override def toString(): String = s"$h1 * $h2"
   override def wellformed = (h1.footprint intersect h2.footprint).isEmpty
   override def footprint = h1.footprint union h2.footprint
 }
 case class HeapCell(rcvr: Var, fld: Fld, value: Any) extends AStore {
+  override def toString(): String = s"$rcvr.$fld |-> $value"
   override def footprint = Set( rcvr -> fld )
 }
 

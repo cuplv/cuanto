@@ -12,7 +12,7 @@ import scala.util.Try
   */
 
 class AState(val h: AStore, val p: Pure) {
-
+  override def toString():String = s"AState($h, $p)"
   /** backwards transfer function for an assignment `oldV := newV` */
   def write(oldV: Var, newV: Expr): Option[AState] = {
     def subH: AStore => (AStore, Iterable[Expr])  = {
