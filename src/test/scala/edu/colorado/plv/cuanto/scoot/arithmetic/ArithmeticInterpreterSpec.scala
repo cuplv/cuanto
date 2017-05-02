@@ -30,7 +30,7 @@ class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChec
     div(vb)(va) -> 5
   )
 
-  "The Scoot interpreter" should "interpret stateless Values" in {
+  /*"The Scoot interpreter" should "interpret stateless Values" in {
     forAll (exprTests) { (e, n) =>
       denote(e,testEnv) should equal (Some(n))
     }
@@ -74,6 +74,6 @@ class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChec
     * could not be interpreted */
   it should "give None when asked to interpret a bad program" in {
     forAll (stmtFailTests) { e => denote(e,acc) should equal (None) }
-  }
+  }*/
 
 }
