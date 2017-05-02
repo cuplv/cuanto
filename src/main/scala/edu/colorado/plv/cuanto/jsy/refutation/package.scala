@@ -20,6 +20,9 @@ package object refutation {
 
   /** helper function returns the set of Variables contained in an expression */
   def getVars(e : Expr): Set[Var] = e match {
-    case _ => ??? //TODO(benno)
+    case Binary(_, l, r) => getVars(l) union getVars(r)
+    case v:Var => Set(v)
+    case If(cond,t,f) => getVars(cond) union getVars(t) union getVars(f)
+    case _ => Set()
   }
 }
