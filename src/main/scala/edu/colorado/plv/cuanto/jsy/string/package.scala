@@ -17,6 +17,6 @@ package object string {
   /** The string concatenation operator is syntactically overloaded as
     * [[edu.colorado.plv.cuanto.jsy.arithmetic.Plus]].
     */
-  val Concat: Bop = arithmetic.Plus
+  val Concat = arithmetic.Plus
 
 }
