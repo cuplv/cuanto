@@ -2,12 +2,6 @@ package edu.colorado.plv.cuanto.abstracting
 
 package symbolic
 
-import cafesat.api._
-import cafesat.api.FormulaBuilder._
-import cafesat.api.Formulas._
-
-
-
 sealed class BoolVote
 case object Top extends BoolVote
 case object Yay extends BoolVote
@@ -17,7 +11,7 @@ case object Bot extends BoolVote
 object BoolVote extends Abstraction
     with Abstractable[(Boolean,Boolean,Boolean),BoolVote] {
   type A = BoolVote
-  type B3 = (PropVar,PropVar,PropVar)
+  // type B3 = (PropVar,PropVar,PropVar)
   val bottom: BoolVote = Bot
 
   def isBottom(e: BoolVote): Boolean = e match {
@@ -50,19 +44,19 @@ object BoolVote extends Abstraction
     case Nay => Top
   }
 
-  def voteYayT(pre: B3, post: B3): Formula = (pre,post) match {
-    case ((a1,a2,a3),(b1,b2,b3)) =>
-      b1 && ((a2 && b2) || !(a2 || b2)) && ((a3 && b3) || !(a3 || b3))
+  // def voteYayT(pre: B3, post: B3): Formula = (pre,post) match {
+  //   case ((a1,a2,a3),(b1,b2,b3)) =>
+  //     b1 && ((a2 && b2) || !(a2 || b2)) && ((a3 && b3) || !(a3 || b3))
 
-  }
+  // }
 
   def voteNay(vs: BoolVote): BoolVote = vs match {
     case Nay => Nay
     case Yay => Top
   }
 
-  def voteNayT(pre: B3, post: B3): Formula = (pre,post) match {
-    case ((a1,a2,a3),(b1,b2,b3)) =>
-      !b1 && ((a2 && b2) || !(a2 || b2)) && ((a3 && b3) || !(a3 || b3))
-  }
+  // def voteNayT(pre: B3, post: B3): Formula = (pre,post) match {
+  //   case ((a1,a2,a3),(b1,b2,b3)) =>
+  //     !b1 && ((a2 && b2) || !(a2 || b2)) && ((a3 && b3) || !(a3 || b3))
+  // }
 }
