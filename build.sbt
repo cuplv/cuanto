@@ -59,3 +59,4 @@ lazy val root = (project in file(".")).
     // Name
     name := "cuanto"
   )
+  libraryDependencies += "ca.mcgill.sable" % "soot" % "trunk"
