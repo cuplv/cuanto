@@ -5,4 +5,5 @@ object Dependencies {
   lazy val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.13.4"
   lazy val scalaParserCombinators = "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.5"
   lazy val javaSMT = "org.sosy-lab" % "java-smt" % "1.0.1"
+  lazy val scalaSMTLIB = "com.regblanc" %% "scala-smtlib" % "0.2.1"
 }

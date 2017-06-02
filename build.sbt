@@ -1,4 +1,5 @@
 import Dependencies._
+import Resolvers._
 
 enablePlugins(SiteScaladocPlugin)
 enablePlugins(GhpagesPlugin)
@@ -49,12 +50,18 @@ lazy val root = (project in file(".")).
     scmInfo := Some(ScmInfo(url("https://github.com/cuplv/cuanto"), "git@github.com:cuplv/cuanto.git")),
     git.remoteRepo := scmInfo.value.get.connection,
 
+    resolvers ++= Seq(
+      // scala-smtlib comes from here
+      sonatypeReleases
+    ),
+
     // Dependencies
     libraryDependencies ++= Seq(
       scalaParserCombinators,
       scalaTest % Test,
       scalaCheck % Test,
-      javaSMT
+      javaSMT,
+      scalaSMTLIB
     ),
 
     // Name
