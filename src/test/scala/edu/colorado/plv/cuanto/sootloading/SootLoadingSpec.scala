@@ -1,6 +1,5 @@
 package edu.colorado.plv.cuanto.sootloading
 
-import org.scalatest.FlatSpec
 import org.scalatest._
 import soot.jimple.JimpleBody
 import soot.shimple.ShimpleBody
