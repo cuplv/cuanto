@@ -2,24 +2,79 @@ package edu.colorado.plv.cuanto.abstracting
 
 package bitvectors
 
-import smtlib.theories._
+import smtlib.theories.Core._
+import smtlib.theories.Constructors._
 import smtlib.parser.Terms._
 
+/** The concrete form, a tuple of three booleans */
 case class B3(bool1: Boolean, bool2: Boolean, bool3: Boolean)
 
-case class B3SMT(boo1: Term, bool2: Term, bool3: Term)
+/** The symbolic form, capable of fully representing a B3 as an SMT
+  * script */
+case class SMT3(bool1: Term, bool2: Term, bool3: Term)
 
-object B3SMT extends Abstractable[B3,B3SMT] {
-  def represent(b3: B3): B3SMT = ???
+object SMT3 {
+  implicit def represent(b: Boolean): Term => Term = { (t: Term) =>
+    b match {
+      case true => t
+      case false => not(t)
+    }
+  }
+
+  implicit def represent(b3: B3): SMT3 => Term = { (smt: SMT3) =>
+    and(
+      b3.bool1(smt.bool1),
+      b3.bool2(smt.bool2),
+      b3.bool3(smt.bool3)
+    )
+  }
+
+  implicit def represent(v: Vote3): SMT3 => Term = { (smt: SMT3) =>
+
+    def yayFormula(smt: SMT3): Term = smt match {
+      case SMT3(a,b,c) => or(and(a,b), and(b,c), and(c,a))
+    }
+
+    v match {
+      case Top => True()
+      case Yay => yayFormula(smt)
+      case Nay => not(yayFormula(smt))
+      case Bot => False()
+    }
+  }
+
+  /** A single vote changes from Nay to Yay (note that this will fail if
+    * all votes in the precondition are already Yay; this could maybe
+    * be defined to also pass in that case?) */
+  def voteYay(pre: SMT3, post: SMT3): Term = (pre,post) match {
+    case (SMT3(a,b,c),SMT3(an,bn,cn)) =>
+      or(
+        and(not(a),an),
+        and(not(b),bn),
+        and(not(c),cn)
+      )
+  }
+
+  /** Opposite of voteYay */
+  def voteNay(pre: SMT3, post: SMT3): Term = (pre,post) match {
+    case (SMT3(a,b,c),SMT3(an,bn,cn)) =>
+      or(
+        and(a,not(an)),
+        and(b,not(bn)),
+        and(c,not(cn))
+      )
+  }
+
 }
 
-sealed class Vote3
+/** The abstract form, which loses precision */
+sealed abstract class Vote3
 case object Top extends Vote3
 case object Yay extends Vote3
 case object Nay extends Vote3
 case object Bot extends Vote3
 
-object Vote3 extends Abstraction with Abstractable[B3,Vote3] {
+object Vote3 extends Abstraction {
   type A = Vote3
 
   val bottom: Vote3 = Bot
@@ -42,7 +97,7 @@ object Vote3 extends Abstraction with Abstractable[B3,Vote3] {
     case _ => Top
   }
 
-  def represent(b3: B3): Vote3 = b3 match {
+  implicit def represent(b3: B3): Vote3 = b3 match {
     case B3(a,b,c) => Seq(a,b,c).filter((b: Boolean) => b).size match {
       case s if s >= 2 => Yay
       case _ => Nay
@@ -52,21 +107,13 @@ object Vote3 extends Abstraction with Abstractable[B3,Vote3] {
   def voteYay(vs: Vote3): Vote3 = vs match {
     case Yay => Yay
     case Nay => Top
+    case v => v
   }
-
-  // def voteYayT(pre: B3, post: B3): Formula = (pre,post) match {
-  //   case ((a1,a2,a3),(b1,b2,b3)) =>
-  //     b1 && ((a2 && b2) || !(a2 || b2)) && ((a3 && b3) || !(a3 || b3))
-
-  // }
 
   def voteNay(vs: Vote3): Vote3 = vs match {
     case Nay => Nay
     case Yay => Top
+    case v => v
   }
 
-  // def voteNayT(pre: B3, post: B3): Formula = (pre,post) match {
-  //   case ((a1,a2,a3),(b1,b2,b3)) =>
-  //     !b1 && ((a2 && b2) || !(a2 || b2)) && ((a3 && b3) || !(a3 || b3))
-  // }
 }
