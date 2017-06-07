@@ -46,7 +46,7 @@ object Interpreter {
   /** Interpret arithmetic expressions encoded as a single `Value` */
   def denote(v: Value, env: Env = emptyEnv): Option[Int] = v match {
     case Local(n) => env get v.asInstanceOf[Local]
-    //case v: IntConstant => Some(v.value)
+    case IntConstant(i) => Some(i)
     case AddExpr(e1, e2) => for {
       arg1 <- denote(e1, env)
       arg2 <- denote(e2, env)

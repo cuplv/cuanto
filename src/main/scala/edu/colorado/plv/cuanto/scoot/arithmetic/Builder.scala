@@ -15,6 +15,7 @@ object Builder {
 
   /** The default accumulator variable for the interpreter to track */
   val acc = local("accumulator")
+  val sAcc = sLocal("accumulator")
 
   /** Lift an `Int` into an `IntConstant` (which counts as an
     * `Immediate` */
@@ -22,9 +23,10 @@ object Builder {
 
   /** Create a variable */
   def local(name: String): Local = jim.newLocal(name, IntType.v())
+  def sLocal(name: String): edu.colorado.plv.cuanto.scoot.ir.Local = jim.newLocal(name, IntType.v())
 
   /** Create an assignment statements, assigning to `acc` by default */
-  def assign(v: Value, l: Local = acc): AssignStmt = jim.newAssignStmt(l, v)
+  def assign(v: Value, l: Local = acc): edu.colorado.plv.cuanto.scoot.ir.AssignStmt = jim.newAssignStmt(l, v)
 
   /** Create an addition expression */
   def add(i1: Immediate)(i2: Immediate): AddExpr = jim.newAddExpr(i1,i2)
@@ -35,10 +37,10 @@ object Builder {
 
   /** Create an assignment statement that adds a value (to `acc` by
     * default) */
-  def adds(i: Immediate, l: Local = acc): AssignStmt = assign(add(l)(i),l)
-  def subs(i: Immediate, l: Local = acc): AssignStmt = assign(sub(l)(i),l)
-  def muls(i: Immediate, l: Local = acc): AssignStmt = assign(mul(l)(i),l)
-  def divs(i: Immediate, l: Local = acc): AssignStmt = assign(div(l)(i),l)
-  def negs(l: Local = acc): AssignStmt = assign(neg(l),l)
+  def adds(i: Immediate, l: Local = acc): edu.colorado.plv.cuanto.scoot.ir.AssignStmt = assign(add(l)(i),l)
+  def subs(i: Immediate, l: Local = acc): edu.colorado.plv.cuanto.scoot.ir.AssignStmt = assign(sub(l)(i),l)
+  def muls(i: Immediate, l: Local = acc): edu.colorado.plv.cuanto.scoot.ir.AssignStmt = assign(mul(l)(i),l)
+  def divs(i: Immediate, l: Local = acc): edu.colorado.plv.cuanto.scoot.ir.AssignStmt = assign(div(l)(i),l)
+  def negs(l: Local = acc): edu.colorado.plv.cuanto.scoot.ir.AssignStmt = assign(neg(l),l)
 
 }

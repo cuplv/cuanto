@@ -9,10 +9,10 @@ class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChec
   import Builder._
   import Interpreter._
 
-  val va = local("va")
-  val vb = local("vb")
+  val va = sLocal("va")
+  val vb = sLocal("vb")
 
-  val testEnv = Map((va,3),(vb,15))
+  val testEnv: Map[edu.colorado.plv.cuanto.scoot.ir.Local, Int] = Map((va,3),(vb,15))
 
   val exprTests = Table(
     "expression" -> "denotation",
@@ -26,11 +26,11 @@ class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChec
 
   val exprLocalTests = Table(
     "expression" -> "denotation",
-    add(va)(int(1)) -> 4,
-    div(vb)(va) -> 5
+    add(local("va"))(int(1)) -> 4,
+    div(local("vb"))(local("va")) -> 5
   )
 
-  /*"The Scoot interpreter" should "interpret stateless Values" in {
+  "The Scoot interpreter" should "interpret stateless Values" in {
     forAll (exprTests) { (e, n) =>
       denote(e,testEnv) should equal (Some(n))
     }
@@ -66,14 +66,14 @@ class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChec
   )
 
   it should "interpret a variable mutated through a sequence of AssignStmts" in {
-    forAll (stmtTests) { (e, n) => denote(e,acc) should equal (Some(n)) }
+    forAll (stmtTests) { (e, n) => denote(e,sAcc) should equal (Some(n)) }
   }
 
   /** Here, "bad program" means that either the variable being tracked
     * is never assigned, or one or more expressions in the program
     * could not be interpreted */
   it should "give None when asked to interpret a bad program" in {
-    forAll (stmtFailTests) { e => denote(e,acc) should equal (None) }
-  }*/
+    forAll (stmtFailTests) { e => denote(e,sAcc) should equal (None) }
+  }
 
 }
