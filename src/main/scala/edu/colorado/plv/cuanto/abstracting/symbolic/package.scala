@@ -21,14 +21,15 @@ package symbolic {
 
 package object symbolic {
 
-  def postHatUp[C,A : Abstract,L](
-    model: ((L => Term),(Term => Term),(L => Term)) => Option[(C,C)],
+  def postHatUp[C,A : Abstract,L,T](
+    model: ((L => T),(T => T),(L => T)) => Option[(C,C)],
     beta: C => A,
-    gammaHat: A => (L => Term),
-    t: Term => Term,
+    gammaHat: A => (L => T),
+    t: T => T,
+    neg: T => T,
     v: A
   ): A = {
-    val notGammaHat = (e: A) => (l: L) => not(gammaHat(e)(l))
+    val notGammaHat = (e: A) => (l: L) => neg(gammaHat(e)(l))
     def recur(low: A): A =
       model(gammaHat(v),t,notGammaHat(low)) match {
         case Some((s,sn)) =>

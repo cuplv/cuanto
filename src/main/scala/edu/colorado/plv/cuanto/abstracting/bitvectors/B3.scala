@@ -6,14 +6,36 @@ import smtlib.theories.Core._
 import smtlib.theories.Constructors._
 import smtlib.parser.Terms._
 
+import symbolic._
+
 /** The concrete form, a tuple of three booleans */
 case class B3(bool1: Boolean, bool2: Boolean, bool3: Boolean)
+
+object B3 {
+  val postHatUpInst =
+    (t: Term => Term, v: Vote3) => postHatUp(modelB3 _,b3ToVote3 _,vote3GammaHat _,t,not,v)
+
+  def b3ToVote3(b: B3): Vote3 = ???
+  def vote3GammaHat(v: Vote3): SMT3 => Term = ???
+
+  implicit val abstractVote3: Abstract[Vote3] = ???
+
+  def modelB3(
+    s1: (SMT3 => Term),
+    t: (Term => Term),
+    s2: (SMT3 => Term)
+  ): Option[(B3,B3)] = ???
+
+}
 
 /** The symbolic form, capable of fully representing a B3 as an SMT
   * script */
 case class SMT3(bool1: Term, bool2: Term, bool3: Term)
 
 object SMT3 {
+
+
+
   implicit def represent(b: Boolean): Term => Term = { (t: Term) =>
     b match {
       case true => t
