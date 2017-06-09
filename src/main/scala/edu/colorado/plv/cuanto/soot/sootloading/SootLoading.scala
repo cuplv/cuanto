@@ -58,7 +58,7 @@ object SootLoading {
           acc + str + pathSep) + jcePath + pathSep + rtPath)
         val getJimple: GetJimple[T] = new GetJimple(analysis)
         PackManager.v().getPack("wjtp").add(new Transform("wjtp.get_jimple", getJimple))
-        soot.Main.main(Array("-unfriendly-mode"))
+          soot.Main.main(Array("-unfriendly-mode"))
         getJimple.result match{
           case Some(result) => result
           case None => throw new RuntimeException("Analysis failed")
