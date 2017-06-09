@@ -32,6 +32,8 @@ package object ir {
 
   implicit def convertIfStmt(dt: soot.jimple.IfStmt) = new IfStmt(dt);
 
+  implicit def convertIntConstant(dt: soot.jimple.IntConstant) = new IntConstant(dt);
+
   implicit def convertLeExpr(dt: soot.jimple.LeExpr) = new LeExpr(dt);
 
   implicit def convertLocal(dt: soot.Local) = new Local(dt);

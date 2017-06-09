@@ -14,10 +14,10 @@ object Interpreter {
 
   /** An "execution environment" or state, mapping variables (of type
     * `Local`) to integer values */
-  type Env = Map[Local,Int]
+  type Env = Map[Local, Int]
 
   /** An environment with no assigned variables */
-  val emptyEnv: Env = new HashMap[Local,Int]()
+  val emptyEnv: Env = new HashMap[Local, Int]()
 
   private def some[A](a: A): Option[A] = Some(a)
 
@@ -41,31 +41,35 @@ object Interpreter {
     denote(ss).flatMap(_ get v)
 
   def denote(ss: Traversable[AssignStmt]): Option[Env] =
-    ss.foldLeft(some(emptyEnv))((env,stmt) => env.flatMap(step(stmt)))
+    ss.foldLeft(some(emptyEnv))((env, stmt) => env.flatMap(step(stmt)))
 
   /** Interpret arithmetic expressions encoded as a single `Value` */
-  def denote(v: Value, env: Env = emptyEnv): Option[Int] = v match {
-    case Local(n) => env get v.asInstanceOf[Local]
-    case IntConstant(i) => Some(i)
-    case AddExpr(e1, e2) => for {
-      arg1 <- denote(e1, env)
-      arg2 <- denote(e2, env)
-    } yield arg1 + arg2
-    case SubExpr(e1, e2) => for {
-      arg1 <- denote(e1, env)
-      arg2 <- denote(e2, env)
-    } yield arg1 - arg2
-    case MulExpr(e1, e2) => for {
-      arg1 <- denote(e1, env)
-      arg2 <- denote(e2, env)
-    } yield arg1 * arg2
-    case DivExpr(e1, e2) => for {
-      arg1 <- denote(e1, env)
-      arg2 <- denote(e2, env)
-    } yield arg1 / arg2
-    case NegExpr(e) => for {
-      arg <- denote(e, env)
-    } yield -arg
+  def denote(v: Value, env: Env = emptyEnv): Option[Int] = {
+    println(v)
+    println(v.getClass())
+    v match {
+      case Local(n) => env get v.asInstanceOf[Local]
+      case IntConstant(i) => Some(i)
+      case AddExpr(e1, e2) => for {
+        arg1 <- denote(e1, env)
+        arg2 <- denote(e2, env)
+      } yield arg1 + arg2
+      case SubExpr(e1, e2) => for {
+        arg1 <- denote(e1, env)
+        arg2 <- denote(e2, env)
+      } yield arg1 - arg2
+      case MulExpr(e1, e2) => for {
+        arg1 <- denote(e1, env)
+        arg2 <- denote(e2, env)
+      } yield arg1 * arg2
+      case DivExpr(e1, e2) => for {
+        arg1 <- denote(e1, env)
+        arg2 <- denote(e2, env)
+      } yield arg1 / arg2
+      case NegExpr(e) => for {
+        arg <- denote(e, env)
+      } yield -arg
+    }
   }
 
   //below are deprecated
