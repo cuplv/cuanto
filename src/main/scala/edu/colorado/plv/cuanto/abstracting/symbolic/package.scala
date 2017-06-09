@@ -1,60 +1,41 @@
 package edu.colorado.plv.cuanto.abstracting
 
+import smtlib.theories.Core._
+import smtlib.theories.Constructors._
+import smtlib.parser.Terms._
+
 package symbolic {
 
-  trait Logical[L,C] {
-    implicit def model(l: L): Option[C]
+  trait Abstract[A] {
+    val bottom: A
+    def isBottom(e: A): Boolean
+    def implies(e1: A, e2: A): Boolean
+    def join(e1: A, e2: A): A
   }
 
-  trait Symbolic[A,L] {
-    implicit def gammaHat(a: A): L
-  }
-
-  trait Logic {
-    type L
-  
+  object Abstract {
+    def apply[A : Abstract]: Abstract[A] = implicitly[Abstract[A]]
   }
 
 }
 
 package object symbolic {
 
-  import BoolVote._
+  def postHatUp[C,A : Abstract,L](
+    model: ((L => Term),(Term => Term),(L => Term)) => Option[(C,C)],
+    beta: C => A,
+    gammaHat: A => (L => Term),
+    t: Term => Term,
+    v: A
+  ): A = {
+    val notGammaHat = (e: A) => (l: L) => not(gammaHat(e)(l))
+    def recur(low: A): A =
+      model(gammaHat(v),t,notGammaHat(low)) match {
+        case Some((s,sn)) =>
+          recur(Abstract[A].join(low,beta(sn)))
+        case _ => low
+      }
+    recur(Abstract[A].bottom)
+  }
 
-  type B3P = (Boolean,Boolean,Boolean)
-
-  // val av: PropVar = propVar("a")
-  // val bv: PropVar = propVar("b")
-  // val cv: PropVar = propVar("c")
-  // val av2: PropVar = propVar("a2")
-  // val bv2: PropVar = propVar("b2")
-  // val cv2: PropVar = propVar("c2")
-
-  // def postHatUp(t: (B3,B3) => Formula, v: BoolVote): BoolVote = {
-  //   def recur(low: BoolVote): BoolVote =
-  //     modelBools(symbolicBoolVote(v,(av,bv,cv)) && t((av,bv,cv),(av2,bv2,cv2)) && (!symbolicBoolVote(low,(av2,bv2,cv2)))) match {
-  //       case Some((s,sn)) => recur(join(low,beta(sn)))
-  //       case _ => low
-  //     }
-  //   recur(bottom: BoolVote)
-  // }
-
-  // val yayFormula: B3 => Formula =
-  //   {case (a,b,c) => (a && b) || (a && c) || (b && c) }
-
-  // def symbolicBoolVote(a: BoolVote, bs: B3): Formula = a match {
-  //   case Top => true
-  //   case Yay => yayFormula(bs)
-  //   case Nay => !yayFormula(bs)
-  //   case Bot => false
-  // }
-
-  // def modelBools(f: Formula): Option[(B3P,B3P)] = {
-  //   Solver.solveForSatisfiability(f) match {
-  //     case None => None
-  //     case Some(model) => {
-  //       Some((model(av),model(bv),model(cv)),(model(av2),model(bv2),model(cv2)))
-  //     }
-  //   }
-  // }
 }
