@@ -3,6 +3,14 @@ import Dependencies._
 enablePlugins(SiteScaladocPlugin)
 enablePlugins(GhpagesPlugin)
 
+
+resolvers in ThisBuild ++= Seq(
+  Resolver.sonatypeRepo("releases"),
+  Resolver.sonatypeRepo("snapshots"),
+  "Soot snapshot" at "http://soot-build.cs.uni-paderborn.de/nexus/repository/soot-snapshot/",
+  "Soot release" at "http://soot-build.cs.uni-paderborn.de/nexus/repository/soot-release/"
+)
+
 lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
@@ -59,4 +67,6 @@ lazy val root = (project in file(".")).
     // Name
     name := "cuanto"
   )
-  libraryDependencies += "ca.mcgill.sable" % "soot" % "trunk"
+  libraryDependencies += "ca.mcgill.sable" % "soot" % "3.0.0-TRUNK"
+//  libraryDependencies += "ca.mcgill.sable" % "java_cup" % "0.9.2"
+//  libraryDependencies += "ca.mcgill.sable" % "axmlprinter" % "2016-07-27"
