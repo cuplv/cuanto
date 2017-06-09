@@ -14,9 +14,9 @@ class Stmt(dt: soot.jimple.Stmt) {
   //def fieldRef: Option[ScootFieldRef] = Option(dt.getFieldRef())
 
   //now general Unit functions
-  def useBoxes: List[Value] = dt.getUseBoxes().asScala.toList.map(a => new Value(a.getValue()))
+  def useBoxes: List[Value] = dt.getUseBoxes().asScala.toList.map(a => convertValue(a.getValue()))
 
-  def defBoxes: List[Value] = dt.getDefBoxes().asScala.toList.map(a => new Value(a.getValue()))
+  def defBoxes: List[Value] = dt.getDefBoxes().asScala.toList.map(a => convertValue(a.getValue()))
 
   def unitBoxes: List[Stmt] = dt.getUnitBoxes().asScala.toList.map(a => new Stmt(a.getUnit().asInstanceOf[soot.jimple.Stmt]))
 

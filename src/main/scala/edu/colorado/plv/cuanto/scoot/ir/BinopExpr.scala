@@ -3,10 +3,10 @@ package edu.colorado.plv.cuanto.scoot.ir
 /**
   * Created by Jared on 4/17/2017.
   */
-class BinopExpr(dt: soot.jimple.BinopExpr) extends Expr(dt: soot.jimple.Expr) {
-  def op1: Value = new Value(dt.getOp1())
+abstract class BinopExpr(dt: soot.jimple.BinopExpr) extends Expr(dt: soot.jimple.Expr) {
+  def op1: Value = dt.getOp1()
 
-  def op2: Value = new Value(dt.getOp2())
+  def op2: Value = dt.getOp2()
 
   def symbol: String = dt.getSymbol()
 }

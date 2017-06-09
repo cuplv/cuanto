@@ -17,7 +17,6 @@ class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChec
 
   val i1: IntConstant = soot.jimple.IntConstant.v(3)
   val a1: NegExpr = jim.newNegExpr(soot.jimple.IntConstant.v(2))
-  val a2: AddExpr = jim.newAddExpr(jim.newLocal("va", soot.IntType.v()), soot.jimple.IntConstant.v(3))
 
   val exprLocalTests: TableFor2[Value, Int] = Table(
     "expression" -> "denotation",
