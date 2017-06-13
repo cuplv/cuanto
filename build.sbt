@@ -63,6 +63,9 @@ lazy val root = (project in file(".")).
     // Alternative Soot dependency using direct nightly build jar
     // libraryDependencies += soot from "https://soot-build.cs.uni-paderborn.de/nightly/soot/soot-trunk.jar",
 
+    // Wala dependency
+    libraryDependencies ++= walaCore,
+
     // Name
     name := "cuanto"
   )
