@@ -51,6 +51,7 @@ lazy val root = (project in file(".")).
 
     // Dependencies
     libraryDependencies ++= Seq(
+      scalaLogging,
       scalaParserCombinators,
       scalaTest % Test,
       scalaCheck % Test

@@ -1,5 +1,7 @@
 package edu.colorado.plv.cuanto.wala
 
+import com.typesafe.scalalogging.LazyLogging
+
 import java.net.URL
 
 import com.ibm.wala.classLoader.{IClass, IMethod}
@@ -21,7 +23,7 @@ import scala.collection.JavaConverters._
   *          }}}
   * @author Bor-Yuh Evan Chang
   */
-object Client {
+object Client extends LazyLogging {
 
   /** Alias for [[fromJavaBinary]] */
   def apply(classPath: URL): Client = fromJavaBinary(classPath)
@@ -31,7 +33,7 @@ object Client {
     * @param classPath the class path
     */
   def fromJavaBinary(classPath: URL): Client = {
-    require(classPath != null, s"Unable to find class path {classPath}")
+    require(classPath != null, s"Unable to find class path ${classPath}")
     val scope = makePrimordialScope
     val applicationLoader = scope.getApplicationLoader
     AnalysisScopeReader.addClassPathToScope(classPath.getPath, scope, applicationLoader)
@@ -45,13 +47,13 @@ object Client {
     new Selector("main", Seq(stringArrayName) -> voidName)
   }
 
-
-  private def makePrimordialScope: AnalysisScope = {
+  private lazy val makePrimordialScope: AnalysisScope = {
     val PrimordialTxt = "wala/primordial.txt"
     val ClientClassLoader = getClass.getClassLoader
     val PrimordialTxtUrl: URL = {
       val u = ClientClassLoader.getResource(PrimordialTxt)
-      assert(u != null, s"Unable to find primordial configuration file {PrimordialTxt}")
+      assert(u != null, s"Unable to find primordial configuration ${PrimordialTxt}")
+      logger.info(s"Using primordial configuration ${u}.")
       u
     }
     AnalysisScopeReader.readJavaScope(PrimordialTxtUrl.getPath, null, ClientClassLoader)
