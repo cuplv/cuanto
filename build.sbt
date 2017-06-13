@@ -56,6 +56,16 @@ lazy val root = (project in file(".")).
       scalaCheck % Test
     ),
 
+    // Soot dependency using Paderborn Nexus
+    resolvers ++= sootResolvers,
+    libraryDependencies += soot,
+    
+    // Alternative Soot dependency using direct nightly build jar
+    // libraryDependencies += soot from "https://soot-build.cs.uni-paderborn.de/nightly/soot/soot-trunk.jar",
+
     // Name
     name := "cuanto"
   )
+
+// Define an alias to run the test suite avoiding the slow tests
+addCommandAlias("testFast","testOnly -- -l org.scalatest.tags.Slow")

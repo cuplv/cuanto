@@ -43,17 +43,19 @@ trait ParserLike extends OpParserLike with JsyParserLike {
     }
 
   /** $booleanOpatom */
-  abstract override def opatom: Parser[Expr] =
+  abstract override def opAtom: Parser[Expr] =
     positioned {
       "true" ^^^ B(true) |
-      "false" ^^^ B(false) |
-      ifthenelse
+      "false" ^^^ B(false)
     } |
-    super.opatom
+    ifthenelse |
+    super.opAtom
 
   def ifthenelse: Parser[Expr] =
-    ("if" ~> parenthesized) ~ expr ~ ("else" ~> itesub) ^^ {
-      case e1 ~ e2 ~ e3 => If(e1, e2, e3)
+    positioned {
+      ("if" ~> parenthesized) ~ expr ~ ("else" ~> itesub) ^^ {
+        case e1 ~ e2 ~ e3 => If(e1, e2, e3)
+      }
     }
 
   /** $booleanUop */
@@ -71,6 +73,10 @@ trait ParserLike extends OpParserLike with JsyParserLike {
     List("&&" -> And)
     /* highest */
   )
+
+  override def start: Parser[Expr] = expr
+  override def expr: Parser[Expr] = iteop
+  override lazy val bop: OpPrecedence = booleanBop
 }
 
 /** The parser for just this boolean sub-language.
@@ -79,8 +85,5 @@ trait ParserLike extends OpParserLike with JsyParserLike {
   * @author Bor-Yuh Evan Chang
   */
 object Parser extends UnitOpParser with ParserLike {
-  override def start: Parser[Expr] = expr
-  override def expr: Parser[Expr] = iteop
   override def itesub: Parser[Expr] = iteop
-  override lazy val bop: OpPrecedence = booleanBop
 }

@@ -23,6 +23,19 @@ package jsy {
   /** Values ''v''. */
   trait Val extends Expr
 
+  /** Variables ''x''.
+    *
+    * A `Var` node in an expression is a variable use. The name of the
+    * variable is stored privately.
+    */
+  case class Var(private val x: String) extends Val
+
+  /** Types ''τ''. */
+  trait Typ extends Positional
+
+  /** The `any` type (i.e., dynamically-typed). */
+  case object TAny extends Typ
+
 }
 
 /** Defining the JavaScripty language platform.
@@ -68,7 +81,9 @@ package jsy {
   *     | $jsyBinaryProduction
   *   - ''uop'' ϵ `Uop`
   *   - ''bop'' ϵ `Bop`
-  *   - ''v'' ϵ `Val`
+  *   - ''v'' ϵ `Val` ::= ''x''
+  *   - ''x'' ϵ `Var`
+  *   - ''τ'' ϵ `Typ` ::= `any` ≡ `TAny`
   *
   * @define jsyUnaryProduction ''uop'' ''e,,1,,'' ≡ `Unary(''uop'', ''e,,1,,'')`
   * @define jsyBinaryProduction ''e,,1,,'' ''bop'' ''e,,2,,'' ≡ `Binary(''bop'', ''e,,1,,'', ''e,,2,,'')`
