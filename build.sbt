@@ -1,5 +1,4 @@
 import Dependencies._
-import Resolvers._
 
 enablePlugins(SiteScaladocPlugin)
 enablePlugins(GhpagesPlugin)
@@ -50,19 +49,23 @@ lazy val root = (project in file(".")).
     scmInfo := Some(ScmInfo(url("https://github.com/cuplv/cuanto"), "git@github.com:cuplv/cuanto.git")),
     git.remoteRepo := scmInfo.value.get.connection,
 
-    resolvers ++= Seq(
-      // scala-smtlib comes from here
-      sonatypeReleases
-    ),
-
     // Dependencies
     libraryDependencies ++= Seq(
       scalaParserCombinators,
       scalaTest % Test,
-      scalaCheck % Test,
-      javaSMT,
-      scalaSMTLIB
+      scalaCheck % Test
     ),
+
+    // scala-smtlib comes from the "sonatype releases" repository
+    resolvers += sonatypeResolver,
+    libraryDependencies += scalaSMTLIB,
+
+    // Soot dependency using Paderborn Nexus
+    resolvers ++= sootResolvers,
+    libraryDependencies += soot,
+    
+    // Alternative Soot dependency using direct nightly build jar
+    // libraryDependencies += soot from "https://soot-build.cs.uni-paderborn.de/nightly/soot/soot-trunk.jar",
 
     // Name
     name := "cuanto"
