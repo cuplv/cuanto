@@ -42,6 +42,7 @@ object SootLoading {
     */
   def getAnalysisResult[T](paths: List[String], main: Option[String] = None,analysis: Scene=>T): Try[T] ={
     try {
+      G.reset()
       lock.lock() //Lock used to prevent concurrent use of global static soot variables
       Try({
         Options.v().keep_line_number() //Soot does not automatically retain line number info, this option keeps it

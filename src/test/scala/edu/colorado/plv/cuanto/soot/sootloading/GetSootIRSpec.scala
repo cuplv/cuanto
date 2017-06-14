@@ -14,19 +14,19 @@ import scala.collection.JavaConverters._
   */
 class GetSootIRSpec extends FlatSpec with Matchers {
   "GetSootIR" should "load a set of non empty classes" in {
-    val scene: Scene = GetSootIR.initSootTest(List("/Users/s/Documents/source/cuanto/test_files/test1/bin/"),None)
+    val scene: Scene = GetSootIR.getSootIRFromDirectoryOfClassFiles(List("/Users/s/Documents/source/cuanto/test_files/test1/bin/"),None)
 
     val classes = scene.getClasses().toArray
     assert(classes.length > 0)
 
   }
   "GetSootIR" should "load a specific class" in {
-    val scene: Scene = GetSootIR.initSootTest(List("/Users/s/Documents/source/cuanto/test_files/test1/bin/"),Some("Test1"))
+    val scene: Scene = GetSootIR.getSootIRFromDirectoryOfClassFiles(List("/Users/s/Documents/source/cuanto/test_files/test1/bin/"),Some("Test1"))
 //    val classes = scene.getClasses().toArray()
     scene.getSootClass("Test1").isPhantom() shouldBe false
   }
   "GetSootIR" should "load jimple bytecode" in{
-    val scene: Scene = GetSootIR.initSootTest(List("/Users/s/Documents/source/cuanto/test_files/test1/bin/"),Some("Test1"))
+    val scene: Scene = GetSootIR.getSootIRFromDirectoryOfClassFiles(List("/Users/s/Documents/source/cuanto/test_files/test1/bin/"),Some("Test1"))
     val methods = scene.getSootClass("Test1").getMethods()
     val method = scene.getSootClass("Test1").getMethod("void main(java.lang.String[])")
     methods.size() shouldBe 2
