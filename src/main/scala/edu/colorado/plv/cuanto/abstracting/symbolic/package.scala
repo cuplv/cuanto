@@ -32,9 +32,19 @@ package object symbolic {
     val notGammaHat = (e: A) => (l: L) => neg(gammaHat(e)(l))
     def recur(low: A): A =
       model(gammaHat(v),t,notGammaHat(low)) match {
-        case Some((s,sn)) =>
+        case Some((s,sn)) => {
+          println("found something")
+          println(s)
+          println(sn)
+          println(low)
+          println(beta(sn))
+          println(Abstract[A].join(low,beta(sn)))
           recur(Abstract[A].join(low,beta(sn)))
-        case _ => low
+        }
+        case _ => {
+          println("did not find something")
+          low
+        }
       }
     recur(Abstract[A].bottom)
   }

@@ -18,4 +18,5 @@ class SymbolicAbstractionSpec extends CuantoSpec {
       v => postHatUpInst(SMT3.voteNay,v) should equal (Vote3.voteNay(v))
     })
   }
+
 }

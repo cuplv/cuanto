@@ -54,6 +54,10 @@ object B3 {
   
       val smt1 = mkSMT3(a1,b1,c1)
       val smt2 = mkSMT3(a2,b2,c2)
+
+      println(s1(smt1))
+      println(s2(smt2))
+      println(t(smt1,smt2))
   
       Seq(
         DeclareConst(a1,BoolSort()),
@@ -92,12 +96,24 @@ object B3 {
       }
     }
   
-    def comprehend(m: List[SExpr]): IMap[SSymbol,Boolean] =
-      m.foldLeft[IMap[SSymbol,Boolean]](IMap.empty)({(acc: IMap[SSymbol,Boolean],i: SExpr) => acc})
+    def comprehend(m: List[SExpr]): IMap[SSymbol,Boolean] = {
+      val p: (IMap[SSymbol,Boolean],SExpr) => IMap[SSymbol,Boolean] = {
+        (acc,i) => i match {
+          case DefineFun(FunDef(id,_,_,v)) => v match {
+            case True() => acc + (id -> true)
+            case Not(True()) => acc + (id -> false)
+            case False() => acc + (id -> false)
+            case _ => acc
+          }
+          case _ => acc
+        }
+      }
+      m.foldLeft[IMap[SSymbol,Boolean]](IMap.empty)(p)
+    }
   
     def gammaHat(v: Vote3): SMT3 => Term = { (smt: SMT3) =>
       def yayFormula(smt: SMT3): Term = smt match {
-        case SMT3(a,b,c) => or(and(a,b), and(b,c), and(c,a))
+        case SMT3(a,b,c) => Or(and(a,b), Or(and(b,c), and(c,a)))
       }
       v match {
         case Top => True()
@@ -128,20 +144,20 @@ object B3 {
       * be defined to also pass in that case?) */
     def voteYay(pre: SMT3, post: SMT3): Term = (pre,post) match {
       case (SMT3(a,b,c),SMT3(an,bn,cn)) =>
-        or(
-          and(not(a),an),
-          and(not(b),bn),
-          and(not(c),cn)
+        Or(
+          and(not(a),an,Equals(b,bn),Equals(c,cn)),
+          and(Equals(a,an),not(b),bn,Equals(c,cn)),
+          and(Equals(a,an),Equals(b,bn),not(c),cn)
         )
     }
   
     /** Opposite of voteYay */
     def voteNay(pre: SMT3, post: SMT3): Term = (pre,post) match {
       case (SMT3(a,b,c),SMT3(an,bn,cn)) =>
-        or(
-          and(a,not(an)),
-          and(b,not(bn)),
-          and(c,not(cn))
+        Or(
+          and(a,not(an),Equals(b,bn),Equals(c,cn)),
+          and(Equals(a,an),b,not(bn),Equals(c,cn)),
+          and(Equals(a,an),Equals(b,bn),c,not(cn))
         )
     }
   
@@ -173,11 +189,19 @@ object B3 {
   
     }
   
+    // def represent(b3: B3): Vote3 = b3 match {
+    //   case B3(a,b,c) => Seq(a,b,c).filter((b: Boolean) => b).size match {
+    //     case s if s >= 2 => Yay
+    //     case _ => Nay
+    //   }
+    // }
+
     def represent(b3: B3): Vote3 = b3 match {
-      case B3(a,b,c) => Seq(a,b,c).filter((b: Boolean) => b).size match {
-        case s if s >= 2 => Yay
-        case _ => Nay
-      }
+      case B3(true,true,true) => Yay
+      case B3(true,true,_   ) => Yay
+      case B3(_   ,true,true) => Yay
+      case B3(true,_   ,true) => Yay
+      case _ => Nay
     }
   
     def voteYay(vs: Vote3): Vote3 = vs match {
