@@ -1,24 +1,21 @@
 package edu.colorado.plv.cuanto
 package abstracting.symbolic
 
-import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.prop.PropertyChecks
+import abstracting.bitvectors.B3._
 
-class SymbolicAbstractionSpec extends FlatSpec with Matchers with PropertyChecks {
-  import BoolVote._
+class SymbolicAbstractionSpec extends CuantoSpec {
+
+  val avals = Seq(Top,Yay,Nay,Bot)
 
   "The postHat funtion" should "correctly model voteYay" in {
-    postHatUp(voteYayT, Top) should equal (voteYay(Top))
-    postHatUp(voteYayT, Yay) should equal (voteYay(Yay))
-    postHatUp(voteYayT, Nay) should equal (voteYay(Nay))
-    postHatUp(voteYayT, Bot) should equal (voteYay(Bot))
+    avals.map({
+      v => postHatUpInst(SMT3.voteYay,v) should equal (Vote3.voteYay(v))
+    })
   }
 
   "The postHat funtion" should "correctly model voteNay" in {
-    postHatUp(voteNayT, Top) should equal (voteNay(Top))
-    postHatUp(voteNayT, Yay) should equal (voteNay(Yay))
-    postHatUp(voteNayT, Nay) should equal (voteNay(Nay))
-    postHatUp(voteNayT, Bot) should equal (voteNay(Bot))
+    avals.map({
+      v => postHatUpInst(SMT3.voteNay,v) should equal (Vote3.voteNay(v))
+    })
   }
 }
-    

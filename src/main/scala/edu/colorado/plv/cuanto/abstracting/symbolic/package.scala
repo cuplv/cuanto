@@ -22,10 +22,10 @@ package symbolic {
 package object symbolic {
 
   def postHatUp[C,A : Abstract,L,T](
-    model: ((L => T),(T => T),(L => T)) => Option[(C,C)],
+    model: ((L => T),((L,L) => T),(L => T)) => Option[(C,C)],
     beta: C => A,
     gammaHat: A => (L => T),
-    t: T => T,
+    t: (L,L) => T,
     neg: T => T,
     v: A
   ): A = {
