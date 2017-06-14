@@ -34,6 +34,11 @@ import smtlib.parser.CommandsResponses.{
   GetModelResponseSuccess,
   Error
 }
+import smtlib.theories.Core.{
+  True,
+  False,
+  Or
+}
 import smtlib.theories.Ints.{
   IntSort,
   NumeralLit,
@@ -83,8 +88,8 @@ class ScalaSmtlibExample extends CuantoSpec {
 
   /** Models are returned as sequences of "define-fun" commands */
   val goodModel: List[Command] = List(
-    DefineFun(FunDef(xs, List.empty, IntSort(), zero)),
-    DefineFun(FunDef(ys, List.empty, IntSort(), Neg(one)))
+    DefineFun(FunDef(ys, List.empty, IntSort(), Neg(one))),
+    DefineFun(FunDef(xs, List.empty, IntSort(), zero))
   )
 
   val badExpr: Term =
@@ -101,6 +106,12 @@ class ScalaSmtlibExample extends CuantoSpec {
     */
   val testCmds = Table(
     "command" -> "response",
+
+    Push(0) -> Success,
+    Assert(Or(True(),False())) -> Success,
+    CheckSat() -> CheckSatStatus(SatStatus),
+    Pop(0) -> Success,
+
     DeclareConst(xs,IntSort()) -> Success,
     DeclareConst(ys,IntSort()) -> Success,
 
@@ -113,8 +124,9 @@ class ScalaSmtlibExample extends CuantoSpec {
     Push(0) -> Success,
     Assert(badExpr) -> Success,
     CheckSat() -> CheckSatStatus(UnsatStatus),
-    GetModel() -> Error("line 23 column 10: model is not available"),
+    GetModel() -> Error("line 31 column 10: model is not available"),
     Pop(0) -> Success
+
   )
 
 }
