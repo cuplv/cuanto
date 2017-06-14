@@ -1,4 +1,4 @@
-package edu.colorado.plv.cuanto.tinyjava;
+package edu.colorado.plv.cuanto.javita;
 
 public class ReturnFortytwoTest {
     public static int return42() {
