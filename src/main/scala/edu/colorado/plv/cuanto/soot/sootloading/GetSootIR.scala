@@ -13,7 +13,12 @@ import scala.util.Try
   * Created by s on 6/9/17.
   */
 object GetSootIR {
-  def initSootTest(paths: List[String]): Scene = {
+  val fileSep: String = System.getProperty("file.separator")
+  val pathSep: String = System.getProperty("path.separator")
+  val javaLibraryPath: String = System.getProperty("java.home") + fileSep + "lib" + fileSep
+  val jcePath: String = javaLibraryPath + "jce.jar"
+  val rtPath: String = javaLibraryPath + "rt.jar"
+  def initSootTest(paths: List[String], main: Option[String]): Scene = {
 
     soot.G.reset()
     Options.v().keep_line_number() //Soot does not automatically retain line number info, this option keeps it
@@ -28,9 +33,11 @@ object GetSootIR {
     if(paths.length < 1){
       throw new IllegalArgumentException("At least one path needed")
     }
-    val resourceURL = paths(0)
-    val sootTestDir = new File(resourceURL)
-    scene.setSootClassPath(sootTestDir.toString())
+    main foreach { main => Options.v().set_main_class(main) }  //Set single entry point
+    val path: String = Scene.v().getSootClassPath
+    //Combine paths into semi colon separated list
+    Scene.v().setSootClassPath(path + ":" + paths.foldLeft("")((acc, str) =>
+      acc + str + pathSep) + jcePath + pathSep + rtPath)
 
 //    PackManager.v().runPacks()
 //    ShimpleTransformer.v.transform()
