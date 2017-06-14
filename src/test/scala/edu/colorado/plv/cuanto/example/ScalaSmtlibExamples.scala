@@ -1,4 +1,8 @@
 package edu.colorado.plv.cuanto
+
+/** 
+  * @author Nicholas Lewchenko
+  */
 package example
 
 import org.scalatest.tagobjects.Slow

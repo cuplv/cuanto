@@ -1,4 +1,8 @@
 package edu.colorado.plv.cuanto
+
+/** 
+  * @author Nicholas Lewchenko
+  */
 package abstracting.symbolic
 
 import abstracting.bitvectors.B3._

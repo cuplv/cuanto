@@ -1,5 +1,8 @@
 package edu.colorado.plv.cuanto.abstracting
 
+/** 
+  * @author Nicholas Lewchenko
+  */
 package bitvectors
 
 import scala.collection.immutable.{Map => IMap}
@@ -55,10 +58,6 @@ object B3 {
       val smt1 = mkSMT3(a1,b1,c1)
       val smt2 = mkSMT3(a2,b2,c2)
 
-      println(s1(smt1))
-      println(s2(smt2))
-      println(t(smt1,smt2))
-  
       Seq(
         DeclareConst(a1,BoolSort()),
         DeclareConst(b1,BoolSort()),
@@ -171,7 +170,7 @@ object B3 {
   case object Bot extends Vote3
   
   object Vote3 {
-    implicit val abstractVote3: Abstract[Vote3] = new Abstract[Vote3] {
+    implicit val abstractVote3: Abstraction[Vote3] = new Abstraction[Vote3] {
   
       val bottom: Vote3 = Bot
       def isBottom(e: Vote3): Boolean = e == bottom
