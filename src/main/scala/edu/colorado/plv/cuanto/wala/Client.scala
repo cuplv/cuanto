@@ -34,7 +34,8 @@ object Client extends LazyLogging {
     */
   def fromJavaBinary(classPath: URL): Client = {
     require(classPath != null, s"Unable to find class path ${classPath}")
-    val scope = makePrimordialScope
+    logger.info(s"Loading classes from path ${classPath}.")
+    val scope = primordialScope
     val applicationLoader = scope.getApplicationLoader
     AnalysisScopeReader.addClassPathToScope(classPath.getPath, scope, applicationLoader)
     new Client(scope)
@@ -47,7 +48,7 @@ object Client extends LazyLogging {
     new Selector("main", Seq(stringArrayName) -> voidName)
   }
 
-  private lazy val makePrimordialScope: AnalysisScope = {
+  private lazy val primordialScope: AnalysisScope = {
     val PrimordialTxt = "wala/primordial.txt"
     val ClientClassLoader = getClass.getClassLoader
     val PrimordialTxtUrl: URL = {
