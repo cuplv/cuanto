@@ -11,16 +11,14 @@ object Interpreter {
 
   /** An "execution environment" or state, mapping variables (of type
     * `Local`) to integer values */
-  type Env = Map[Local,Int]
+  type Env = Map[String,Int]
 
   /** An environment with no assigned variables */
-  val emptyEnv: Env = new HashMap[Local,Int]()
-
-  private def some[A](a: A): Option[A] = Some(a)
+  val emptyEnv: Env = new HashMap[String,Int]()
 
   /** Interpret arithmetic expressions encoded as a single `Value` */
   def denote(v: Value, env: Env = emptyEnv): Option[Int] = v match {
-    case Local(v) => env get v.asInstanceOf[Local]
+    case Local(s) => env get s
     case IntConstant(v) => Some(v)
     case AddExpr(e1, e2) => for {
       arg1 <- denote(e1, env)
