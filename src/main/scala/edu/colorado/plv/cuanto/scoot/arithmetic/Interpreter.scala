@@ -1,8 +1,8 @@
 package edu.colorado.plv.cuanto.scoot
 package arithmetic
 
-import scala.collection.immutable.HashMap
 import edu.colorado.plv.cuanto.scoot.ir._
+import scala.collection.immutable.HashMap
 
 /** Implement an interpreter for sequences of Jimple assignment
   * statements that represent integer arithmetic programs

@@ -1,7 +1,7 @@
 package edu.colorado.plv.cuanto.scoot.ir
 
-import soot.Type
 import scala.collection.JavaConverters._
+import soot.Type
 
 /**
   * Created by Jared on 6/13/2017.
