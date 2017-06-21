@@ -67,6 +67,10 @@ lazy val root = (project in file(".")).
     // Wala dependency
     libraryDependencies ++= walaCore,
 
+    // scala-smtlib comes from the "sonatype releases" repository
+    resolvers += sonatypeResolver,
+    libraryDependencies += scalaSMTLIB,
+
     // Name
     name := "cuanto"
   )
