@@ -1,10 +1,11 @@
 \documentclass{report}
 
 \usepackage{syntax}
+\usepackage{xspace}
 \usepackage{mathpartir}
 \usepackage{url}
 
-\newcommand{\minijava}{MiniJava}
+\newcommand{\minijava}{MiniJava\xspace}
 
 \begin{document}
 \title{Java subsets and corresponding Jimple subset}
@@ -19,11 +20,26 @@ We define a subset of Java inspired by \minijava~\cite{} (a grammar
 for \minijava is available here \label{sec:minijava}).
 
 We define a different (bigger) subset of Java than \minijava that has
-less syntax restrictions.
+less language syntax restrictions.
 %
-Th \minijava syntax restrictions are not extremely imortant for
-Jimple (we already have parsing and typechecking).
+The \minijava syntax restrictions are not imortant when using soot as
+frontend (we already have parsing and typechecking).
 
+Features that we want:
+\begin{itemize}
+\item Integer and Boolean primitive types
+\item Integer and Boolean array types
+\item Classes without method overloading (no interfaces, generics, \ldots)
+\item Restricted control flow and expressions (no exception handling)
+\end{itemize}
+
+\section{Correspondent Jimple subset}
+\begin{grammar}
+  
+\end{grammar}
+
+
+\section{Jimple subset}
 \begin{grammar}
 <jimple_method> ::= <local_declarations> <identity_stmts> <stmts> <exception_ranges>
 
