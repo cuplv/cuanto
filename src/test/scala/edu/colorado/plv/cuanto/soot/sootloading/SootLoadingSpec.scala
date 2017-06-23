@@ -1,5 +1,6 @@
 package edu.colorado.plv.cuanto.scoot.sootloading
 
+import edu.colorado.plv.cuanto.wala.Client
 import org.scalatest.FlatSpec
 import org.scalatest._
 import org.scalatest.tagobjects.Slow
@@ -9,6 +10,9 @@ import soot.{Body, Scene, SootClass, SootMethod}
 
 import scala.collection.JavaConverters._
 import scala.util.Success
+import edu.colorado.plv.cuanto.walatest.EmptyMainTest
+import edu.colorado.plv.cuanto.jutil.implicits._
+
 
 
 /**
@@ -17,6 +21,7 @@ import scala.util.Success
 class SootLoadingSpec extends FlatSpec with Matchers {
   val fileSep: String = System.getProperty("file.separator")
   val pathSep: String = System.getProperty("path.separator")
+  lazy val walaTest = classOf[EmptyMainTest].getRelativeURL.get.getPath
 
   /**
     * Test checks whether a sample program loads
@@ -24,18 +29,18 @@ class SootLoadingSpec extends FlatSpec with Matchers {
   "SootLoading" should "successfully load test file" taggedAs(Slow) in {
     val testClassExists = (scene: Scene) =>
       scene.getClasses.asScala.exists((clazz: SootClass) => {
-        clazz.getName == "Test1" &&
+        clazz.getName == "edu.colorado.plv.cuanto.walatest.EmptyMainTest" &&
           clazz.getMethodByName("main") != null
       }
 
       )
 
-    println(System.getProperty("user.dir") + fileSep + "src" + fileSep + "test" + fileSep + "resources" + fileSep + "test_files" + fileSep + "test1")
+    println(walaTest)
 
     val classesExist = SootLoading.getAnalysisResult[Boolean](
       // List(getClass.getResource("/test_files/test1/").getPath),
-      List(System.getProperty("user.dir") + fileSep + "src" + fileSep + "test" + fileSep + "resources" + fileSep + "test_files" + fileSep + "test1"),
-      Some("Test1"),
+      List(walaTest),
+      Some("edu.colorado.plv.cuanto.walatest.EmptyMainTest"),
       testClassExists
     )
     classesExist shouldBe a[Success[_]]
@@ -48,19 +53,17 @@ class SootLoadingSpec extends FlatSpec with Matchers {
   "SootLoading" should "successfully load jimple" taggedAs(Slow) in {
     val testClassExists = (scene: Scene) =>
       scene.getClasses.asScala.exists((clazz: SootClass) => {
-        clazz.getName == "Test1" &&
+        clazz.getName == "edu.colorado.plv.cuanto.walatest.EmptyMainTest" &&
           clazz.getMethodByName("main") != null &&
           clazz.getMethodByName("main").getActiveBody.isInstanceOf[JimpleBody]
       }
 
       )
 
-    println(System.getProperty("user.dir") + fileSep + "src" + fileSep + "test" + fileSep + "resources" + fileSep + "test_files" + fileSep + "test1")
-
     val classesExist = SootLoading.getAnalysisResult[Boolean](
       // List(getClass.getResource("/test_files/test1/").getPath),
-      List(System.getProperty("user.dir") + fileSep + "src" + fileSep + "test" + fileSep + "resources" + fileSep + "test_files" + fileSep + "test1"),
-      Some("Test1"),
+      List(walaTest),
+      Some("edu.colorado.plv.cuanto.walatest.EmptyMainTest"),
       testClassExists
     )
     classesExist shouldBe a[Success[_]]
