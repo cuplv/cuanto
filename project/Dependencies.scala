@@ -8,6 +8,11 @@ object Dependencies {
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
   
   lazy val scalaParserCombinators = "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.5"
+
+  lazy val javaSMT = "org.sosy-lab" % "java-smt" % "1.0.1"
+
+  lazy val sonatypeResolver = "Sonatype OSS Releases" at "https://oss.sonatype.org/content/repositories/releases"
+  lazy val scalaSMTLIB = "com.regblanc" %% "scala-smtlib" % "0.2.1"
   
   lazy val sootResolvers = Seq(
     "soot snapshot" at "https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-snapshot/",

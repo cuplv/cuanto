@@ -57,6 +57,10 @@ lazy val root = (project in file(".")).
       scalaCheck % Test
     ),
 
+    // scala-smtlib comes from the "sonatype releases" repository
+    resolvers += sonatypeResolver,
+    libraryDependencies += scalaSMTLIB,
+
     // Soot dependency using Paderborn Nexus
     resolvers ++= sootResolvers,
     libraryDependencies += soot,
