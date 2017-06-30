@@ -12,8 +12,8 @@ addons:
     packages:
     # Install z3 for use in tests using scala-smtlib
     - z3
-    - libgmp
-    - libmpfr
+    - libgmp-dev
+    - libmpfr-dev
 script:
 - sbt clean coverage test
 after_success:
