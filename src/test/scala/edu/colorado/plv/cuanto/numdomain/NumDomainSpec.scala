@@ -44,8 +44,8 @@ class NumDomainSpec extends FlatSpec with Matchers {
 
   "dpkg -L  libgmp-dev" !
 
-  System.loadLibrary("jgmp")
-  System.loadLibrary("japron")
+  //System.loadLibrary("jgmp")
+  //System.loadLibrary("japron")
   runAPITest()
   // runInterfaceTest()
 
