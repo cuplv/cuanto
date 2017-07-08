@@ -17,4 +17,4 @@ project/plugins/project/
 # Soot
 sootOutput/
 
-lib/
+lib/*
