@@ -1,4 +1,4 @@
-package edu.colorado.plv.cuanto.numdomain.apron
+package edu.colorado.plv.cuanto.numdomain.apronapi
 
 import apron.{Linexpr0, MpfrScalar, MpqScalar}
 import edu.colorado.plv.cuanto.numdomain.AbsExpr

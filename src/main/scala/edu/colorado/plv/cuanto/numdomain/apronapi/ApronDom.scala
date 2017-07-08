@@ -1,4 +1,4 @@
-package edu.colorado.plv.cuanto.numdomain.apron
+package edu.colorado.plv.cuanto.numdomain.apronapi
 
 import apron._
 import edu.colorado.plv.cuanto.numdomain.{AbsDom, AbsExpr, AbsInterval}
