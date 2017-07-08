@@ -15,6 +15,7 @@ addons:
     - libgmp-dev
     - libmpfr-dev
     - libapron-dev
+install: ./install-dependencies.sh
 script:
 - sbt clean coverage test
 after_success:
