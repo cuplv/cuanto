@@ -4,6 +4,7 @@ import apron.{Box, Manager, Octagon, Polka, _}
 import edu.colorado.plv.cuanto.numdomain.apronapi._
 import gmp.Mpfr
 import org.scalatest.{FlatSpec, Matchers}
+import sys.process._
 
 /**
   * Created by lumber on 4/20/17.
@@ -37,6 +38,12 @@ class NumDomainSpec extends FlatSpec with Matchers {
     */
   println("Working Directory = " + System.getProperty("user.dir"))
   println("Library path = " + System.getProperty("java.library.path"))
+  "dpkg -L  libapron-dev" !
+
+  "dpkg -L  libmpfr-dev" !
+
+  "dpkg -L  libgmp-dev" !
+
   System.loadLibrary("jgmp")
   System.loadLibrary("japron")
   runAPITest()
