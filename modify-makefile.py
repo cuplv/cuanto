@@ -14,6 +14,8 @@ with open ("apron/Makefile.config.model", "r") as myfile:
 			target.write("GMP_PREFIX = /usr/lib")
 		elif ("MPFR_PREFIX = /usr" in line):
 			target.write("MPFR_PREFIX = /usr/lib")
+		elif ("HAS_OCAML = 1" in line):
+			target.write("#HAS_OCAML = 1")
 		else:
 			target.write(line)
 
