@@ -1,7 +1,5 @@
 package edu.colorado.plv.cuanto.numdomain
 
-import java.io.File
-
 import apron.{Box, Manager, Octagon, Polka, _}
 import edu.colorado.plv.cuanto.numdomain.apronapi._
 import gmp.Mpfr
@@ -38,7 +36,7 @@ class NumDomainSpec extends FlatSpec with Matchers {
     * 3. local machine: use `otool` https://stackoverflow.com/questions/17703510/dyld-library-not-loaded-reason-image-not-loaded
     */
   System.loadLibrary("jgmp")
-  // println("Working Directory = " + System.getProperty("user.dir"))
+  println("Working Directory = " + System.getProperty("user.dir"))
   System.loadLibrary("japron")
   runAPITest()
   // runInterfaceTest()
