@@ -9,9 +9,9 @@ svn co svn://scm.gforge.inria.fr/svnroot/apron/apron/trunk apron
 python modify-makefile.py
 cd apron
 make
-make install
+#make install
 cd ..
-pwd
+mkdir lib/
 mv apron/japron/libjapron.so lib/
 mv apron/japron/libjgmp.so lib/
 mv apron/japron/apron.jar lib/
