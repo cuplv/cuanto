@@ -17,7 +17,8 @@ project/plugins/project/
 # Soot
 sootOutput/
 
-lib/libboxD.so
-lib/libapron.so
-lib/liboctD.so
-lib/libpolkaMPQ.so
+#lib/libboxD.so
+#lib/libapron.so
+#lib/liboctD.so
+#lib/libpolkaMPQ.so
+lib/*.so
