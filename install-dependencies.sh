@@ -1,7 +1,7 @@
 #!/bin/sh
 
-sudo find / -name "jni.h"
-sudo find / -name "jni_md.h"
+find /usr/lib/jvm/java-8-oracle -name "jni.h"
+find /usr/lib/jvm/java-8-oracle -name "jni_md.h"
 
 echo $JAVA_HOME
 
