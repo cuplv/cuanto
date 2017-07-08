@@ -21,4 +21,4 @@ sootOutput/
 #lib/libapron.so
 #lib/liboctD.so
 #lib/libpolkaMPQ.so
-lib/*.so
+lib/

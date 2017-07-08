@@ -10,4 +10,8 @@ python modify-makefile.py
 cd apron
 make
 make install
-
+cd ..
+mv apron/japron/libjapron.so ./lib/
+mv apron/japron/libjgmp.so ./lib/
+mv apron/japron/apron.jar ./lib/
+mv apron/japron/gmp.jar ./lib/
