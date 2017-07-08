@@ -1,9 +1,9 @@
 #!/bin/sh
 
-find /usr/lib/jvm/java-8-oracle -name "jni.h"
-find /usr/lib/jvm/java-8-oracle -name "jni_md.h"
+#find /usr/lib/jvm/java-8-oracle -name "jni.h"
+#find /usr/lib/jvm/java-8-oracle -name "jni_md.h"
 
-echo $JAVA_HOME
+#echo $JAVA_HOME
 
 svn co svn://scm.gforge.inria.fr/svnroot/apron/apron/trunk apron
 python modify-makefile.py
@@ -20,3 +20,5 @@ mv apron/box/libboxD.so lib/
 mv apron/octagons/liboctD.so lib/
 mv apron/libapron.so lib/
 mv apron/newpolka/libpolkaMPQ.so lib/
+
+ls -al lib/

@@ -36,13 +36,13 @@ class NumDomainSpec extends FlatSpec with Matchers {
     * // 2. local machine: change working directory to cuanto/lib
     * 3. local machine: use `otool` https://stackoverflow.com/questions/17703510/dyld-library-not-loaded-reason-image-not-loaded
     */
-  println("Working Directory = " + System.getProperty("user.dir"))
-  println("Library path = " + System.getProperty("java.library.path"))
-  "dpkg -L  libapron-dev" !
+  // println("Working Directory = " + System.getProperty("user.dir"))
+  // println("Library path = " + System.getProperty("java.library.path"))
+  // "dpkg -L  libapron-dev" !
 
-  "dpkg -L  libmpfr-dev" !
+  // "dpkg -L  libmpfr-dev" !
 
-  "dpkg -L  libgmp-dev" !
+  // "dpkg -L  libgmp-dev" !
 
   //System.loadLibrary("jgmp")
   //System.loadLibrary("japron")
