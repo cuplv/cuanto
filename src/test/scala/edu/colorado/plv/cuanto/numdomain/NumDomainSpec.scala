@@ -37,7 +37,7 @@ class NumDomainSpec extends FlatSpec with Matchers {
     * 3. local machine: use `otool` https://stackoverflow.com/questions/17703510/dyld-library-not-loaded-reason-image-not-loaded
     */
   // println("Working Directory = " + System.getProperty("user.dir"))
-  // println("Library path = " + System.getProperty("java.library.path"))
+  println("Library path = " + System.getProperty("java.library.path"))
   // "dpkg -L  libapron-dev" !
 
   // "dpkg -L  libmpfr-dev" !

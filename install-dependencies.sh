@@ -18,7 +18,7 @@ mv apron/japron/apron.jar lib/
 mv apron/japron/gmp.jar lib/
 mv apron/box/libboxD.so lib/
 mv apron/octagons/liboctD.so lib/
-mv apron/libapron.so lib/
+mv apron/apron/libapron.so lib/
 mv apron/newpolka/libpolkaMPQ.so lib/
 
 ls -al lib/
