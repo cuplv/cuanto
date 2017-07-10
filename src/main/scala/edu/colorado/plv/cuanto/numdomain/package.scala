@@ -3,7 +3,7 @@ package edu.colorado.plv.cuanto
 import gmp.Mpfr
 
 /**
-  * Created by lumber on 4/20/17.
+  * Created by Tianhan Lu on 4/20/17.
   */
 package object numdomain {
   trait Bop

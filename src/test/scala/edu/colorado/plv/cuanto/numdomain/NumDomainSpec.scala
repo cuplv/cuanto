@@ -5,7 +5,7 @@ import gmp.Mpfr
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
-  * Created by lumber on 4/20/17.
+  * Created by Tianhan Lu on 4/20/17.
   */
 class NumDomainSpec extends FlatSpec with Matchers {
   runAPITest()
