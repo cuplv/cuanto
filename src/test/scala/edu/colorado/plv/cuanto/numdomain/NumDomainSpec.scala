@@ -1,80 +1,14 @@
 package edu.colorado.plv.cuanto.numdomain
 
 import apron.{Box, Manager, Octagon, Polka, _}
-import edu.colorado.plv.cuanto.numdomain.apronapi._
 import gmp.Mpfr
 import org.scalatest.{FlatSpec, Matchers}
-import sys.process._
 
 /**
   * Created by lumber on 4/20/17.
   */
 class NumDomainSpec extends FlatSpec with Matchers {
-
-  /**
-    * java.library.path specifies the directories where System.loadLibrary() looks for the dynamic library file.
-    * If you change the java.library.path system property in your code, it will not have any effect.
-    * There are hacks to make Java "forget" the initial value and re-evaluate the contents of the java.library.path system property.
-    *
-    * However, the dependent library is not loaded by Java, it's loaded by Windows.
-    * Windows does not care about java.library.path, it only cares about the PATH environment variable. Your only option is to adjust PATH for your Java process.
-    * For example, if you start it from a batch file, change the PATH environment variable right before the java invocation.
-    *
-    *
-    * http://stackoverflow.com/questions/12566732/java-jni-and-dependent-libraries-on-windows
-    */
-
-  /**
-    * As a result, I set the current working directory to "/Users/lumber/Documents/workspace/cuanto/lib" in "Run -> Edit Configurations..."
-    * However, this is only a temporary solution.
-    */
-
-
-  /**
-    * 0. need to work on both local machine and travis...
-    * 1. local machine: copy-paste libraries to cuanto/, then delete them
-    * // 2. local machine: change working directory to cuanto/lib
-    * 3. local machine: use `otool` https://stackoverflow.com/questions/17703510/dyld-library-not-loaded-reason-image-not-loaded
-    */
-  // println("Working Directory = " + System.getProperty("user.dir"))
-  println("Library path = " + System.getProperty("java.library.path"))
-  // "dpkg -L  libapron-dev" !
-
-  // "dpkg -L  libmpfr-dev" !
-
-  // "dpkg -L  libgmp-dev" !
-
-  //System.loadLibrary("jgmp")
-  //System.loadLibrary("japron")
   runAPITest()
-  // runInterfaceTest()
-
-  // The point of having AbsTerm as parent class for ApronLinTerm and ApronNonLinTerm is to let them share a common interface such that some high-level procedures won't need to know the difference between them. Same for AbsExpr, AbsCons, AbsDom.
-  def runInterfaceTest(): Unit = {
-    val dom = new ApronDom((2, 1), Array(new ApronInterval(1, 2), new ApronInterval(-3, 5), new ApronInterval(0.75, 1.2)), ApronDom.Box)
-    println(dom + "\n\n\n")
-
-    println("Bound of x2: " + dom.getBound(2).interval + "\n")
-
-    val ltrms = Array(new ApronLinTerm(-5, 1), new ApronLinTerm(0.1, 0.6, 0), new ApronLinTerm(0.1, 2))
-    println(ltrms.foldLeft("Linear terms:\n")((acc, t) => acc + "  " + t + "\n"))
-    val linexpr = new ApronLinExpr(2, ltrms)
-    println("Linear expression: " + linexpr + "\n")
-    println("Bound of linear expression: " + dom.getBound(linexpr).interval + "\n")
-    val lincons = new ApronLinCons(linexpr, LE)
-    println("Linear constraint: " + lincons + "\n")
-    println("If the given domain satisfies the linear constraint: " + dom.satisfy(lincons))
-
-    println("\n\n")
-    val txpr = new ApronNonLinTerm(ADD, new ApronNonLinTerm(MUL, 0, 1), new ApronNonLinTerm(DIV, 2, 2.0))
-    println("Nonlinear term: " + txpr + "\n")
-    val texpr = new ApronNonLinExpr(txpr)
-    println("Nonlinear expression: " + texpr + "\n")
-    println("Bound of nonlinear expression:  " + dom.getBound(texpr).interval + "\n")
-    val tcons = new ApronNonLinCons(texpr, LE)
-    println("Linear constraint: " + tcons + "\n")
-    println("If the given domain satisfies the linear constraint: " + dom.satisfy(tcons))
-  }
 
   def runAPITest(): Unit = {
     println("")

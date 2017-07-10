@@ -21,4 +21,4 @@ mv apron/octagons/liboctD.so lib/
 mv apron/apron/libapron.so lib/
 mv apron/newpolka/libpolkaMPQ.so lib/
 
-ls -al lib/
+#ls -al lib/
