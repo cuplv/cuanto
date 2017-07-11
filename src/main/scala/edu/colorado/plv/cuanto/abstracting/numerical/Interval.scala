@@ -43,8 +43,9 @@ object Interval {
   val btw: (Int,Int) => Interval = (g,l) => reduce(Btw(g,l))
 
   object implicits {
-    implicit val semilatticeInterval: Semilattice[Interval] = new Semilattice[I] {
+    implicit val latticeInterval: Lattice[Interval] = new Lattice[I] {
       val bot: Interval = Bot
+      val top: Interval = Top
       def implies(e1: I,e2: I): Boolean = (e1,e2) match {
         case (Bot,_) => true
         case (_,Top) => true
@@ -61,7 +62,7 @@ object Interval {
         case (Gte(g1),Gte(g2)) => gte(min(g1,g2))
         case (Lte(l1),Lte(l2)) => lte(max(l1,l2))
   
-        case (Gte(g1),Lte(l2)) => btw(g1,l2)
+        case (Gte(g1),Lte(l2)) => top
         case (Lte(l2),Gte(g1)) => join(gte(g1),lte(l2))
   
         case (Btw(g1,l1),Gte(g2)) => gte(min(g1,g2))
@@ -74,7 +75,28 @@ object Interval {
   
         case (Bot,_) => e2
         case (_,Bot) => e1
-        case _ => Top
+        case _ => top
+      }
+      def meet(e1: I,e2: I): I = (e1,e2) match {
+        case _ if e1 == e2 => e1
+
+        case (Gte(g1),Gte(g2)) => gte(max(g1,g2))
+        case (Lte(l1),Lte(l2)) => lte(min(l1,l2))
+
+        case (Gte(g1),Lte(l2)) => btw(g1,l2)
+        case (Lte(l2),Gte(g1)) => join(gte(g1),lte(l2))
+
+        case (Btw(g1,l1),Gte(g2)) => btw(max(g1,g2),l1)
+        case (Gte(g2),Btw(g1,l1)) => join(btw(g1,l1),gte(g2))
+
+        case (Btw(g1,l1),Lte(l2)) => btw(g1,min(l1,l2))
+        case (Lte(l2),Btw(g1,l1)) => join(btw(g1,l1),lte(l2))
+
+        case (Btw(g1,l1),Btw(g2,l2)) => btw(max(g1,g2),min(l1,l2))
+
+        case (Top,_) => e2
+        case (_,Top) => e1
+        case _ => bot
       }
     }
 

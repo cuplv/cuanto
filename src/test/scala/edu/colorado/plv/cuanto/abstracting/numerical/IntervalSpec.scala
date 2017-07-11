@@ -3,6 +3,7 @@ package abstracting
 package numerical
 
 import Abstraction.beta
+import Lattice.meet
 import Semilattice.{implies, join}
 
 import Interval._
@@ -42,6 +43,8 @@ class IntervalSpec extends CuantoSpec {
     "(A , B)" -> "(A + B)",
     (Gte(5),Gte(10)) -> Gte(5),
     (Lte(5),Lte(10)) -> Lte(10),
+    (Gte(7),Lte(9)) -> Top,
+    (Gte(9),Lte(7)) -> Top,
     (Btw(0,5),Btw(2,3)) -> Btw(0,5),
     (Btw(0,5),Btw(1,6)) -> Btw(0,6),
     (Btw(0,5),Gte(2)) -> Gte(0),
@@ -52,6 +55,26 @@ class IntervalSpec extends CuantoSpec {
     forAll (joinTests) {
       (ab,r) => ab match {
         case (a,b) => join(a,b) should equal (r)
+      }
+    }
+  }
+
+  val meetTests = Table[(Interval,Interval),Interval](
+    "(A , B)" -> "(A * B)",
+    (Gte(5),Gte(10)) -> Gte(10),
+    (Lte(5),Lte(10)) -> Lte(5),
+    (Gte(7),Lte(9)) -> Btw(7,9),
+    (Gte(9),Lte(7)) -> Bot,
+    (Btw(0,5),Btw(2,3)) -> Btw(2,3),
+    (Btw(0,5),Btw(1,6)) -> Btw(1,5),
+    (Btw(0,5),Gte(2)) -> Btw(2,5),
+    (Btw(0,5),Lte(4)) -> Btw(0,4)
+  )
+
+  it should "meet" in {
+    forAll (meetTests) {
+      (ab,r) => ab match {
+        case (a,b) => meet(a,b) should equal (r)
       }
     }
   }
@@ -72,6 +95,14 @@ class IntervalSpec extends CuantoSpec {
     join(beta(c1),beta(c2))
   }
 
+  def checkmeet[C,A : Lattice](
+    c1: C, c2: C
+  )(
+    implicit inst: Abstraction[C,A]
+  ): A = {
+    meet(beta(c1),beta(c2))
+  }
+
   val betaTests = Table[Int,Interval](
     "Concrete" -> "Abstract",
     5 -> btw(5,5),
@@ -80,9 +111,16 @@ class IntervalSpec extends CuantoSpec {
 
   val combinedJoinTests = Table[(Int,Int),Interval](
     "Concrete A, B" -> "Abstract A + B",
-    (3,8) -> btw(3,8),
-    (34,-50) -> btw(-50,34),
-    (2,2) -> btw(2,2)
+    (3,8) -> Btw(3,8),
+    (34,-50) -> Btw(-50,34),
+    (2,2) -> Btw(2,2)
+  )
+
+  val combinedMeetTests = Table[(Int,Int),Interval](
+    "Concrete A, B" -> "Abstract A * B",
+    (3,8) -> Bot,
+    (34,-50) -> Bot,
+    (2,2) -> Btw(2,2)
   )
 
   it should "abstract Ints" in {
@@ -92,6 +130,11 @@ class IntervalSpec extends CuantoSpec {
     forAll (combinedJoinTests) {
       (cs,a) => (cs match {
         case (c1,c2) => checkjoin(c1,c2)
+      }) should equal (a)
+    }
+    forAll (combinedMeetTests) {
+      (cs,a) => (cs match {
+        case (c1,c2) => checkmeet(c1,c2)
       }) should equal (a)
     }
   }
