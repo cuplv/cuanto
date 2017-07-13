@@ -1,6 +1,6 @@
 package edu.colorado.plv.cuanto
 package abstracting.tc
-package bitvector
+package domains
 
 /** A domain representing a majority ([[Yay]]) or minority ([[Nay]])
   * among a set of boolean values

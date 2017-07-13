@@ -1,6 +1,6 @@
 package edu.colorado.plv.cuanto
 package abstracting.tc
-package bitvector
+package domains
 
 import Abstraction.beta
 import Semilattice.{implies, join}

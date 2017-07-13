@@ -1,6 +1,6 @@
 package edu.colorado.plv.cuanto
 package abstracting.tc
-package numerical
+package domains
 
 import Abstraction.beta
 import Lattice.meet
