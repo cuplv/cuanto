@@ -1,5 +1,5 @@
 package edu.colorado.plv.cuanto
-package abstracting
+package abstracting.tc
 package bitvector
 
 import Abstraction.beta

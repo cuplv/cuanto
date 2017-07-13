@@ -1,5 +1,5 @@
 package edu.colorado.plv.cuanto
-package abstracting
+package abstracting.tc
 package bitvector
 
 /** A domain representing a majority ([[Yay]]) or minority ([[Nay]])

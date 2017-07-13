@@ -1,5 +1,5 @@
 package edu.colorado.plv.cuanto
-package abstracting
+package abstracting.tc
 package numerical
 
 /** A domain representing an integer constrained by an upper and/or

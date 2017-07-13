@@ -1,13 +1,13 @@
 package edu.colorado.plv.cuanto.jsy.arithmetic
 
-import edu.colorado.plv.cuanto.abstracting.Abstraction
+import edu.colorado.plv.cuanto.abstracting.ml.Abstractable
 
 /** Abstract value type that can be evaluated with arithmetic operations.
   *
   * @tparam V is the value type
   * @author Bor-Yuh Evan Chang
   */
-trait Evalable[V] extends Abstraction[Double,V] {
+trait Evalable[V] extends Abstractable[Double,V] {
   def negate(v1: V): V
   def plus(v1: V, v2: V): V
   def minus(v1: V, v2: V): V = plus(v1, negate(v2))

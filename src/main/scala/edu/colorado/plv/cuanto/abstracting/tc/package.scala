@@ -1,10 +1,9 @@
 package edu.colorado.plv.cuanto
 
 /**
-  * @author Bor-Yuh Evan Chang
   * @author octalsrc
   */
-package abstracting {
+package abstracting.tc {
 
   /** A domain of partially ordered values with a ''least element''
     * ([[bot]]) and a [[join]] operation
