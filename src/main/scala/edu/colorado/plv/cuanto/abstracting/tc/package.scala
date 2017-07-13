@@ -6,9 +6,9 @@ package edu.colorado.plv.cuanto
 package abstracting.tc {
 
   /** A domain of partially ordered values with a ''least element''
-    * ([[bot]]) and a [[join]] operation
+    * ([[Semilattice.bot]]) and a [[Semilattice.join]] operation
     *
-    * The partial ordering in this case is [[implies]].
+    * The partial ordering in this case is [[Semilattice.implies]].
     *
     * The features of a [[Semilattice]] are commonly useful for an
     * abstract domain. */
@@ -33,8 +33,8 @@ package abstracting.tc {
       inst.join(e1,e2)
   }
 
-  /** An extension of the [[Semilattice]] with a [[meet]] operation and
-    * a [[top]] element that is greater than or equal to all other
+  /** An extension of the [[Semilattice]] with a [[Lattice.meet]] operation and
+    * a [[Lattice.top]] element that is greater than or equal to all other
     * elements */
   trait Lattice[A] extends Semilattice[A] {
     /** The greatest element, greater than or equal to all other
