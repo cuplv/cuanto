@@ -2,9 +2,9 @@ package edu.colorado.plv.cuanto
 package abstracting.tc
 package domains
 
-import Abstraction.beta
-import Semilattice.{bot, implies, join}
-import Lattice.top
+import Abstraction._
+import Lattice._
+import Semilattice._
 
 import Vote._
 import Vote.instances._
@@ -54,6 +54,23 @@ class VoteSpec extends CuantoSpec {
     forAll (joinTests) {
       (ab,r) => ab match {
         case (a,b) => join(a,b) should equal (r)
+      }
+    }
+  }
+
+  val meetTests = Table[(Vote,Vote),Vote](
+    "(A , B)" -> "(A + B)",
+    (bot,top) -> bot,
+    (bot,yay) -> bot,
+    (yay,yay) -> yay,
+    (yay,nay) -> bot,
+    (top,nay) -> nay
+  )
+
+  it should "meet" in {
+    forAll (meetTests) {
+      (ab,r) => ab match {
+        case (a,b) => meet(a,b) should equal (r)
       }
     }
   }
