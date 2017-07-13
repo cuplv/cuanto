@@ -3,9 +3,11 @@ package abstracting.tc
 package domains
 
 import Abstraction.beta
-import Semilattice.{implies, join}
+import Semilattice.{bot, implies, join}
+import Lattice.top
 
-import Vote.implicits._
+import Vote._
+import Vote.instances._
 
 /**
   * @author octalsrc
@@ -14,20 +16,20 @@ class VoteSpec extends CuantoSpec {
 
   val implyExamples = Table[Vote,Vote](
     "A" -> "B",
-    Bot -> Yay,
-    Bot -> Top,
-    Bot -> Bot,
-    Top -> Top,
-    Yay -> Yay,
-    Nay -> Nay
+    bot -> yay,
+    bot -> top,
+    bot -> bot,
+    top -> top,
+    yay -> yay,
+    nay -> nay
   )
 
   val implyFailures = Table[Vote,Vote](
     "A" -> "B",
-    Top -> Yay,
-    Nay -> Yay,
-    Yay -> Nay,
-    Yay -> Bot
+    top -> yay,
+    nay -> yay,
+    yay -> nay,
+    yay -> bot
   )
 
   "The Vote abstraction" should "imply" in {
@@ -41,11 +43,11 @@ class VoteSpec extends CuantoSpec {
 
   val joinTests = Table[(Vote,Vote),Vote](
     "(A , B)" -> "(A + B)",
-    (Bot,Top) -> Top,
-    (Bot,Yay) -> Yay,
-    (Yay,Yay) -> Yay,
-    (Yay,Nay) -> Top,
-    (Top,Nay) -> Top
+    (bot,top) -> top,
+    (bot,yay) -> yay,
+    (yay,yay) -> yay,
+    (yay,nay) -> top,
+    (top,nay) -> top
   )
 
   it should "join" in {
@@ -58,26 +60,26 @@ class VoteSpec extends CuantoSpec {
 
   val betaTests1 = Table[Boolean,Vote](
     "Concrete" -> "Abstract",
-    true -> Yay,
-    false -> Nay
+    true -> yay,
+    false -> nay
   )
 
   val betaTests3 = Table[(Boolean,Boolean,Boolean),Vote](
     "Concrete" -> "Abstract",
-    (true,true,true) -> Yay,
-    (false,true,true) -> Yay,
-    (true,false,false) -> Nay,
-    (false,false,false) -> Nay,
-    (false,false,true) -> Nay
+    (true,true,true) -> yay,
+    (false,true,true) -> yay,
+    (true,false,false) -> nay,
+    (false,false,false) -> nay,
+    (false,false,true) -> nay
   )
 
   val betaTestsList = Table[List[Boolean],Vote](
     "Concrete" -> "Abstract",
-    List(true) -> Yay,
-    List() -> Top,
-    List(true,false) -> Top,
-    List(true,true,false) -> Yay,
-    List(false,false,false,false,true,true,true) -> Nay
+    List(true) -> yay,
+    List() -> top,
+    List(true,false) -> top,
+    List(true,true,false) -> yay,
+    List(false,false,false,false,true,true,true) -> nay
   )
 
   it should "abstract a single Boolean" in {
