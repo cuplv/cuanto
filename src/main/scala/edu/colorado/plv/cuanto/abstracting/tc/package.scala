@@ -63,14 +63,13 @@ package abstracting.tc {
     */
   trait Abstraction[C,A] {
     /** Representation function. */
-    implicit def represent(c: C): A
+    def beta(c: C): A
   }
   object Abstraction {
     def apply[C,A](implicit inst: Abstraction[C,A]): Abstraction[C,A] =
       implicitly[Abstraction[C,A]]
 
-    /** Alias for [[Abstraction.represent `represent`]] */
-    def beta[C,A](c: C)(implicit inst: Abstraction[C,A]): A = inst.represent(c)
+    def beta[C,A](c: C)(implicit inst: Abstraction[C,A]): A = inst.beta(c)
   }
 
 }

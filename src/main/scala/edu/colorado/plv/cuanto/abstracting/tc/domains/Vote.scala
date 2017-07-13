@@ -52,7 +52,7 @@ package object Vote {
 
     implicit val abstractionVote: Abstraction[Boolean,Vote] =
       new Abstraction[Boolean,V] {
-        override def represent(c: Boolean) = c match {
+        override def beta(c: Boolean) = c match {
           case true => Yay
           case false => Nay
         }
@@ -60,7 +60,7 @@ package object Vote {
 
     implicit val abstractionVote3: Abstraction[(Boolean,Boolean,Boolean),Vote] =
       new Abstraction[(Boolean,Boolean,Boolean),V] {
-        override def represent(c: (Boolean,Boolean,Boolean)) = c match {
+        override def beta(c: (Boolean,Boolean,Boolean)) = c match {
           case (true,true,_) => Yay
           case (_,true,true) => Yay
           case (true,_,true) => Yay
@@ -70,7 +70,7 @@ package object Vote {
 
     implicit val abstractionVoteList: Abstraction[List[Boolean],Vote] =
       new Abstraction[List[Boolean],V] {
-        override def represent(c: List[Boolean]) = {
+        override def beta(c: List[Boolean]) = {
           val test: (Boolean,Int) => Int = (a,b) => a match {
             case true => b + 1
             case _ => b

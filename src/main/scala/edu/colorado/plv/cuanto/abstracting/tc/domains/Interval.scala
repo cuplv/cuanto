@@ -103,7 +103,7 @@ package object Interval {
 
     implicit val abstractionInterval: Abstraction[Int,Interval] =
       new Abstraction[Int,Interval] {
-        override def represent(c: Int): I = btw(c,c)
+        override def beta(c: Int): I = btw(c,c)
       }
 
   }
