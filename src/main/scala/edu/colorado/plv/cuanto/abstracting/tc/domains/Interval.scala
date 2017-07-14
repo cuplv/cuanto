@@ -1,26 +1,27 @@
 package edu.colorado.plv.cuanto
 package abstracting.tc
-package numerical
+package domains
 
 /** A domain representing an integer constrained by an upper and/or
   * lower bound
   *
   * Elements of the [[Interval]] domain should be constructed using
-  * the [[Interval.btw `btw`]], [[Interval.lte `lte`]], and
-  * [[Interval.gte `gte`]] operations defined in the companion object.
+  * the [[btw `btw`]], [[lte `lte`]], and [[gte `gte`]] operations
+  * defined in the companion object.
   *
   * @author octalsrc
   */
-sealed abstract class Interval
-case object Top extends Interval
-case object Bot extends Interval
-
-case class Gte(gte: Int) extends Interval
-case class Lte(lte: Int) extends Interval
-case class Btw(gte: Int, lte: Int) extends Interval
-
-object Interval {
+package object Interval {
   import math.{min,max}
+
+  sealed abstract class Interval
+
+  private[this] case object Top extends Interval
+  private[this] case object Bot extends Interval
+
+  private[this] case class Gte(gte: Int) extends Interval
+  private[this] case class Lte(lte: Int) extends Interval
+  private[this] case class Btw(gte: Int, lte: Int) extends Interval
 
   private[this] type I = Interval
 
@@ -42,7 +43,7 @@ object Interval {
     * first `Int` and less than or equal to the second `int`) */
   val btw: (Int,Int) => Interval = (g,l) => reduce(Btw(g,l))
 
-  object implicits {
+  object instances {
     implicit val latticeInterval: Lattice[Interval] = new Lattice[I] {
       val bot: Interval = Bot
       val top: Interval = Top
@@ -102,7 +103,7 @@ object Interval {
 
     implicit val abstractionInterval: Abstraction[Int,Interval] =
       new Abstraction[Int,Interval] {
-        override def represent(c: Int): I = btw(c,c)
+        override def beta(c: Int): I = btw(c,c)
       }
 
   }

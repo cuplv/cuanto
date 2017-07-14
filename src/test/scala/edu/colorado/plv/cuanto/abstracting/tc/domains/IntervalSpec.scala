@@ -1,13 +1,13 @@
 package edu.colorado.plv.cuanto
 package abstracting.tc
-package numerical
+package domains
 
 import Abstraction.beta
-import Lattice.meet
-import Semilattice.{implies, join, isBottom, bot}
+import Lattice.{meet, top}
+import Semilattice.{bot, implies, join, isBottom}
 
 import Interval._
-import Interval.implicits._
+import Interval.instances._
 
 /**
   * @author octalsrc
@@ -16,19 +16,19 @@ class IntervalSpec extends CuantoSpec {
 
   val implyTests = Table[(Interval,Interval),Boolean](
     "Does A imply B?" -> "Response",
-    (Bot,Lte(4)) -> true,
-    (Top,Lte(4)) -> false,
-    (Gte(5),Bot) -> false,
-    (Gte(5),Top) -> true,
-    (Btw(0,5),Gte(2)) -> false,
-    (Gte(2),Btw(3,4)) -> false,
-    (Btw(0,5),Lte(10)) -> true,
-    (Btw(0,10),Btw(2,8)) -> true,
-    (Btw(2,8),Btw(0,10)) -> false,
-    (Gte(5),Gte(0)) -> true,
-    (Gte(5),Gte(10)) -> false,
-    (Lte(10),Lte(8)) -> false,
-    (Lte(10),Lte(12)) -> true
+    (bot,lte(4)) -> true,
+    (top,lte(4)) -> false,
+    (gte(5),bot) -> false,
+    (gte(5),top) -> true,
+    (btw(0,5),gte(2)) -> false,
+    (gte(2),btw(3,4)) -> false,
+    (btw(0,5),lte(10)) -> true,
+    (btw(0,10),btw(2,8)) -> true,
+    (btw(2,8),btw(0,10)) -> false,
+    (gte(5),gte(0)) -> true,
+    (gte(5),gte(10)) -> false,
+    (lte(10),lte(8)) -> false,
+    (lte(10),lte(12)) -> true
   )
 
   "The Interval abstraction" should "imply" in {
@@ -41,14 +41,14 @@ class IntervalSpec extends CuantoSpec {
 
   val joinTests = Table[(Interval,Interval),Interval](
     "(A , B)" -> "(A + B)",
-    (Gte(5),Gte(10)) -> Gte(5),
-    (Lte(5),Lte(10)) -> Lte(10),
-    (Gte(7),Lte(9)) -> Top,
-    (Gte(9),Lte(7)) -> Top,
-    (Btw(0,5),Btw(2,3)) -> Btw(0,5),
-    (Btw(0,5),Btw(1,6)) -> Btw(0,6),
-    (Btw(0,5),Gte(2)) -> Gte(0),
-    (Btw(0,5),Lte(4)) -> Lte(5)
+    (gte(5),gte(10)) -> gte(5),
+    (lte(5),lte(10)) -> lte(10),
+    (gte(7),lte(9)) -> top,
+    (gte(9),lte(7)) -> top,
+    (btw(0,5),btw(2,3)) -> btw(0,5),
+    (btw(0,5),btw(1,6)) -> btw(0,6),
+    (btw(0,5),gte(2)) -> gte(0),
+    (btw(0,5),lte(4)) -> lte(5)
   )
 
   it should "join" in {
@@ -61,14 +61,14 @@ class IntervalSpec extends CuantoSpec {
 
   val meetTests = Table[(Interval,Interval),Interval](
     "(A , B)" -> "(A * B)",
-    (Gte(5),Gte(10)) -> Gte(10),
-    (Lte(5),Lte(10)) -> Lte(5),
-    (Gte(7),Lte(9)) -> Btw(7,9),
-    (Gte(9),Lte(7)) -> Bot,
-    (Btw(0,5),Btw(2,3)) -> Btw(2,3),
-    (Btw(0,5),Btw(1,6)) -> Btw(1,5),
-    (Btw(0,5),Gte(2)) -> Btw(2,5),
-    (Btw(0,5),Lte(4)) -> Btw(0,4)
+    (gte(5),gte(10)) -> gte(10),
+    (lte(5),lte(10)) -> lte(5),
+    (gte(7),lte(9)) -> btw(7,9),
+    (gte(9),lte(7)) -> bot,
+    (btw(0,5),btw(2,3)) -> btw(2,3),
+    (btw(0,5),btw(1,6)) -> btw(1,5),
+    (btw(0,5),gte(2)) -> btw(2,5),
+    (btw(0,5),lte(4)) -> btw(0,4)
   )
 
   it should "meet" in {
@@ -115,16 +115,16 @@ class IntervalSpec extends CuantoSpec {
 
   val combinedJoinTests = Table[(Int,Int),Interval](
     "Concrete A, B" -> "Abstract A + B",
-    (3,8) -> Btw(3,8),
-    (34,-50) -> Btw(-50,34),
-    (2,2) -> Btw(2,2)
+    (3,8) -> btw(3,8),
+    (34,-50) -> btw(-50,34),
+    (2,2) -> btw(2,2)
   )
 
   val combinedMeetTests = Table[(Int,Int),Interval](
     "Concrete A, B" -> "Abstract A * B",
-    (3,8) -> Bot,
-    (34,-50) -> Bot,
-    (2,2) -> Btw(2,2)
+    (3,8) -> bot,
+    (34,-50) -> bot,
+    (2,2) -> btw(2,2)
   )
 
   it should "abstract Ints" in {

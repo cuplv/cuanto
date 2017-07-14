@@ -1,26 +1,35 @@
 package edu.colorado.plv.cuanto
 package abstracting.tc
-package bitvector
+package domains
 
-/** A domain representing a majority ([[Yay]]) or minority ([[Nay]])
+/** A domain representing a majority ([[yay `yay`]]) or minority ([[nay `nay`]])
   * among a set of boolean values
   *
   * @author octalsrc
   */
-sealed abstract class Vote
-case object Top extends Vote
-case object Bot extends Vote
+package object Vote {
 
-case object Yay extends Vote
-case object Nay extends Vote
+  sealed abstract class Vote
 
-object Vote {
+  private[domains] case object Top extends Vote
+  private[domains] case object Bot extends Vote
+
+  private[domains] case object Yay extends Vote
+  private[domains] case object Nay extends Vote
+
   private[this] type V = Vote
 
-  object implicits {
+  /** Majority vote (meaning a majority of the booleans were `true`) */
+  val yay: Vote = Yay
 
-    implicit val semilatticeVote: Semilattice[V] = new Semilattice[V] {
+  /** Minority vote (majority were `false`) */
+  val nay: Vote = Nay
+
+  object instances {
+
+    implicit val latticeVote: Lattice[Vote] = new Lattice[V] {
       val bot: V = Bot
+      val top: V = Top
       def implies(e1: V,e2: V): Boolean = (e1,e2) match {
         case (Bot,_) => true
         case (_,Top) => true
@@ -33,19 +42,25 @@ object Vote {
         case _ if e1 == e2 => e1
         case _ => Top
       }
+      def meet(e1: V,e2: V): V = (e1,e2) match {
+        case (Top,_) => e2
+        case (_,Top) => e1
+        case _ if e1 == e2 => e1
+        case _ => Bot
+      }
     }
 
-    implicit val abstractionVote: Abstraction[Boolean,V] =
+    implicit val abstractionVote: Abstraction[Boolean,Vote] =
       new Abstraction[Boolean,V] {
-        override def represent(c: Boolean) = c match {
+        override def beta(c: Boolean) = c match {
           case true => Yay
           case false => Nay
         }
       }
 
-    implicit val abstractionVote3: Abstraction[(Boolean,Boolean,Boolean),V] =
+    implicit val abstractionVote3: Abstraction[(Boolean,Boolean,Boolean),Vote] =
       new Abstraction[(Boolean,Boolean,Boolean),V] {
-        override def represent(c: (Boolean,Boolean,Boolean)) = c match {
+        override def beta(c: (Boolean,Boolean,Boolean)) = c match {
           case (true,true,_) => Yay
           case (_,true,true) => Yay
           case (true,_,true) => Yay
@@ -53,9 +68,9 @@ object Vote {
         }
       }
 
-    implicit val abstractionVoteList: Abstraction[List[Boolean],V] =
+    implicit val abstractionVoteList: Abstraction[List[Boolean],Vote] =
       new Abstraction[List[Boolean],V] {
-        override def represent(c: List[Boolean]) = {
+        override def beta(c: List[Boolean]) = {
           val test: (Boolean,Int) => Int = (a,b) => a match {
             case true => b + 1
             case _ => b
