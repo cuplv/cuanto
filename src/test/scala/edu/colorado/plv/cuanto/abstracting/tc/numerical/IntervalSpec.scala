@@ -4,7 +4,7 @@ package numerical
 
 import Abstraction.beta
 import Lattice.meet
-import Semilattice.{implies, join}
+import Semilattice.{implies, join, isBottom, bot}
 
 import Interval._
 import Interval.implicits._
@@ -103,6 +103,10 @@ class IntervalSpec extends CuantoSpec {
     meet(beta(c1),beta(c2))
   }
 
+//  def checkbot[C](c : C)(implicit inst: Semilattice[C]): Boolean ={
+//    isBottom(c)
+//  }
+
   val betaTests = Table[Int,Interval](
     "Concrete" -> "Abstract",
     5 -> btw(5,5),
@@ -137,6 +141,12 @@ class IntervalSpec extends CuantoSpec {
         case (c1,c2) => checkmeet(c1,c2)
       }) should equal (a)
     }
+  }
+  it should "detect bottom" in {
+    isBottom(bot[Interval]) should equal (true)
+    isBottom(btw(2,3)) should equal (false)
+    isBottom(beta(3)) should equal (false)
+
   }
 
 }
