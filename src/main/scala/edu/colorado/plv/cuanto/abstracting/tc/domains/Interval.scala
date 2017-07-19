@@ -64,18 +64,18 @@ package object interval {
 
         case (Gte(g1),Gte(g2)) => gte(min(g1,g2))
         case (Lte(l1),Lte(l2)) => lte(max(l1,l2))
-  
+
         case (Gte(g1),Lte(l2)) => top
         case (Lte(l2),Gte(g1)) => join(gte(g1),lte(l2))
-  
+
         case (Btw(g1,l1),Gte(g2)) => gte(min(g1,g2))
         case (Gte(g2),Btw(g1,l1)) => join(btw(g1,l1),gte(g2))
-  
+
         case (Btw(g1,l1),Lte(l2)) => lte(max(l1,l2))
         case (Lte(l2),Btw(g1,l1)) => join(btw(g1,l1),lte(l2))
-  
+
         case (Btw(g1,l1),Btw(g2,l2)) => btw(min(g1,g2),max(l1,l2))
-  
+
         case (Bot,_) => e2
         case (_,Bot) => e1
         case _ => top

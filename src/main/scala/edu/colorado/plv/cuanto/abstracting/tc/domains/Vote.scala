@@ -26,7 +26,6 @@ package object vote {
   val nay: Vote = Nay
 
   object instances {
-
     implicit val latticeVote: Lattice[Vote] = new Lattice[V] {
       val bot: V = Bot
       val top: V = Top
@@ -77,7 +76,7 @@ package object vote {
           }
           val l: Int = c.size
           val t: Int = c.foldRight(0)(test)
-  
+
           () match {
             case _ if t * 2 > l => Yay
             case _ if t * 2 < l => Nay
@@ -85,6 +84,5 @@ package object vote {
           }
         }
       }
-  
   }
 }
