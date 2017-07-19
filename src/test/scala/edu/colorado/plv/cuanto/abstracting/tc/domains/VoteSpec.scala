@@ -1,13 +1,12 @@
 package edu.colorado.plv.cuanto
 package abstracting.tc
-package domains
+package domains.vote
 
 import Abstraction._
 import Lattice._
 import Semilattice._
 
-import Vote._
-import Vote.instances._
+import instances._
 
 /**
   * @author Nicholas V. Lewchenko

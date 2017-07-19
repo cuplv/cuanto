@@ -1,13 +1,12 @@
 package edu.colorado.plv.cuanto
 package abstracting.tc
-package domains
+package domains.interval
 
 import Abstraction.beta
 import Lattice.{meet, top}
 import Semilattice.{bot, implies, join, isBottom}
 
-import Interval._
-import Interval.instances._
+import instances._
 
 /**
   * @author Nicholas V. Lewchenko

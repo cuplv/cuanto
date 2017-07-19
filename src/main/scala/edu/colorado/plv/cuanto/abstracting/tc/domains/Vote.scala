@@ -7,7 +7,7 @@ package domains
   *
   * @author Nicholas V. Lewchenko
   */
-package object Vote {
+package object vote {
 
   sealed abstract class Vote
 

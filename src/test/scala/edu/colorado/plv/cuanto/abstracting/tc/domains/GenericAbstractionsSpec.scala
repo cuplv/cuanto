@@ -1,18 +1,19 @@
 package edu.colorado.plv.cuanto
 package abstracting.tc
 package domains
+package generic
 
 import Abstraction._
 import Lattice._
 import Semilattice._
 
-import generic.instances._
+import instances._
 
-import Interval._
-import Interval.instances._
+import interval._
+import interval.instances._
 
-import Vote._
-import Vote.instances._
+import vote._
+import vote.instances._
 
 /**
   * @author Nicholas V. Lewchenko

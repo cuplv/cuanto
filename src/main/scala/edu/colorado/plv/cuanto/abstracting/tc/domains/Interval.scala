@@ -11,7 +11,7 @@ package domains
   *
   * @author Nicholas V. Lewchenko
   */
-package object Interval {
+package object interval {
   import math.{min,max}
 
   sealed abstract class Interval
