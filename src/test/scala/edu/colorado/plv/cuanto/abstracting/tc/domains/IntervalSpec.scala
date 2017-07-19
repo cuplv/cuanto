@@ -2,9 +2,9 @@ package edu.colorado.plv.cuanto
 package abstracting.tc
 package domains.interval
 
-import Abstraction.beta
-import Lattice.{meet, top}
-import Semilattice.{bot, implies, join, isBottom}
+import Abstraction._
+import Lattice._
+import Semilattice._
 
 import instances._
 
@@ -152,6 +152,19 @@ class IntervalSpec extends CuantoSpec {
   }
   it should "distinguish the result of beta from bottom" in {
     isBottom(beta(3)) should equal (false)
+  }
+
+  it should "detect top" in {
+    isTop(top[Interval]) should equal (true)
+  }
+  it should "be able to distinguish bottom as not top" in {
+    isTop(bot[Interval]) should equal (false)
+  }
+  it should "distinguish an interval from top" in {
+    isTop(btw(2,3)) should equal (false)
+  }
+  it should "distinguish the result of beta from top" in {
+    isTop(beta(3)) should equal (false)
   }
 
 }

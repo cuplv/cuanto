@@ -116,4 +116,29 @@ class VoteSpec extends CuantoSpec {
     }
   }
 
+  it should "detect bottom" in {
+    isBottom(bot[Vote]) should equal (true)
+  }
+  it should "be able to distinguish top as not bottom" in {
+    isBottom(top[Vote]) should equal (false)
+  }
+  it should "distinguish an interval from bottom" in {
+    isBottom(yay) should equal (false)
+  }
+  it should "distinguish the result of beta from bottom" in {
+    isBottom(beta(true)) should equal (false)
+  }
+
+  it should "detect top" in {
+    isTop(top[Vote]) should equal (true)
+  }
+  it should "be able to distinguish bottom as not top" in {
+    isTop(bot[Vote]) should equal (false)
+  }
+  it should "distinguish an interval from top" in {
+    isTop(yay) should equal (false)
+  }
+  it should "distinguish the result of beta from top" in {
+    isTop(beta(true)) should equal (false)
+  }
 }
