@@ -25,10 +25,6 @@ package object interval {
 
   private[this] type I = Interval
 
-  private[this] val reduce: I => I = e => e match {
-    case Btw(g,l) if g > l => Bot
-    case e => e
-  }
 
   /** Produce an abstract element representing [[Int]]s greater than or
     * equal to this [[Int]] */
@@ -41,7 +37,13 @@ package object interval {
   /** Produce an abstract element representing [[Int]]s within the
     * inclusive bounds of the arguments (greater than or equal to the
     * first `Int` and less than or equal to the second `int`) */
-  val btw: (Int,Int) => Interval = (g,l) => reduce(Btw(g,l))
+  val btw: (Int,Int) => Interval = (g,l) => {
+    val reduce: I => I = e => e match {
+      case Btw(g,l) if g > l => Bot
+      case e => e
+    }
+    reduce(Btw(g,l))
+  }
 
   object instances {
     implicit val latticeInterval: Lattice[Interval] = new Lattice[I] {
