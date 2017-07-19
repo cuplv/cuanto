@@ -44,6 +44,7 @@ class IntervalSpec extends CuantoSpec {
     (lte(5),lte(10)) -> lte(10),
     (gte(7),lte(9)) -> top,
     (gte(9),lte(7)) -> top,
+    (top[Interval],(gte(9))) -> top,
     (btw(0,5),btw(2,3)) -> btw(0,5),
     (btw(0,5),btw(1,6)) -> btw(0,6),
     (btw(0,5),gte(2)) -> gte(0),
