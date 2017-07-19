@@ -15,7 +15,7 @@ import Vote._
 import Vote.instances._
 
 /**
-  * @author octalsrc
+  * @author Nicholas V. Lewchenko
   */
 class GenericAbstractionsSpec extends CuantoSpec {
 

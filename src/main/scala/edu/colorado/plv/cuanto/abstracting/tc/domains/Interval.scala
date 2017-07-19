@@ -9,7 +9,7 @@ package domains
   * the [[btw `btw`]], [[lte `lte`]], and [[gte `gte`]] operations
   * defined in the companion object.
   *
-  * @author octalsrc
+  * @author Nicholas V. Lewchenko
   */
 package object Interval {
   import math.{min,max}

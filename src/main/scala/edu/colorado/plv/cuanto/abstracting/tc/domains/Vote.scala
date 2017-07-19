@@ -5,7 +5,7 @@ package domains
 /** A domain representing a majority ([[yay `yay`]]) or minority ([[nay `nay`]])
   * among a set of boolean values
   *
-  * @author octalsrc
+  * @author Nicholas V. Lewchenko
   */
 package object Vote {
 

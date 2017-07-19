@@ -1,7 +1,7 @@
 package edu.colorado.plv.cuanto
 
 /**
-  * @author octalsrc
+  * @author Nicholas V. Lewchenko
   */
 package abstracting.tc {
 

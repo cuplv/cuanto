@@ -10,7 +10,7 @@ import Interval._
 import Interval.instances._
 
 /**
-  * @author octalsrc
+  * @author Nicholas V. Lewchenko
   */
 class IntervalSpec extends CuantoSpec {
 
