@@ -144,9 +144,15 @@ class IntervalSpec extends CuantoSpec {
   }
   it should "detect bottom" in {
     isBottom(bot[Interval]) should equal (true)
+  }
+  it should "be able to distinguish top as not bottom" in {
+    isBottom(top[Interval]) should equal (false)
+  }
+  it should "distinguish an interval from bottom" in {
     isBottom(btw(2,3)) should equal (false)
+  }
+  it should "distinguish the result of beta from bottom" in {
     isBottom(beta(3)) should equal (false)
-
   }
 
 }
