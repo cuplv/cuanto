@@ -11,11 +11,11 @@ package object vote {
 
   sealed abstract class Vote
 
-  private[domains] case object Top extends Vote
-  private[domains] case object Bot extends Vote
+  private[this] case object Top extends Vote
+  private[this] case object Bot extends Vote
 
-  private[domains] case object Yay extends Vote
-  private[domains] case object Nay extends Vote
+  private[this] case object Yay extends Vote
+  private[this] case object Nay extends Vote
 
   private[this] type V = Vote
 
