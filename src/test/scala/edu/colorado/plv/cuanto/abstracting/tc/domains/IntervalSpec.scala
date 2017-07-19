@@ -78,6 +78,10 @@ class IntervalSpec extends CuantoSpec {
     }
   }
 
+  // These various "check-x" functions are used to test/demonstrate
+  // the way polymorphic functions are written for working with
+  // typclass values; they are not necessary for using the
+  // typeclasses' operations.
   def checkrep[C,A](
     c: C,
     a: A
@@ -101,10 +105,6 @@ class IntervalSpec extends CuantoSpec {
   ): A = {
     meet(beta(c1),beta(c2))
   }
-
-//  def checkbot[C](c : C)(implicit inst: Semilattice[C]): Boolean ={
-//    isBottom(c)
-//  }
 
   val betaTests = Table[Int,Interval](
     "Concrete" -> "Abstract",
