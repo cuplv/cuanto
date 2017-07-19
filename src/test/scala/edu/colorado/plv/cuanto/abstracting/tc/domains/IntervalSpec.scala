@@ -167,4 +167,13 @@ class IntervalSpec extends CuantoSpec {
     isTop(beta(3)) should equal (false)
   }
 
+  // This requires properly defined `apply` methods in the companion
+  // objects of each typeclass.  The `Lattice[A].fun` method of
+  // referncing a typeclass member uses `apply` to pull the
+  // `Lattice[A]` instance from implicit scope.
+  it should "be usable as a standard typeclass" in {
+    Semilattice[Interval].isBottom(Semilattice[Interval].bot) should equal (true)
+    Lattice[Interval].isTop(Lattice[Interval].top) should equal (true)
+    Abstraction[Int,Interval].beta(5) should equal (btw(5,5))
+  }
 }
