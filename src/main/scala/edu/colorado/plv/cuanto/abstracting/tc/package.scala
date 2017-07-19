@@ -55,8 +55,8 @@ package abstracting.tc {
 
   /** Abstract an abstractable value.
     *
-    * An [[Abstraction]] defines a representation function mapping a
-    * single value to an abstract element.
+    * An [[Abstraction]] defines a representation function ([[beta]])
+    * mapping a single value to an abstract element.
     *
     * @tparam C is the concrete value type
     * @tparam A is the abstract element type
@@ -70,6 +70,9 @@ package abstracting.tc {
       implicitly[Abstraction[C,A]]
 
     def beta[C,A](c: C)(implicit inst: Abstraction[C,A]): A = inst.beta(c)
+
+    /** An alias for [[beta]], the representation function */
+    def represent[C,A](c: C)(implicit inst: Abstraction[C,A]): A = inst.beta(c)
   }
 
 }
