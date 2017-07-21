@@ -1,4 +1,5 @@
 import Dependencies._
+import SystemClasspath._
 
 enablePlugins(SiteScaladocPlugin)
 enablePlugins(GhpagesPlugin)
@@ -70,6 +71,12 @@ lazy val root = (project in file(".")).
     // scala-smtlib comes from the "sonatype releases" repository
     resolvers += sonatypeResolver,
     libraryDependencies += scalaSMTLIB,
+
+    // Tell sbt to look at $CLASSPATH for unmanaged jars.  This is
+    // where system-installed jars (such as jars that depend on native
+    // libraries) are usually found.
+    unmanagedClasspath in Compile ++= systemClasspath,
+    unmanagedClasspath in Test ++= systemClasspath,
 
     // Name
     name := "cuanto"
