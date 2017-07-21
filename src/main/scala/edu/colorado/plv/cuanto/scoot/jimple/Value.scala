@@ -1,4 +1,4 @@
-package edu.colorado.plv.cuanto.scoot.ir
+package edu.colorado.plv.cuanto.scoot.jimple
 
 import scala.collection.JavaConverters._
 import soot.Type

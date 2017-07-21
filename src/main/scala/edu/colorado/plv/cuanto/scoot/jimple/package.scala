@@ -5,7 +5,7 @@ import soot.jimple.JimpleValueSwitch
 /**
   * Created by Jared on 6/13/2017.
   */
-package object ir {
+package object jimple {
   implicit def convertAddExpr(dt: soot.jimple.AddExpr) : AddExpr = new AddExpr(dt)
 
   implicit def convertDivExpr(dt: soot.jimple.DivExpr) : DivExpr = new DivExpr(dt)
