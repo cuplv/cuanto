@@ -3,7 +3,7 @@ package edu.colorado.plv.cuanto
 /**
   * @author Bor-Yuh Evan Chang
   */
-package abstracting {
+package abstracting.ml {
 
   /** Abstract an abstractable value.
     *
