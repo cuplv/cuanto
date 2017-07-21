@@ -1,11 +1,11 @@
 language: nix
 before_script:
-- cd $HOME && git clone https://github.com/cuplv/cuplv-nixpkgs && cuplv-nixpkgs/install && cd -
+- mkdir -p $HOME/overlays && cd $HOME/overlays && git clone https://github.com/cuplv/cuplv-nixpkgs && cd -
 - nix-env -iA nixpkgs.bashInteractive
 script:
-- nix-shell --command "sbt clean coverage test"
+- nix-shell --command "sbt clean coverage test" -I nixpkgs-overlays=$HOME/overlays
 after_success:
-- nix-shell --command "sbt coverageReport coveralls codacyCoverage"
+- nix-shell --command "sbt coverageReport coveralls codacyCoverage" -I nixpkgs-overlays=$HOME/overlays
 before_deploy:
 # Record minimal build information via the Git user ident
 - git config --global user.name "$USER"
