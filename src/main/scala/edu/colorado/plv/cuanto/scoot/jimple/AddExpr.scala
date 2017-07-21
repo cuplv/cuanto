@@ -8,6 +8,6 @@ class AddExpr(dt: soot.jimple.AddExpr) extends BinopExpr(dt: soot.jimple.BinopEx
 //empty interface
 
 object AddExpr {
-  def unapply(e: AddExpr): Option[(soot.Value, soot.Value)] =
+  def unapply(e: AddExpr): Option[(Value, Value)] =
     Some((e.op1, e.op2))
 }
