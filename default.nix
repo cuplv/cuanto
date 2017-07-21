@@ -1,4 +1,4 @@
-{ stdenv, sbt, z3, jdk }:
+{ stdenv, sbt, z3, jdk, japron }:
 
 # If we're using Linux openjdk, there is an option that removes lots
 # of unneeded extra dependencies.
@@ -13,5 +13,5 @@ stdenv.mkDerivation rec {
   name = "cuanto-${version}";
   version = "dev";
   src = ./.;
-  buildInputs = [ sbt z3 jdk ];
+  buildInputs = [ sbt z3 jdk japron ];
 }
