@@ -3,6 +3,15 @@ scala:
 - 2.12.1
 jdk:
 - oraclejdk8
+addons:
+  apt:
+    sources:
+    # This package repo is necessary for getting z3 on Ubuntu 14.04
+    - sourceline: 'deb http://download.opensuse.org/repositories/home:/delcypher:/z3/xUbuntu_14.04/ /'
+      key_url: 'http://download.opensuse.org/repositories/home:delcypher:z3/xUbuntu_14.04/Release.key'
+    packages:
+    # Install z3 for use in tests using scala-smtlib
+    - z3
 script:
 - sbt clean coverage test
 after_success:
