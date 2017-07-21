@@ -51,7 +51,7 @@ import smtlib.theories.Ints.{
   *
   * [[https://github.com/regb/scala-smtlib/blob/v0.2.1/src/it/scala/smtlib/it/SmtLibRunnerTests.scala]]
   *
-  * @author octalsrc
+  * @author Nicholas V. Lewchenko
   */
 class ScalaSmtlibExample extends CuantoSpec {
 

@@ -1,4 +1,4 @@
-package edu.colorado.plv.cuanto.abstracting
+package edu.colorado.plv.cuanto.abstracting.ml
 
 /** Signature for a generic abstraction.
   *

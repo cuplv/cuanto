@@ -38,17 +38,46 @@ We use Scaladoc and follow the standard guidelines from [Scaladoc for Library Au
 
 ## Development Environment
 
-### Dependencies
+### Getting an environment with `nix-shell`
+
+The simplest way to set up the build environment if you are running
+Linux, MacOS, or Windows (with a Linux subsystem) is with
+the [Nix package manager](http://nixos.org/nix/).  With the Nix
+package manager installed (see [Nix project](http://nixos.org/nix/)),
+add the [`cuplv-nixpkgs`](https://github.com/cuplv/cuplv-nixpkgs)
+overlay and then use `nix-shell` to open a shell with all dependencies
+available.
+
+    # Add the cuplv-nixpkgs overlay
+    $ git clone https://github.com/cuplv/cuplv-nixpkgs
+    $ cuplv-nixpkgs/install
+    
+    # Clone the cuanto project
+    $ git clone https://github.com/cuplv/cuanto
+    
+    # Enter the cuanto build environment
+    $ cd cuanto
+    $ nix-shell
+    
+    # Test the build environment
+    [nix-shell:~/cuanto]$ sbt test
+
+### Manually setting up an environment
+
+If you would like to set up a build environment using your own package
+manager, you will need to find and install the following tools:
 
 - JDK 8
 - `sbt`
+- `z3`
 
-#### macOS: Install Dependencies
+### Setting up an environment with on MacOS with Homebrew
 
 Using [Homebrew](https://brew.sh/), install dependencies as follows:
 ```
 $ brew cask install java
 $ brew install sbt
+$ brew install z3
 ```
 
 ### Building and Testing 
