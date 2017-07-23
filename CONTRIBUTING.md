@@ -71,7 +71,7 @@ manager, you will need to find and install the following tools:
 - `sbt`
 - `z3`
 
-### Setting up an environment with on MacOS with Homebrew
+### Setting up an environment on MacOS with Homebrew
 
 Using [Homebrew](https://brew.sh/), install dependencies as follows:
 ```
