@@ -27,120 +27,100 @@ package object jimple {
       //ExprSwitch methods
       override def caseAddExpr(addExpr: soot.jimple.AddExpr): Unit = retValue = Some(convertAddExpr(addExpr))
 
-      override def caseAndExpr(andExpr: soot.jimple.AndExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseAndExpr(andExpr: soot.jimple.AndExpr): Unit = ???
 
-      override def caseCastExpr(castExpr: soot.jimple.CastExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseCastExpr(castExpr: soot.jimple.CastExpr): Unit = ???
 
-      override def caseCmpExpr(cmpExpr: soot.jimple.CmpExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseCmpExpr(cmpExpr: soot.jimple.CmpExpr): Unit = ???
 
-      override def caseCmpgExpr(cmpgExpr: soot.jimple.CmpgExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseCmpgExpr(cmpgExpr: soot.jimple.CmpgExpr): Unit = ???
 
-      override def caseCmplExpr(cmplExpr: soot.jimple.CmplExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseCmplExpr(cmplExpr: soot.jimple.CmplExpr): Unit = ???
 
       override def caseDivExpr(divExpr: soot.jimple.DivExpr): Unit = retValue = Some(convertDivExpr(divExpr))
 
-      override def caseDynamicInvokeExpr(dynamicInvokeExpr: soot.jimple.DynamicInvokeExpr): Unit =
-        throw new Exception("unsupported Expr conversion")
+      override def caseDynamicInvokeExpr(dynamicInvokeExpr: soot.jimple.DynamicInvokeExpr): Unit = ???
 
-      override def caseEqExpr(eqExpr: soot.jimple.EqExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseEqExpr(eqExpr: soot.jimple.EqExpr): Unit = ???
 
-      override def caseGeExpr(geExpr: soot.jimple.GeExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseGeExpr(geExpr: soot.jimple.GeExpr): Unit = ???
 
-      override def caseGtExpr(gtExpr: soot.jimple.GtExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseGtExpr(gtExpr: soot.jimple.GtExpr): Unit = ???
 
-      override def caseInstanceOfExpr(instanceOfExpr: soot.jimple.InstanceOfExpr): Unit =
-        throw new Exception("unsupported Expr conversion")
+      override def caseInstanceOfExpr(instanceOfExpr: soot.jimple.InstanceOfExpr): Unit = ???
 
-      override def caseInterfaceInvokeExpr(interfaceInvokeExpr: soot.jimple.InterfaceInvokeExpr): Unit =
-        throw new Exception("unsupported Expr conversion")
+      override def caseInterfaceInvokeExpr(interfaceInvokeExpr: soot.jimple.InterfaceInvokeExpr): Unit = ???
 
-      override def caseLeExpr(leExpr: soot.jimple.LeExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseLeExpr(leExpr: soot.jimple.LeExpr): Unit = ???
 
-      override def caseLengthExpr(lengthExpr: soot.jimple.LengthExpr): Unit =
-        throw new Exception("unsupported Expr conversion")
+      override def caseLengthExpr(lengthExpr: soot.jimple.LengthExpr): Unit = ???
 
-      override def caseLtExpr(ltExpr: soot.jimple.LtExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseLtExpr(ltExpr: soot.jimple.LtExpr): Unit = ???
 
       override def caseMulExpr(mulExpr: soot.jimple.MulExpr): Unit = retValue = Some(convertMulExpr(mulExpr))
 
-      override def caseNeExpr(neExpr: soot.jimple.NeExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseNeExpr(neExpr: soot.jimple.NeExpr): Unit = ???
 
       override def caseNegExpr(negExpr: soot.jimple.NegExpr): Unit = retValue = Some(convertNegExpr(negExpr))
 
-      override def caseNewArrayExpr(newArrayExpr: soot.jimple.NewArrayExpr): Unit =
-        throw new Exception("unsupported Expr conversion")
+      override def caseNewArrayExpr(newArrayExpr: soot.jimple.NewArrayExpr): Unit = ???
 
-      override def caseNewExpr(newExpr: soot.jimple.NewExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseNewExpr(newExpr: soot.jimple.NewExpr): Unit = ???
 
-      override def caseNewMultiArrayExpr(newMultiArrayExpr: soot.jimple.NewMultiArrayExpr): Unit =
-        throw new Exception("unsupported Expr conversion")
+      override def caseNewMultiArrayExpr(newMultiArrayExpr: soot.jimple.NewMultiArrayExpr): Unit = ???
 
-      override def caseOrExpr(orExpr: soot.jimple.OrExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseOrExpr(orExpr: soot.jimple.OrExpr): Unit = ???
 
-      override def caseRemExpr(remExpr: soot.jimple.RemExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseRemExpr(remExpr: soot.jimple.RemExpr): Unit = ???
 
-      override def caseShlExpr(shlExpr: soot.jimple.ShlExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseShlExpr(shlExpr: soot.jimple.ShlExpr): Unit = ???
 
-      override def caseShrExpr(shrExpr: soot.jimple.ShrExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseShrExpr(shrExpr: soot.jimple.ShrExpr): Unit = ???
 
-      override def caseSpecialInvokeExpr(specialInvokeExpr: soot.jimple.SpecialInvokeExpr): Unit =
-        throw new Exception("unsupported Expr conversion")
+      override def caseSpecialInvokeExpr(specialInvokeExpr: soot.jimple.SpecialInvokeExpr): Unit = ???
 
-      override def caseStaticInvokeExpr(staticInvokeExpr: soot.jimple.StaticInvokeExpr): Unit =
-        throw new Exception("unsupported Expr conversion")
+      override def caseStaticInvokeExpr(staticInvokeExpr: soot.jimple.StaticInvokeExpr): Unit = ???
 
       override def caseSubExpr(subExpr: soot.jimple.SubExpr): Unit = retValue = Some(convertSubExpr(subExpr))
 
-      override def caseUshrExpr(ushrExpr: soot.jimple.UshrExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseUshrExpr(ushrExpr: soot.jimple.UshrExpr): Unit = ???
 
-      override def caseVirtualInvokeExpr(virtualInvokeExpr: soot.jimple.VirtualInvokeExpr): Unit =
-        throw new Exception("unsupported Expr conversion")
+      override def caseVirtualInvokeExpr(virtualInvokeExpr: soot.jimple.VirtualInvokeExpr): Unit = ???
 
-      override def caseXorExpr(xorExpr: soot.jimple.XorExpr): Unit = throw new Exception("unsupported Expr conversion")
+      override def caseXorExpr(xorExpr: soot.jimple.XorExpr): Unit = ???
 
 
       //ConstantSwitch methods
-      override def caseClassConstant(classConstant: soot.jimple.ClassConstant): Unit =
-        throw new Exception("unsupported Constant conversion")
+      override def caseClassConstant(classConstant: soot.jimple.ClassConstant): Unit = ???
 
-      override def caseDoubleConstant(doubleConstant: soot.jimple.DoubleConstant): Unit =
-        throw new Exception("unsupported Constant conversion")
+      override def caseDoubleConstant(doubleConstant: soot.jimple.DoubleConstant): Unit = ???
 
-      override def caseFloatConstant(floatConstant: soot.jimple.FloatConstant): Unit =
-        throw new Exception("unsupported Constant conversion")
+      override def caseFloatConstant(floatConstant: soot.jimple.FloatConstant): Unit = ???
 
       override def caseIntConstant(intConstant: soot.jimple.IntConstant): Unit =
         retValue = Some(convertIntConstant(intConstant))
 
-      override def caseLongConstant(longConstant: soot.jimple.LongConstant): Unit =
-        throw new Exception("unsupported Constant conversion")
+      override def caseLongConstant(longConstant: soot.jimple.LongConstant): Unit = ???
 
-      override def caseMethodHandle(methodHandle: soot.jimple.MethodHandle): Unit =
-        throw new Exception("unsupported Constant conversion")
+      override def caseMethodHandle(methodHandle: soot.jimple.MethodHandle): Unit = ???
 
-      override def caseNullConstant(nullConstant: soot.jimple.NullConstant): Unit =
-        throw new Exception("unsupported Constant conversion")
+      override def caseNullConstant(nullConstant: soot.jimple.NullConstant): Unit = ???
 
-      override def caseStringConstant(stringConstant: soot.jimple.StringConstant): Unit =
-        throw new Exception("unsupported Constant conversion")
+      override def caseStringConstant(stringConstant: soot.jimple.StringConstant): Unit = ???
 
 
       //RefSwitch methods
-      override def caseArrayRef(arrayRef: soot.jimple.ArrayRef): Unit = throw new Exception("unsupported Ref conversion")
+      override def caseArrayRef(arrayRef: soot.jimple.ArrayRef): Unit = ???
 
-      override def caseCaughtExceptionRef(caughtExceptionRef: soot.jimple.CaughtExceptionRef): Unit =
-        throw new Exception("unsupported Ref conversion")
+      override def caseCaughtExceptionRef(caughtExceptionRef: soot.jimple.CaughtExceptionRef): Unit = ???
 
-      override def caseInstanceFieldRef(instanceFieldRef: soot.jimple.InstanceFieldRef): Unit =
-        throw new Exception("unsupported Ref conversion")
+      override def caseInstanceFieldRef(instanceFieldRef: soot.jimple.InstanceFieldRef): Unit = ???
 
-      override def caseParameterRef(parameterRef: soot.jimple.ParameterRef): Unit =
-        throw new Exception("unsupported Ref conversion")
+      override def caseParameterRef(parameterRef: soot.jimple.ParameterRef): Unit = ???
 
-      override def caseStaticFieldRef(staticFieldRef: soot.jimple.StaticFieldRef): Unit =
-        throw new Exception("unsupported Ref conversion")
+      override def caseStaticFieldRef(staticFieldRef: soot.jimple.StaticFieldRef): Unit = ???
 
-      override def caseThisRef(thisRef: soot.jimple.ThisRef): Unit = throw new Exception("unsupported Ref conversion")
+      override def caseThisRef(thisRef: soot.jimple.ThisRef): Unit = ???
 
 
       //JimpleValueSwith methods
