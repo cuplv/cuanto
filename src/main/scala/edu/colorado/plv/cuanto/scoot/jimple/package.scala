@@ -4,7 +4,7 @@ import scala.language.reflectiveCalls //IntelliJ warning on retValue orders this
 import soot.jimple.JimpleValueSwitch
 
 /**
-  * Created by Jared on 6/13/2017.
+  * @author Jared Wright
   */
 package object jimple {
   implicit def convertAddExpr(dt: soot.jimple.AddExpr) : AddExpr = new AddExpr(dt)

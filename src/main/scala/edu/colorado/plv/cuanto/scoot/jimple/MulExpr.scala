@@ -1,7 +1,7 @@
 package edu.colorado.plv.cuanto.scoot.jimple
 
 /**
-  * Created by Jared on 6/21/2017.
+  * @author Jared Wright
   */
 class MulExpr private[jimple] (private val dt: soot.jimple.MulExpr) extends BinopExpr
 

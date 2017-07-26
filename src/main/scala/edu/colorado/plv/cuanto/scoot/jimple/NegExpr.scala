@@ -1,7 +1,7 @@
 package edu.colorado.plv.cuanto.scoot.jimple
 
 /**
-  * Created by Jared on 6/13/2017.
+  * @author Jared Wright
   */
 class NegExpr private[jimple] (private val dt: soot.jimple.NegExpr) extends UnopExpr
 
