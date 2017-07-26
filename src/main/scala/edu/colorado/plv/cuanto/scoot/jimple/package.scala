@@ -1,7 +1,7 @@
 package edu.colorado.plv.cuanto.scoot
 
-import soot.jimple.JimpleValueSwitch
 import scala.language.reflectiveCalls //IntelliJ warning on retValue orders this
+import soot.jimple.JimpleValueSwitch
 
 /**
   * Created by Jared on 6/13/2017.

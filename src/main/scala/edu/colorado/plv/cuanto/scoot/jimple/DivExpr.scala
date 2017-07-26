@@ -3,13 +3,9 @@ package edu.colorado.plv.cuanto.scoot.jimple
 /**
   * Created by Jared on 6/21/2017.
   */
-class DivExpr(dt: soot.jimple.DivExpr) extends BinopExpr {
-  def op1: Value = dt.getOp1()
-
-  def op2: Value = dt.getOp2()
-}
+class DivExpr private[jimple] (private val dt: soot.jimple.DivExpr) extends BinopExpr
 
 object DivExpr {
   def unapply(e: DivExpr): Option[(Value, Value)] =
-    Some((e.op1, e.op2))
+    Some((e.dt.getOp1(), e.dt.getOp2()))
 }

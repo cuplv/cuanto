@@ -3,10 +3,8 @@ package edu.colorado.plv.cuanto.scoot.jimple
 /**
   * Created by Jared on 6/13/2017.
   */
-class Local(dt: soot.Local) extends Value {
-  def name: String = dt.getName()
-}
+class Local private[jimple] (private val dt: soot.Local) extends Value
 
 object Local {
-  def unapply(l: Local): Option[String] = Some(l.name)
+  def unapply(l: Local): Option[String] = Some(l.dt.getName())
 }

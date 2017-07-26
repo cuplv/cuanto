@@ -3,6 +3,4 @@ package edu.colorado.plv.cuanto.scoot.jimple
 /**
   * Created by Jared on 6/13/2017.
   */
-trait UnopExpr extends Expr {
-  def op: Value
-}
+trait UnopExpr extends Expr

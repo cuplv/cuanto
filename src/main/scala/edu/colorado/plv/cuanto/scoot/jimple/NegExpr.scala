@@ -3,10 +3,8 @@ package edu.colorado.plv.cuanto.scoot.jimple
 /**
   * Created by Jared on 6/13/2017.
   */
-class NegExpr(dt: soot.jimple.NegExpr) extends UnopExpr{
-  def op: Value = dt.getOp()
-}
+class NegExpr private[jimple] (private val dt: soot.jimple.NegExpr) extends UnopExpr
 
 object NegExpr {
-  def unapply(e: NegExpr): Option[Value] = Some(e.op)
+  def unapply(e: NegExpr): Option[Value] = Some(e.dt.getOp())
 }
