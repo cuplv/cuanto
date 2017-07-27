@@ -8,7 +8,7 @@ object SystemClasspath {
       case _ => ""
     }
 
-  private[this] val jars: String => Seq[File] = pathName => 
+  private[this] val jars: String => Seq[File] = pathName =>
     systemClasspathRaw(pathName).split(':').map(file).toSeq
 
   val systemClasspath = (pathName: String) => jars(pathName).classpath
