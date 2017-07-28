@@ -2,6 +2,12 @@ package edu.colorado.plv.cuanto
 package abstracting.tc
 package domains
 
+import smtlib.parser.Commands._
+import smtlib.parser.Terms._
+import smtlib.theories.Ints._
+
+import symbolic._
+
 /** A domain representing an integer constrained by an upper and/or
   * lower bound
   *
@@ -45,7 +51,19 @@ package object interval {
     reduce(Btw(g,l))
   }
 
+  case class IntSMT(int1: Term)
+
   object instances {
+    implicit val intSMTSymbol: Symbol[IntSMT] = new Symbol[IntSMT] {
+      override def draw(name: String): (IntSMT,Traversable[Command]) = {
+        val s: SSymbol = SSymbol(name)
+        val q: QualifiedIdentifier = QualifiedIdentifier(SimpleIdentifier(s))
+
+        (IntSMT(q),Seq(DeclareConst(s,IntSort())))
+      }
+      override val idConstraint: Constraint[IntSMT] = ???
+    }
+      
     implicit val latticeInterval: Lattice[Interval] = new Lattice[I] {
       val bot: Interval = Bot
       val top: Interval = Top
