@@ -121,19 +121,7 @@ class NumDomainSpec extends FlatSpec with Matchers {
     assert(a1.isEqual(man, a0.addRayCopy(man, gen)))
 
     val ac = new Abstract0(man, a0)
-    println("assign-lexp: " + a0.assignCopy(man, 0, linexp, _: Abstract0))
-    println("assign-texp: " + a0.assignCopy(man, 0, texp, _: Abstract0))
-    println("subst-lexp: " + a0.substituteCopy(man, 0, linexp, _: Abstract0))
-    println("subst-texp: " + a0.substituteCopy(man, 0, texp, _: Abstract0))
-    assert(a0.isEqual(man, ac))
-    ac.assign(man, 0, linexp, _: Abstract0)
-    assert(ac.isEqual(man, a0.assignCopy(man, 0, linexp, _: Abstract0)))
-    assert(!ac.isEqual(man, a0))
-    ac.assign(man, 0, texp, _: Abstract0)
-    ac.substitute(man, 0, linexp, _: Abstract0)
-    ac.substitute(man, 0, texp, _: Abstract0)
-
-
+    
     assert(a0.meetCopy(man, full).isEqual(man, a0))
     assert(a0.joinCopy(man, empty).isEqual(man, a0))
     assert(a0.meetCopy(man, empty).isEqual(man, empty))
