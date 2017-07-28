@@ -4,31 +4,36 @@ import apron.{Box, Manager, Octagon, Polka, _}
 import gmp.Mpfr
 import org.scalatest.{FlatSpec, Matchers}
 
+import scala.util.{Try, Failure, Success}
+
 /**
   * Created by Tianhan Lu on 4/20/17.
   */
 class NumDomainSpec extends FlatSpec with Matchers {
   runAPITest()
 
+  private val DIVLINE = "========="
+  private val RIGHTARROW = " -> "
+
   def runAPITest(): Unit = {
     println("")
     println("")
     println("Box")
-    println("=========")
+    println(DIVLINE)
     test(new Box)
 
     println("")
     println("Octagons")
-    println("=========")
+    println(DIVLINE)
     test(new Octagon)
 
     println("")
     println("Polyhedra (closed convex polyhedra)")
-    println("=========")
+    println(DIVLINE)
     test(new Polka(false))
     println("")
     println("Polyhedra (non-closed convex polyhedra)")
-    println("=========")
+    println(DIVLINE)
     test(new Polka(true))
   }
 
@@ -90,25 +95,26 @@ class NumDomainSpec extends FlatSpec with Matchers {
     println("to-lcons: " + a0.toLincons(man).toString)
     println("to-box: " + a0.toBox(man).toString)
     println("to-tcons: " + a0.toTcons(man).toString)
-    try
-      println("to-gen: " + a0.toGenerator(man).toString)
-    catch {
-      case e: ApronException =>
-        println("got exception: " + e)
+    def readTextFile(): Try[Unit] = {
+      Try(println("to-gen: " + a0.toGenerator(man).toString))
+    }
+    readTextFile match {
+      case Success(_) =>
+      case Failure(e) => println("got exception: " + e)
     }
     println("bound 0:   " + a0.getBound(man, 0))
-    println("bound lin: " + linexp + " -> " + a0.getBound(man, linexp))
-    println("bound t:  " + texp + " -> " + a0.getBound(man, texp))
+    println("bound lin: " + linexp + RIGHTARROW + a0.getBound(man, linexp))
+    println("bound t:  " + texp + RIGHTARROW + a0.getBound(man, texp))
     println("sat lin:  " + a0.satisfy(man, lincons))
     println("sat t:    " + a0.satisfy(man, tcons))
-    println("sat 0:    " + box(0) + " -> " + a0.satisfy(man, 0, box(0)))
-    println("sat 1:    " + box(0) + " -> " + a0.satisfy(man, 1, box(0)))
+    println("sat 0:    " + box(0) + RIGHTARROW + a0.satisfy(man, 0, box(0)))
+    println("sat 1:    " + box(0) + RIGHTARROW + a0.satisfy(man, 1, box(0)))
     println("uncons 0: " + a0.isDimensionUnconstrained(man, 0))
 
     val a1 = new Abstract0(man, a0)
     assert(a0.isEqual(man, a1))
     a1.addRay(man, gen)
-    println("+ gen: " + gen + " -> " + a1)
+    println("+ gen: " + gen + RIGHTARROW + a1)
     assert(!a0.isEqual(man, a1))
     assert(a0.isIncluded(man, a1))
     assert(!a1.isIncluded(man, a0))
@@ -138,7 +144,7 @@ class NumDomainSpec extends FlatSpec with Matchers {
     assert(a0.meetCopy(man, lincons).isIncluded(man, a0))
     assert(a0.meetCopy(man, lincons2).isIncluded(man, a0))
     assert(a0.meetCopy(man, tcons).isIncluded(man, a0))
-    println("+ const: " + lincons2 + " -> " + a0.meetCopy(man, lincons2))
+    println("+ const: " + lincons2 + RIGHTARROW + a0.meetCopy(man, lincons2))
     val w = full.meetCopy(man, lincons2)
     println("widen: " + a0.widening(man, w))
     println("widen threshold: " + a0.wideningThreshold(man, w, linconss))
