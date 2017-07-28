@@ -1,7 +1,10 @@
 import Dependencies._
+import SystemClasspath._
 
 enablePlugins(SiteScaladocPlugin)
 enablePlugins(GhpagesPlugin)
+
+val cuantoClasspath = systemClasspath("CUANTO_CLASSPATH")
 
 lazy val root = (project in file(".")).
   settings(
@@ -70,6 +73,12 @@ lazy val root = (project in file(".")).
     // scala-smtlib comes from the "sonatype releases" repository
     resolvers += sonatypeResolver,
     libraryDependencies += scalaSMTLIB,
+
+    // Tell sbt to look at $CUANTO_CLASSPATH for unmanaged jars.  This
+    // is where system-installed jars (such as jars that depend on
+    // native libraries) are placed by the nix build.
+    unmanagedClasspath in Compile ++= cuantoClasspath,
+    unmanagedClasspath in Test ++= cuantoClasspath,
 
     // Name
     name := "cuanto"
