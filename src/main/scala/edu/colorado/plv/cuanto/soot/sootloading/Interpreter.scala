@@ -21,6 +21,7 @@ object Interpreter {
       val results: Iterable[Integer] = scene.getClasses.asScala.flatMap(clazz =>{
         if(clazz.getName == className) {
           val method = clazz.getMethod(methodName)
+          val jimpleBody = method.getActiveBody
           ???
         }else{None}
       })

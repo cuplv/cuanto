@@ -1,5 +1,5 @@
 package edu.colorado.plv.cuanto.scoot
-package arithmetic
+package concrete_interpreter
 
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.PropertyChecks

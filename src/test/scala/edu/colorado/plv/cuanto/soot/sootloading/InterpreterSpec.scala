@@ -10,6 +10,5 @@ class InterpreterSpec extends FlatSpec {
   val emptyMainTest = classOf[EmptyMainTest].getRelativeURL.get.getPath
   "Interpreter" should "interpret empty class" in {
     val result = Interpreter.interpretMethod("Test1", "void main(java.lang.String[])", List(TestResorcePathFinder.getJavaTestFile("Test1")))
-    println(result)
   }
 }

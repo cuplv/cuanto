@@ -1,5 +1,5 @@
 package edu.colorado.plv.cuanto.scoot
-package arithmetic
+package concrete_interpreter
 
 import soot.{Value, IntType, Local, Immediate}
 import soot.jimple._
