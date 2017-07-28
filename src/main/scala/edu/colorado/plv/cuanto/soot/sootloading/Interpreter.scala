@@ -1,6 +1,7 @@
 package edu.colorado.plv.cuanto.soot.sootloading
 
 import edu.colorado.plv.cuanto.scoot.sootloading.SootLoading
+
 import soot.Scene
 
 import scala.util.Try
@@ -11,6 +12,7 @@ import scala.collection.JavaConverters._
   * Created by s on 7/21/17.
   */
 object Interpreter {
+//  lazy val emptyTest = classOf[EmptyMainTest].getRelativeURL.get
   def interpretMethod(classname: String, methodName: String, paths: List[String]): Try[Integer] = {
     SootLoading.getAnalysisResult(paths, None, getInterpreter(classname, methodName))
   }
