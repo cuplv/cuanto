@@ -14,7 +14,7 @@ import scala.collection.JavaConverters._
 object Interpreter {
 //  lazy val emptyTest = classOf[EmptyMainTest].getRelativeURL.get
   def interpretMethod(classname: String, methodName: String, paths: List[String]): Try[Integer] = {
-    SootLoading.getAnalysisResult(paths, None, getInterpreter(classname, methodName))
+    SootLoading.getAnalysisResult(paths, Some(classname), getInterpreter(classname, methodName))
   }
   def getInterpreter(className: String, methodName: String): Scene => Integer = {
     (scene: Scene) => {
