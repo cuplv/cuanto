@@ -61,19 +61,29 @@ available.
     
     # Test the build environment
     [nix-shell:~/cuanto]$ sbt test
+
 #### Troubleshooting
-For the following error on MAC OS:
+
+On some Linux and MacOS systems, the system-installed version of bash
+is too old for `nix-shell` to use.  If this is the case, you'll see
+this error:
+
 ```
+$ nix-shell
+
 bash: local: -n: invalid option
 local: usage: local name[=value] ...
 bash: local: -n: invalid option
 local: usage: local name[=value] ...
 bash: failureHooks: command not found
 ```
-run this command:
+To fix it, you'll need a newer version of bash.  If it is inconvenient
+to update your system, you can install a suitable version using Nix
+itself:
+
 ```nix-env -iA nixpkgs.bashInteractive```
 
-source: https://github.com/NixOS/nixpkgs/issues/27493
+(source: https://github.com/NixOS/nixpkgs/issues/27493)
 
 ### Manually setting up an environment
 
