@@ -6,7 +6,8 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.util.Success
 
 /**
-  * Created by Shawn Meier on 7/26/17.
+  * @author Shawn Meier
+  *         Created on 7/26/17.
   */
 class InterpretMethodSpec extends FlatSpec with Matchers {
   val emptyMainTest = classOf[EmptyMainTest].getRelativeURL.get.getPath
