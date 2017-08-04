@@ -81,7 +81,7 @@ To fix it, you'll need a newer version of bash.  If it is inconvenient
 to update your system, you can install a suitable version using Nix
 itself:
 
-```nix-env -iA nixpkgs.bashInteractive```
+```$ nix-env -iA nixpkgs.bashInteractive```
 
 (source: https://github.com/NixOS/nixpkgs/issues/27493)
 
