@@ -7,7 +7,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.util.{Try, Failure, Success}
 
 /**
-  * Created by Tianhan Lu on 4/20/17.
+  * @author Tianhan Lu
   */
 class NumDomainSpec extends FlatSpec with Matchers {
   runAPITest()

@@ -2,6 +2,9 @@ package edu.colorado.plv.cuanto.numdomain
 import apron.{Box, _}
 import org.scalatest.{FlatSpec, Matchers}
 
+/**
+  * @author Tianhan Lu
+  */
 class NumDomainSpec extends FlatSpec with Matchers {
   "Construct a new domain in Apron" should "not crash" in {
     val box = Array(new Interval(1, 2), new Interval(-3, 5), new Interval(3, 4, 6, 5))

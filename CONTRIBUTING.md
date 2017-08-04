@@ -70,27 +70,7 @@ manager, you will need to find and install the following tools:
 - JDK 8
 - `sbt`
 - `z3`
-- `gmp`
-- `mpfr`
-
-After installing the tools listed above, you need to download Apron source code,
-compile it and configure the environment on your machine (assume you are using linux):
-1. Clone source code: `svn co svn://scm.gforge.inria.fr/svnroot/apron/apron/trunk apron`
-2. Enter Apron's root directory: `cd apron`
-3. Configure: `./configure -prefix $out -no-cxx -absolute-dylibs`
-4. Compile: `make`
-5. Test: `make test`
-6. Enter cuanto's root directory: `cd cuanto`
-7. Create a lib folder in cuanto: `mkdir lib`
-8. Move the followings files from `apron/` to `cuanto/lib/`: apron.jar, gmp.jar, libapron.so, libboxD.so, libjapron.so, libjgmp.so, liboctD.so, libpolkaMPQ.so (Note that these files are not necessarily in Apron's root directory. They might be under some sub-directories.)
-9. Open a shell and type: `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUANTO/lib` (replace $CUANTO with the absolute path of cuanto)
-10. Done
-
-If you are using MacOS, things will be slightly different when setting up Apron:
-1. Replace step 8 above with: 
-Move the followings files from `apron/` to `cuanto/lib/`: apron.jar, gmp.jar, libapron.so, libboxD.so, libjapron.dylib (renamed from libjapron.so), libjgmp.dylib (renamed from libjgmp.so), libjgmp.so, liboctD.so, libpolkaMPQ.so (Note that these files are not necessarily in Apron's root directory. They might be under some sub-directories.)
-2. Replace step 9 above with:
-Open a shell and type: `export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$CUANTO/lib` (replace $CUANTO with the absolute path of cuanto)
+- [Apron dependency](http://apron.cri.ensmp.fr/library/) (The `Requirements` section)
 
 ### Setting up an environment on MacOS with Homebrew
 
@@ -99,8 +79,6 @@ Using [Homebrew](https://brew.sh/), install dependencies as follows:
 $ brew cask install java
 $ brew install sbt
 $ brew install z3
-$ brew install gmp
-$ brew install mpfr
 ```
 
 ### Building and Testing 
@@ -141,3 +119,53 @@ If you want to use [IntelliJ IDEA](https://www.jetbrains.com/idea/) as your IDE,
 - Make sure the `Project SDK` is 1.8.
 
 It is particularly convenient to run [ScalaTest via IntelliJ](http://www.scalatest.org/user_guide/using_scalatest_with_intellij). Get started by right-clicking on a ScalaTest `Spec` class.
+
+
+### Apron Installation
+
+Generally there are three phases:
+
+- Download Apron source code
+- Compile Apron
+- Configure the environment on your machine (assume you are using linux)
+
+Below are detailed steps for setting up an enviroment where Apron relies on:
+1. Clone source code:
+
+    `svn co svn://scm.gforge.inria.fr/svnroot/apron/apron/trunk apron`
+2. Enter Apron's root directory: `cd apron`
+3. Configure Apron:
+
+    `./configure -prefix $out -no-cxx -absolute-dylibs`
+4. Compile Apron: `make`
+5. Test if Apron is functioning well: `make test`
+6. Enter cuanto's root directory: `cd cuanto`
+7. Create a lib folder in cuanto: `mkdir lib`
+8. Move the followings files from `apron/` to `cuanto/lib/`:
+
+    apron.jar, gmp.jar, libapron.so, libboxD.so, libjapron.so, libjgmp.so, liboctD.so, libpolkaMPQ.so
+    
+    Note that these files are not necessarily in Apron's root directory. They might be under some sub-directories.
+9. Open a shell and type:
+
+    `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUANTO/lib`
+    
+    (replace $CUANTO with the absolute path of cuanto)
+10. Done.
+
+####Apron installation for MacOS
+If you are using MacOS, things will be slightly different when setting up Apron:
+1. Replace step 8 above with: 
+
+    Move the followings files from `apron/` to `cuanto/lib/`:
+    
+    apron.jar, gmp.jar, libapron.so, libboxD.so, libjapron.dylib (renamed from libjapron.so), libjgmp.dylib (renamed from libjgmp.so), libjgmp.so, liboctD.so, libpolkaMPQ.so 
+    
+    Note that these files are not necessarily in Apron's root directory. They might be under some sub-directories.
+2. Replace step 9 above with:
+
+    Open a shell and type:
+
+    `export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$CUANTO/lib`
+    
+    (replace $CUANTO with the absolute path of cuanto)
