@@ -77,7 +77,15 @@ bash: local: -n: invalid option
 local: usage: local name[=value] ...
 bash: failureHooks: command not found
 ```
-To fix it, you'll need a newer version of bash.  If it is inconvenient
+To fix it, you'll need a newer version of bash.  The MACOS bash can be updated using homebrew. Be careful while changing shells, it may be a good idea to test the new shell first by running it.  When run, a properly configured shell should look very similar to the one it was run from and be interactive.
+```
+brew install bash
+sudo -s
+echo /usr/local/bin/bash >> /etc/shells
+chsh -s /usr/local/bin/bash
+```
+
+If it is inconvenient
 to update your system, you can install a suitable version using Nix
 itself:
 
