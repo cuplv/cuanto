@@ -52,6 +52,9 @@ object Interpreter {
 
     val newEnv = varname match{
       case j : Local =>  {
+        j match{
+          case j: JimpleLocal => ???
+        }
         val curEnv: Env = env.head
         ???
       }
