@@ -121,7 +121,7 @@ class NumDomainSpec extends FlatSpec with Matchers {
     assert(a1.isEqual(man, a0.addRayCopy(man, gen)))
 
     val ac = new Abstract0(man, a0)
-    
+
     assert(a0.meetCopy(man, full).isEqual(man, a0))
     assert(a0.joinCopy(man, empty).isEqual(man, a0))
     assert(a0.meetCopy(man, empty).isEqual(man, empty))
