@@ -61,6 +61,19 @@ available.
     
     # Test the build environment
     [nix-shell:~/cuanto]$ sbt test
+#### Troubleshooting
+For the following error on MAC OS:
+```
+bash: local: -n: invalid option
+local: usage: local name[=value] ...
+bash: local: -n: invalid option
+local: usage: local name[=value] ...
+bash: failureHooks: command not found
+```
+run this command:
+```nix-env -iA nixpkgs.bashInteractive```
+
+source: https://github.com/NixOS/nixpkgs/issues/27493
 
 ### Manually setting up an environment
 
