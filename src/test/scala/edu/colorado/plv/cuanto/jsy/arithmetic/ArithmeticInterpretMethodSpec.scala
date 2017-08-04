@@ -8,7 +8,7 @@ import scala.util.Try
 /**
   * @author Bor-Yuh Evan Chang
   */
-class ArithmeticInterpreterSpec extends CuantoSpec with ArithmeticInterpreterBehaviors {
+class ArithmeticInterpretMethodSpec extends CuantoSpec with ArithmeticInterpreterBehaviors {
   import SimpleInterpreter._
 
   behavior of "denote"

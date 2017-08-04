@@ -5,7 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.PropertyChecks
 import edu.colorado.plv.cuanto.scoot.jimple._
 
-class ArithmeticInterpreterSpec extends FlatSpec with Matchers with PropertyChecks {
+class ArithmeticInterpretMethodSpec extends FlatSpec with Matchers with PropertyChecks {
   import Builder._
   import Interpreter._
 
