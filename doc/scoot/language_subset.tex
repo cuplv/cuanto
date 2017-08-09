@@ -19,27 +19,54 @@
 We define a subset of Java inspired by \minijava~\cite{} (a grammar
 for \minijava is available here \label{sec:minijava}).
 
-We define a different (bigger) subset of Java than \minijava that has
-less language syntax restrictions.
+We define a different subset of Java than \minijava that has less
+language syntax restrictions.
 %
-The \minijava syntax restrictions are not imortant when using soot as
+The \minijava syntax restrictions are not important when using soot as
 frontend (we already have parsing and typechecking).
 
-Features that we want:
+We first define a subset of Java with:
 \begin{itemize}
-\item Integer and Boolean primitive types
+\item Integer and Boolean variables
+\item Control flow  control flow: 
+\item only calls static static methods
+\item 
+\end{itemize} 
+
+What is outside the fragment:
+\begin{itemize}
+\item No dynamic memory allocation (no arrays, no creation of new
+  objects)
+\item No object oriented features (call to 
+\end{itemize}
+The language does not include dynamic memory allocation, object
+oriented features as 
+
+ with the following features:
+\begin{itemize}
+\item Class declarations:
+  \begin{itemize}
+  \item Class declaration without inheritance, implementation of interfaces and generics.
+  \end{itemize}
+\item Method declarations:
+  \begin{itemize}
+    
+  \end{itemize}
+\item Variable declarations:
+  \begin{itemize}
+  \item Only Integer and Boolean primitive types
+  \end{itemize}
+\item Restriction on the type of the variables:
+\item 
 \item Integer and Boolean array types
-\item Classes without method overloading (no interfaces, generics, \ldots)
-\item Restricted control flow and expressions (no exception handling)
+\item Class declarations
+Classes without method overloading (no interfaces, generics, \ldots)
+\item Restriction on the control flow and expressions (no exception handling)
 \end{itemize}
 
-\section{Correspondent Jimple subset}
-\begin{grammar}
-  
-\end{grammar}
 
 
-\section{Jimple subset}
+\section{Jimple grammar}
 \begin{grammar}
 <jimple_method> ::= <local_declarations> <identity_stmts> <stmts> <exception_ranges>
 
