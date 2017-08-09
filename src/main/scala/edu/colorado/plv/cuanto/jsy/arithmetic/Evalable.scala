@@ -1,6 +1,6 @@
 package edu.colorado.plv.cuanto.jsy.arithmetic
 
-import edu.colorado.plv.cuanto.abstracting.Abstractable
+import edu.colorado.plv.cuanto.abstracting.ml.Abstractable
 
 /** Abstract value type that can be evaluated with arithmetic operations.
   *

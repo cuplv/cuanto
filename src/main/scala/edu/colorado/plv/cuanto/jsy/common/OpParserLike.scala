@@ -66,15 +66,21 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
   def expr: Parser[Expr]
 
   /** Parameter: define atoms. */
-  def opatom: Parser[Expr]
+  def opAtom: Parser[Expr]
 
   /** Parameter: define unary operators. */
   def uop: Parser[Uop]
 
-  /** Parameter: define statements (the sub-expression of blocks).
+  /** Parameter: define unary sub-expressions. Default: [[atom]]. */
+  def unarysub: Parser[Expr] = atom
+
+  /** Parameter: define the sub-expression of blocks, such as a sequence of statements.
     * The default is [[expr]].
     */
-  def stmt: Parser[Expr] = expr
+  def statements: Parser[Expr] = expr
+
+  /** Parameter: define types. */
+  def opTyp: Parser[Typ]
 
   /** Type alias for the list defining the precedence of binary operators.
     *
@@ -95,7 +101,7 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     * @param ops the binary operators, specifying precedence
     * @param sub the parser for sub-expressions
     */
-  def binaryLeft(ops: OpPrecedence, sub: Parser[Expr]): Parser[Expr] = {
+  def binaryLeft(ops: OpPrecedence, sub: => Parser[Expr]): Parser[Expr] = {
     def binaryCase(opsyn: (String, Bop)): Parser[(Expr, Expr) => Expr] = {
       val (csyn, asyn) = opsyn
       withpos(csyn) ^^ { case (pos, _) => (e1: Expr, e2: Expr) => Binary(asyn, e1, e2) setPos pos }
@@ -121,27 +127,38 @@ trait OpParserLike extends JavaTokenParsers with RichParsers {
     positioned {
       uop ~ unary ^^ { case op ~ e => Unary(op, e) }
     } |
-    atom
+    unarysub
 
   /** Parse parenthesized expressions and delegates to `opatom`.
     *
     * @see opatom
     */
   def atom: Parser[Expr] =
-    opatom |
-    positioned(ident ^^ Var) |
+    opAtom |
+    variable |
     parenthesized |
     block |
     failure("expected an atom")
 
+  /** Parse a variable identifier. */
+  def variable: Parser[Var] = positioned(ident ^^ Var)
+
   def parenthesized: Parser[Expr] =
-    positioned {
-      "(" ~> expr <~ ")"
-    }
+    "(" ~> expr <~ ")"
 
   def block: Parser[Expr] =
-    positioned {
-      "{" ~> stmt <~ "}"
-    }
+    "{" ~> statements <~ "}"
 
+  /** Parse types and delegates to `optyp`.
+    *
+    * @see optyp
+    */
+  def typ: Parser[Typ] =
+    positioned("any" ^^^ TAny) |
+    opTyp
+
+  /** Parenthesized sequence. May optionally be unparenthesized if length 1. */
+  def parenrepsep[A,B](a: => Parser[A], sep: => Parser[Any]): Parser[List[A]] =
+    "(" ~> repsep(a, sep) <~ ")" |
+    a ^^ { a => List(a) }
 }

@@ -10,11 +10,11 @@ import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpPa
   * @author Kyle Headley
   */
 trait ParserLike extends OpParserLike with JsyParserLike {
-  abstract override def opatom: Parser[Expr] =
+  abstract override def opAtom: Parser[Expr] =
     positioned {
       stringLiteral ^^ { s => S(s.substring(1, s.length - 1)) }
     } |
-    super.opatom
+    super.opAtom
 
   lazy val stringBop: OpPrecedence = List(
       /* lowest */
