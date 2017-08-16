@@ -1,8 +1,8 @@
 package edu.colorado.plv.cuanto
 package abstracting.tc
 
-import smtlib.parser.Commands.Command
-import smtlib.parser.Terms.Term
+import smtlib.parser.Commands.{Command,DefineFun,FunDef}
+import smtlib.parser.Terms.{SExpr,SSymbol,Term}
 import smtlib.theories.Core.Not
 
 import Semilattice._
@@ -15,16 +15,32 @@ package object symbolic {
 
   trait Symbol[S] {
     def draw(s: String): (S,Traversable[Command])
-    val idConstraint: Constraint[S]
+  }
+  object Symbol {
+    def apply[A : Symbol]: Symbol[A] = implicitly[Symbol[A]]
+  }
+
+  trait SMTVal[V] {
+    def interpret(value: Term): Option[V]
+  }
+  object SMTVal {
+    def apply[A : SMTVal]: SMTVal[A] = implicitly[SMTVal[A]]
   }
 
   trait Model[C] {
     type Schema
-    def model(s: Constraint[Schema]): Option[C]
+    def model(name: String, s: Constraint[Schema]): Option[C]
+  }
+  object Model {
+    def apply[A : Model]: Model[A] = implicitly[Model[A]]
   }
 
   trait SymAbstract[A,S] {
     def gammaHat(a: A): Constraint[S]
+  }
+  object SymAbstract {
+    def apply[A,S](implicit inst: SymAbstract[A,S]): SymAbstract[A,S] =
+      implicitly[SymAbstract[A,S]]
   }
 
   def modelT[C,S](
@@ -47,4 +63,18 @@ package object symbolic {
       }
     recur(bot[A])
   }
+
+  def comprehend[V : SMTVal](m: List[SExpr]): Map[SSymbol,V] = {
+    val p: (Map[SSymbol,V],SExpr) => Map[SSymbol,V] = {
+      (acc,i) => i match {
+        case DefineFun(FunDef(id,_,_,v)) => SMTVal[V].interpret(v) match {
+          case Some(v) => acc + (id -> v)
+          case None => acc
+        }
+        case _ => acc
+      }
+    }
+    m.foldLeft[Map[SSymbol,V]](Map.empty)(p)
+  }
+
 }

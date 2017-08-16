@@ -2,7 +2,9 @@ package edu.colorado.plv.cuanto
 package abstracting.tc
 package domains
 
+import smtlib.interpreters.Z3Interpreter
 import smtlib.parser.Commands._
+import smtlib.parser.CommandsResponses._
 import smtlib.parser.Terms._
 import smtlib.theories.Ints._
 
@@ -61,8 +63,39 @@ package object interval {
 
         (IntSMT(q),Seq(DeclareConst(s,IntSort())))
       }
-      override val idConstraint: Constraint[IntSMT] = ???
     }
+
+    implicit val intSMTVal: SMTVal[Int] = new SMTVal[Int] {
+      override def interpret(value: Term): Option[Int] = value match {
+        case NumeralLit(v) => Some(v.intValue())
+        case _ => None
+      }
+    }
+
+    implicit val intModel: Model[Int] {type Schema = IntSMT} = new Model[Int] {
+      override type Schema = IntSMT
+      override def model(name: String, s: Constraint[IntSMT]): Option[Int] = {
+        val (schemaVal,decl) = Symbol[IntSMT].draw(name)
+        val z3 = Z3Interpreter.buildDefault
+        val assertion = Seq(Assert(s(schemaVal)))
+
+        (decl ++ assertion ++ Seq(CheckSat())).map(z3.eval)
+
+        z3.eval(GetModel()) match {
+          case GetModelResponseSuccess(m) =>
+            val res = comprehend(m)
+            for {
+              i <- res get SSymbol(name)
+            } yield i
+          case _ => None
+        }
+      }
+    }
+
+    implicit val intervalSym: SymAbstract[Interval,IntSMT] =
+      new SymAbstract[Interval,IntSMT] {
+        override def gammaHat(a: Interval): Constraint[IntSMT] = ???
+      }
       
     implicit val latticeInterval: Lattice[Interval] = new Lattice[I] {
       val bot: Interval = Bot
