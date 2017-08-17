@@ -149,3 +149,15 @@ If you want to use [IntelliJ IDEA](https://www.jetbrains.com/idea/) as your IDE,
 - Make sure the `Project SDK` is 1.8.
 
 It is particularly convenient to run [ScalaTest via IntelliJ](http://www.scalatest.org/user_guide/using_scalatest_with_intellij). Get started by right-clicking on a ScalaTest `Spec` class.
+
+### Running on windows
+
+We recommend using the Ubuntu Bash on windows for development under linux. (https://msdn.microsoft.com/en-us/commandline/wsl/install_guide) . This is an almost fully functional implementation of the linux environment from which you can run bash.  After following these instructions open a bash terminal and follow the instructions for linux.  We currently do not have a good way to make intellij work in this environment but command line is fully functional.
+
+#Debugging:
+If nix shell emits a disk I/O error then it may be neccessary to apply the following fix: https://github.com/NixOS/nix/issues/1203
+
+Within the /etc/nix/nix.conf add the line
+```
+use-sqlite-wal = false
+```
