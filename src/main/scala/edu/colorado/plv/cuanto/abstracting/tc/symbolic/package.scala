@@ -1,7 +1,9 @@
 package edu.colorado.plv.cuanto
 package abstracting.tc
 
-import smtlib.parser.Commands.{Command,DefineFun,FunDef}
+import smtlib.Interpreter
+import smtlib.parser.Commands.{Command,DefineFun,FunDef,GetModel}
+import smtlib.parser.CommandsResponses.GetModelResponseSuccess
 import smtlib.parser.Terms.{SExpr,SSymbol,Term}
 import smtlib.theories.Core.Not
 
@@ -30,6 +32,7 @@ package object symbolic {
   trait Model[C] {
     type Schema
     def model(name: String, s: Constraint[Schema]): Option[C]
+    def getModel(name: String, interpreter: Interpreter): Option[C]
   }
   object Model {
     def apply[A : Model]: Model[A] = implicitly[Model[A]]
@@ -77,4 +80,9 @@ package object symbolic {
     m.foldLeft[Map[SSymbol,V]](Map.empty)(p)
   }
 
+  def getModelMap[V : SMTVal](i: Interpreter): Option[Map[SSymbol,V]] =
+    i.eval(GetModel()) match {
+      case GetModelResponseSuccess(m) => Some(comprehend(m))
+      case _ => None
+    }
 }

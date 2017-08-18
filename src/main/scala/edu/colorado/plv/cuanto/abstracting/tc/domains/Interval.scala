@@ -2,6 +2,7 @@ package edu.colorado.plv.cuanto
 package abstracting.tc
 package domains
 
+import smtlib.Interpreter
 import smtlib.interpreters.Z3Interpreter
 import smtlib.parser.Commands._
 import smtlib.parser.CommandsResponses._
@@ -89,6 +90,13 @@ package object interval {
             } yield i
           case _ => None
         }
+      }
+      override def getModel(name: String, i: Interpreter): Option[Int] = {
+        (for {
+          intResults <- getModelMap(i)
+        } yield for {
+          i <- intResults get SSymbol(name)
+        } yield i).flatten
       }
     }
 
