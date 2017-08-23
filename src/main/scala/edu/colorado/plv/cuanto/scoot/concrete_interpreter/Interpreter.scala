@@ -2,7 +2,6 @@ package edu.colorado.plv.cuanto.scoot
 package concrete_interpreter
 
 import edu.colorado.plv.cuanto.scoot.jimple._
-import soot.ValueBox
 import soot.jimple.JimpleBody
 import soot.jimple.internal.{JAssignStmt, JReturnStmt, JimpleLocal}
 
@@ -50,19 +49,15 @@ object Interpreter {
   }
   def updateEnv(env: List[Env], varname: Value, value: Int): List[Env] = {
 
-    val newEnv = varname match{
-      case j : Local =>  {
-        j match{
-          case j: JimpleLocal => ???
-        }
-        val curEnv: Env = env.head
-        ???
+    val newEnv: List[Env] = varname match{
+      case Local(n) =>  {
+        List(env.head + ((n, value))) ::: env.tail
       }
       case _ => {
         ???
       }
     }
-    ???
+    newEnv
   }
   def internal_interpretBody(env : List[Env], loc: soot.Unit, b : JimpleBody): Option[Int] = loc match {
     case r: JReturnStmt => denote(r.getOp,env.head)
