@@ -27,7 +27,7 @@ object implicits {
     import scala.reflect.runtime.{universe => ru}
 
     /** The reflection mirror for `f`. */
-    private lazy val omirror = scala.reflect.runtime.currentMirror.reflect(f)
+    private[this] lazy val omirror = scala.reflect.runtime.currentMirror.reflect(f)
 
     /** Makes the `lazy val`s of type `T` as a traversable sequence (via run-time reflection). */
     def asTraversable[T](implicit ftag: ru.TypeTag[F], ttag: ru.TypeTag[T]): Traversable[(ru.Symbol,T)] = {
