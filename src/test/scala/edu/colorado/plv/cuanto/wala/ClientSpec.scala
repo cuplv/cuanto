@@ -1,21 +1,18 @@
 package edu.colorado.plv.cuanto.wala
 
 import org.scalatest.FlatSpec
-import edu.colorado.plv.cuanto.jutil.implicits._
-import edu.colorado.plv.cuanto.walatest.EmptyMainTest
 
 /**
   * @author Bor-Yuh Evan Chang
   */
 class ClientSpec extends FlatSpec {
-  import edu.colorado.plv.cuanto.wala._
+  import edu.colorado.plv.cuanto.tests.Walatest
 
   "apply" should "not crash" in {
-    val url = classOf[EmptyMainTest].getRelativeURL.get
-    Client(url)
+    Client(Walatest.emptyMainTestURL)
   }
 
-  lazy val walaTest = Client(classOf[EmptyMainTest].getRelativeURL.get)
+  lazy val walaTest = Client(Walatest.emptyMainTestURL)
 
   "classHierarchy" should "not crash" in {
     walaTest.classHierarchy
