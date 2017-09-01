@@ -59,16 +59,18 @@ object Interpreter {
     }
     newEnv
   }
-  def internal_interpretBody(env : List[Env], loc: soot.Unit, b : JimpleBody): Option[Int] = loc match {
-    case r: JReturnStmt => denote(r.getOp,env.head)
-    case a: JAssignStmt => {
-      val successor : soot.Unit = b.getUnits.getSuccOf(a)
-      val varname : soot.Value = a.getLeftOp
-      val newEnv = updateEnv(env, varname, denote(a.getRightOp, env.head).get)
-      internal_interpretBody(newEnv, successor, b)
-    }
-    case _ => {
-      ???
+  def internal_interpretBody(env : List[Env], loc: soot.Unit, b : JimpleBody): Option[Int] = {
+    val successor: soot.Unit = b.getUnits.getSuccOf(loc)
+    loc match {
+      case r: JReturnStmt => denote(r.getOp, env.head)
+      case a: JAssignStmt => {
+        val varname: soot.Value = a.getLeftOp
+        val newEnv = updateEnv(env, varname, denote(a.getRightOp, env.head).get)
+        internal_interpretBody(newEnv, successor, b)
+      }
+      case _ => {
+        ???
+      }
     }
   }
 }

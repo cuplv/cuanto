@@ -27,7 +27,7 @@ object InterpretMethod {
           val method = clazz.getMethod(methodName)
           val jimpleBody = method.getActiveBody
           jimpleBody match {
-            case j : JimpleBody => Some(Interpreter.interpretBody (j))
+            case j : JimpleBody => Some(Interpreter.interpretBody(j))
             case _ => ???
           }
         }else{None}
