@@ -1,12 +1,11 @@
-language: scala
-scala:
-- 2.12.1
-jdk:
-- oraclejdk8
+language: nix
+before_script:
+- mkdir -p $HOME/overlays && cd $HOME/overlays && git clone https://github.com/cuplv/cuplv-nixpkgs && cd -
+- nix-env -iA nixpkgs.bashInteractive
 script:
-- sbt clean coverage test
+- nix-shell --pure --command "sbt clean coverage test" -I nixpkgs-overlays=$HOME/overlays
 after_success:
-- sbt coverageReport coveralls codacyCoverage
+- nix-shell --pure --command "sbt coverageReport coveralls codacyCoverage" -I nixpkgs-overlays=$HOME/overlays
 before_deploy:
 # Record minimal build information via the Git user ident
 - git config --global user.name "$USER"

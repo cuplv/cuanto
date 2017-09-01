@@ -19,4 +19,7 @@ object Dependencies {
     "com.ibm.wala" % "com.ibm.wala.util" % "1.4.2",
     "com.ibm.wala" % "com.ibm.wala.core" % "1.4.2"
   )
+
+  lazy val sonatypeResolver = "Sonatype OSS Releases" at "https://oss.sonatype.org/content/repositories/releases"
+  lazy val scalaSMTLIB = "com.regblanc" %% "scala-smtlib" % "0.2.1"
 }
