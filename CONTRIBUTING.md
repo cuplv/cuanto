@@ -13,9 +13,12 @@ In brief, the core of the workflow consists of the following:
 - Merging into the `develop` branch via pull requests.
 - Reserving the `master` branch for releases.
 
-[Atlassian. Gitflow Workflow]: https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow
+Overall, we follow common [git best practices][Bao. Gitflow and Pull Request].
 
-## Commits and Commit Messages
+[Atlassian. Gitflow Workflow]: https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow
+[Bao. Gitflow and Pull Request]: https://devblog.dwarvesf.com/post/git-best-practices/
+
+### Commits and Commit Messages
 
 We follow standard conventions for making commits and writing effective Git commit messages. First read the brief [How to Write a Git Commit Message] and then [Contributing to a Project][ProGit: Contributing to a Project] from the [ProGit] book. In short, make logically incremental commits and write substantitive messages that convey _why_ something was changed versus simply saying _what_ was changed. 
 
