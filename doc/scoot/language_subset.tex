@@ -6,65 +6,52 @@
 \usepackage{url}
 
 \newcommand{\minijava}{MiniJava\xspace}
+\newcommand{\javita}{Javita\xspace}
 
 \begin{document}
-\title{Java subsets and corresponding Jimple subset}
+\title{Javita}
 
 \maketitle
 
 % jimple - grammar for classes?
 
 
-\section{Java subset - (Javita?)}
-We define a subset of Java inspired by \minijava~\cite{} (a grammar
-for \minijava is available here \label{sec:minijava}).
+\section{\javita - Java subset handled in Cuanto}
+We informally define \javita, a subset of Java inspired by \minijava
+(a grammar for \minijava is available here \label{sec:minijava}).
 
 We define a different subset of Java than \minijava that has less
-language syntax restrictions.
-%
-The \minijava syntax restrictions are not important when using soot as
-frontend (we already have parsing and typechecking).
+language syntax restrictions. The \minijava syntax restrictions are
+not important when using soot as frontend (we already have parsing and
+typechecking).
 
-We first define a subset of Java with:
+The \javita fragment contains:
 \begin{itemize}
-\item Integer and Boolean variables
-\item Control flow  control flow: 
-\item only calls static static methods
-\item 
+\item Integer and Boolean variables;
+\item Operations on Integer variables (sum, difference,
+  multiplication, division, modulo);
+\item Operations on Boolean variables (and, or, negation, xor, ...); 
+\item Control flow: Sequences, for loops, while loops, do while loops;
+\item Declare static methods, with Integer and Boolean return values
+  and parameters;
+\item Call to static methods;
+\item Declaration of classes with static (Integer or Boolean) fields.
 \end{itemize} 
 
-What is outside the fragment:
+The rest of the Java language is outside the fragment:
 \begin{itemize}
-\item No dynamic memory allocation (no arrays, no creation of new
-  objects)
-\item No object oriented features (call to 
-\end{itemize}
-The language does not include dynamic memory allocation, object
-oriented features as 
-
- with the following features:
-\begin{itemize}
-\item Class declarations:
-  \begin{itemize}
-  \item Class declaration without inheritance, implementation of interfaces and generics.
-  \end{itemize}
-\item Method declarations:
-  \begin{itemize}
-    
-  \end{itemize}
-\item Variable declarations:
-  \begin{itemize}
-  \item Only Integer and Boolean primitive types
-  \end{itemize}
-\item Restriction on the type of the variables:
-\item 
-\item Integer and Boolean array types
-\item Class declarations
-Classes without method overloading (no interfaces, generics, \ldots)
-\item Restriction on the control flow and expressions (no exception handling)
+\item No variables of type different from Boolean or Integer;
+\item No dynamic memory allocation (no arrays, no creation of new objects);;
+\item No calls to methods on objects, no dynamic dispatch;
+\item No handling of exception;
+\item No declaration of non-static fields, no inheritance, no
+  implementation of interfaces, no generics types.
 \end{itemize}
 
+\bibliographystyle{plain}
+\bibliography{refs}
 
+\appendix
 
 \section{Jimple grammar}
 \begin{grammar}
@@ -234,12 +221,6 @@ Classes without method overloading (no interfaces, generics, \ldots)
 <exception_range> ::= ".catch" <ref_type> "from" <label> "to" <label> "using" <label>;
 
 \end{grammar}
-
-\bibliographystyle{plain}
-\bibliography{refs}
-
-\appendix
-
 \section{\minijava}
 \label{sec:minijava}
 
