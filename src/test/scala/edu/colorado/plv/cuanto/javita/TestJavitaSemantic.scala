@@ -6,8 +6,10 @@ import edu.colorado.plv.cuanto.CuantoSpec
   * @author Sergio Mover
   */
 class TestJavitaSemantic extends CuantoSpec {
-  import edu.colorado.plv.cuanto.javita.Expressions
-  import edu.colorado.plv.cuanto.javita.ControlFlow
+  import edu.colorado.plv.cuanto.javita.{Expressions, ControlFlow}
+
+  val mcString = "Method call"
+  val resString = "Result"
 
   def runMethods[A](table : org.scalatest.prop.TableFor2[() => A, A]) : Unit = {
     it should s"Compute correct result" in {
@@ -19,7 +21,7 @@ class TestJavitaSemantic extends CuantoSpec {
 
   behavior of "Arithmetic operators"
   val exprTests = Table(
-    ("Method call","Result"),
+    (mcString, resString),
     (Expressions.testExpr1 _,3),
     (Expressions.testExpr2 _, 13),
     (Expressions.testExpr3 _, 1),
@@ -38,7 +40,7 @@ class TestJavitaSemantic extends CuantoSpec {
 
   behavior of "Boolean operators"
   val boolTests = Table(
-    ("Method call","Result"),
+    (mcString, resString),
     (Expressions.testBool1 _, true),
     (Expressions.testBool2 _, false),
     (Expressions.testBool3 _, false),
@@ -54,7 +56,7 @@ class TestJavitaSemantic extends CuantoSpec {
 
   behavior of "Comparison operators"
   val compTests = Table(
-    ("Method call","Result"),
+    (mcString, resString),
     (Expressions.testComparisons1 _, true),
     (Expressions.testComparisons2 _, true),
     (Expressions.testComparisons3 _, false),
@@ -76,7 +78,7 @@ class TestJavitaSemantic extends CuantoSpec {
 
   behavior of "Control flow"
   val cfTests = Table(
-    ("Method call","Result"),
+    (mcString, resString),
     (ControlFlow.sequence1 _, true),
     (ControlFlow.if1 _, true),
     (ControlFlow.if2 _, true),
@@ -92,7 +94,7 @@ class TestJavitaSemantic extends CuantoSpec {
 
   behavior of "Access fields"
   val fieldsTests = Table(
-    ("Method call","Result"),
+    (mcString, resString),
     (ControlFlow.testReadClassField _, true),
     (ControlFlow.testWriteClassField _, true)
   )
@@ -100,7 +102,7 @@ class TestJavitaSemantic extends CuantoSpec {
 
   behavior of "Static method call"
   val methodCallsTests = Table(
-    ("Method call","Result"),
+    (mcString, resString),
     (ControlFlow.testMethodCall _, true)
   )
   runMethods(methodCallsTests)
