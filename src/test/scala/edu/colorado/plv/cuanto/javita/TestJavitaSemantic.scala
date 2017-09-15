@@ -17,7 +17,6 @@ class TestJavitaSemantic extends CuantoSpec {
   }
 
   behavior of "Arithmetic operators"
-
   val exprTests = Table(
     ("Method call","Result"),
     (Expressions.testExpr1 _,3),
@@ -34,11 +33,25 @@ class TestJavitaSemantic extends CuantoSpec {
     (Expressions.testExpr12 _, 3),
     (Expressions.testExpr13 _, 0)
   )
-
   runMethods(exprTests)
 
-  behavior of "Comparison operators"
+  behavior of "Boolean operators"
+  val boolTests = Table(
+    ("Method call","Result"),
+    (Expressions.testBool1 _, true),
+    (Expressions.testBool2 _, false),
+    (Expressions.testBool3 _, false),
+    (Expressions.testBool4 _, false),
+    (Expressions.testBool5 _, true),
+    (Expressions.testBool6 _, true),
+    (Expressions.testBool7 _, true),
+    (Expressions.testBool8 _, false),
+    (Expressions.testBool9 _, false),
+    (Expressions.testBool10 _, true)
+  )
+  runMethods(boolTests)
 
+  behavior of "Comparison operators"
   val compTests = Table(
     ("Method call","Result"),
     (Expressions.testComparisons1 _, true),
