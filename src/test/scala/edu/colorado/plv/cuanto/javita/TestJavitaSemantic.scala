@@ -7,6 +7,7 @@ import edu.colorado.plv.cuanto.CuantoSpec
   */
 class TestJavitaSemantic extends CuantoSpec {
   import edu.colorado.plv.cuanto.javita.Expressions
+  import edu.colorado.plv.cuanto.javita.ControlFlow
 
   def runMethods[A](table : org.scalatest.prop.TableFor2[() => A, A]) : Unit = {
     it should s"Compute correct result" in {
@@ -73,4 +74,34 @@ class TestJavitaSemantic extends CuantoSpec {
   )
   runMethods(compTests)
 
+  behavior of "Control flow"
+  val cfTests = Table(
+    ("Method call","Result"),
+    (ControlFlow.sequence1 _, true),
+    (ControlFlow.if1 _, true),
+    (ControlFlow.if2 _, true),
+    (ControlFlow.switch1 _, true),
+    (ControlFlow.switch2 _, true),
+    (ControlFlow.switch3 _, true),
+    (ControlFlow.switch4 _, true),
+    (ControlFlow.testWhile _, true),
+    (ControlFlow.testDoWhile _, true),
+    (ControlFlow.testFor _, true)
+  )
+  runMethods(cfTests)
+
+  behavior of "Access fields"
+  val fieldsTests = Table(
+    ("Method call","Result"),
+    (ControlFlow.testReadClassField _, true),
+    (ControlFlow.testWriteClassField _, true)
+  )
+  runMethods(fieldsTests)
+
+  behavior of "Static method call"
+  val methodCallsTests = Table(
+    ("Method call","Result"),
+    (ControlFlow.testMethodCall _, true)
+  )
+  runMethods(methodCallsTests)
 }
