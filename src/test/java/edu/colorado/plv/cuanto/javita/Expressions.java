@@ -38,8 +38,21 @@ public class Expressions {
   /**
    * Test comparison operators: <=, >=, <, >, !=, == 
    */ 
-  public static boolean testComparisons1() {return 0 <= 0;} // true
-  public static boolean testComparisons2() {return 0 <= 1;} // true
-  public static boolean testComparisons3() {return 2 <= 0;} // faslse
+  public static boolean testComparisons1() {return 0 <= 0;}  // true
+  public static boolean testComparisons2() {return 0 <= 1;}  // true
+  public static boolean testComparisons3() {return 2 <= 0;}  // faslse
+  public static boolean testComparisons4() {return 0 >= 0;}  // true
+  public static boolean testComparisons5() {return 1 >= 0;}  // true
+  public static boolean testComparisons6() {return 0 >= 2;}  // faslse
+  public static boolean testComparisons7() {return 0 < 0;}   // false
+  public static boolean testComparisons8() {return 0 < 1;}   // true
+  public static boolean testComparisons9() {return 2 < 0;}   // faslse
+  public static boolean testComparisons10() {return 0 > 0;}  // false
+  public static boolean testComparisons11() {return 1 > 0;}  // true
+  public static boolean testComparisons12() {return 0 > 2;}  // faslse
+  public static boolean testComparisons13() {return 0 == 0;} // true
+  public static boolean testComparisons14() {return 0 == 1;} // false
+  public static boolean testComparisons15() {return 0 != 0;} // false
+  public static boolean testComparisons16() {return 0 != 1;} // true
 
 }

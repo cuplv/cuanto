@@ -56,7 +56,20 @@ class TestJavitaSemantic extends CuantoSpec {
     ("Method call","Result"),
     (Expressions.testComparisons1 _, true),
     (Expressions.testComparisons2 _, true),
-    (Expressions.testComparisons3 _, false)
+    (Expressions.testComparisons3 _, false),
+    (Expressions.testComparisons4 _, true),
+    (Expressions.testComparisons5 _, true),
+    (Expressions.testComparisons6 _, false),
+    (Expressions.testComparisons7 _, false),
+    (Expressions.testComparisons8 _, true),
+    (Expressions.testComparisons9 _, false),
+    (Expressions.testComparisons10 _, false),
+    (Expressions.testComparisons11 _, true),
+    (Expressions.testComparisons12 _, false),
+    (Expressions.testComparisons13 _, true),
+    (Expressions.testComparisons14 _, false),
+    (Expressions.testComparisons15 _, false),
+    (Expressions.testComparisons16 _, true)
   )
   runMethods(compTests)
 
