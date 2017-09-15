@@ -3,9 +3,7 @@ package abstracting.tc
 package domains
 
 import smtlib.Interpreter
-import smtlib.interpreters.Z3Interpreter
-import smtlib.parser.Commands._
-import smtlib.parser.CommandsResponses._
+import smtlib.parser.Commands.{Command, DeclareConst}
 import smtlib.parser.Terms._
 import smtlib.theories.Ints._
 
@@ -54,15 +52,14 @@ package object interval {
     reduce(Btw(g,l))
   }
 
-  case class IntSMT(int1: Term)
+  case class IntSMT(int1: SSymbol)
 
   object instances {
     implicit val intSMTSymbol: Symbol[IntSMT] = new Symbol[IntSMT] {
       override def draw(name: String): (IntSMT,Traversable[Command]) = {
         val s: SSymbol = SSymbol(name)
-        val q: QualifiedIdentifier = QualifiedIdentifier(SimpleIdentifier(s))
 
-        (IntSMT(q),Seq(DeclareConst(s,IntSort())))
+        (IntSMT(s),Seq(DeclareConst(s,IntSort())))
       }
     }
 
@@ -75,28 +72,11 @@ package object interval {
 
     implicit val intModel: Model[Int] {type Schema = IntSMT} = new Model[Int] {
       override type Schema = IntSMT
-      override def model(name: String, s: Constraint[IntSMT]): Option[Int] = {
-        val (schemaVal,decl) = Symbol[IntSMT].draw(name)
-        val z3 = Z3Interpreter.buildDefault
-        val assertion = Seq(Assert(s(schemaVal)))
-
-        (decl ++ assertion ++ Seq(CheckSat())).map(z3.eval)
-
-        z3.eval(GetModel()) match {
-          case GetModelResponseSuccess(m) =>
-            val res = comprehend(m)
-            for {
-              i <- res get SSymbol(name)
-            } yield i
-          case _ => None
-        }
-      }
       override def getModel(name: String, i: Interpreter): Option[Int] = {
-        (for {
+        for {
           intResults <- getModelMap(i)
-        } yield for {
-          i <- intResults get SSymbol(name)
-        } yield i).flatten
+          int <- intResults get SSymbol(name)
+        } yield int
       }
     }
 

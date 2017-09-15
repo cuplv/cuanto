@@ -2,9 +2,10 @@ package edu.colorado.plv.cuanto
 package abstracting.tc
 
 import smtlib.Interpreter
-import smtlib.parser.Commands.{Command,DefineFun,FunDef,GetModel}
+import smtlib.interpreters.Z3Interpreter
+import smtlib.parser.Commands._
 import smtlib.parser.CommandsResponses.GetModelResponseSuccess
-import smtlib.parser.Terms.{SExpr,SSymbol,Term}
+import smtlib.parser.Terms._
 import smtlib.theories.Core.Not
 
 import Semilattice._
@@ -22,6 +23,11 @@ package object symbolic {
     def apply[A : Symbol]: Symbol[A] = implicitly[Symbol[A]]
   }
 
+  /** Create a [[smtlib.parser.terms.Term `Term`]] from a
+    * [[smtlib.parser.terms.SSymbol `SSymbol`]] */
+  val sTerm: SSymbol => QualifiedIdentifier =
+    s => QualifiedIdentifier(SimpleIdentifier(s))
+
   trait SMTVal[V] {
     def interpret(value: Term): Option[V]
   }
@@ -31,11 +37,24 @@ package object symbolic {
 
   trait Model[C] {
     type Schema
-    def model(name: String, s: Constraint[Schema]): Option[C]
     def getModel(name: String, interpreter: Interpreter): Option[C]
   }
   object Model {
     def apply[A : Model]: Model[A] = implicitly[Model[A]]
+  }
+
+  def model[C,S : Symbol](
+    name: String, s: Constraint[S]
+  )(
+    implicit iM: Model[C] {type Schema = S}
+  ): Option[C] = {
+    val (schemaVal,decl) = Symbol[S].draw(name)
+    val z3 = Z3Interpreter.buildDefault
+    val assertion = Seq(Assert(s(schemaVal)))
+
+    (decl ++ assertion ++ Seq(CheckSat())).map(z3.eval)
+
+    Model[C].getModel(name, z3)
   }
 
   trait SymAbstract[A,S] {

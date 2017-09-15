@@ -15,13 +15,13 @@ import instances._
 class SymbolicIntervalSpec extends CuantoSpec {
 
   val gteSpec: Int => Constraint[IntSMT] =
-    i => { case IntSMT(t) => GreaterThan(t,NumeralLit(BigInt(i))) }
+    i => { case IntSMT(t) => GreaterThan(sTerm(t),NumeralLit(BigInt(i))) }
 
   val btwSpec: (Int,Int) => Constraint[IntSMT] = {
     case (g,l) => {
       case IntSMT(t) => And(
-        GreaterThan(t,NumeralLit(BigInt(g))),
-        LessThan(t,NumeralLit(BigInt(l)))
+        GreaterThan(sTerm(t),NumeralLit(BigInt(g))),
+        LessThan(sTerm(t),NumeralLit(BigInt(l)))
       )
     }
   }
@@ -36,9 +36,9 @@ class SymbolicIntervalSpec extends CuantoSpec {
 
   "The Int symbolic representation" should "produce models" in {
     forAll (modelTests) {
-      (smt,p) => modelInst.model("asdf",smt).map(p) should equal (Some(true))
+      (smt,p) => model("asdf",smt).map(p) should equal (Some(true))
     }
 
-    modelInst.model("asdf",btwSpec(2,1)) should equal (None)
+    model("asdf",btwSpec(2,1)) should equal (None)
   }
 }
