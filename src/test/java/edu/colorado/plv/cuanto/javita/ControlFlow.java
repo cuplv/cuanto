@@ -9,8 +9,8 @@ package edu.colorado.plv.cuanto.javita;
  * return true.
  */
 public class ControlFlow {
-  static int classField1 = 0;
-  static boolean classField2 = true;
+  private static int classField1 = 0;
+  private static boolean classField2 = true;
 
   public static boolean sequence1() {
     int a = 2;
