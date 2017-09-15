@@ -65,14 +65,35 @@ package object symbolic {
       implicitly[SymAbstract[A,S]]
   }
 
-  def modelT[C,S](
+  def modelT[C,S : Symbol](
     t: Transformer[S]
   )(
     pre: Constraint[S],
     post: Constraint[S]
   )(
     implicit iM: Model[C] {type Schema = S}
-  ): Option[(C,C)] = ???
+  ): Option[(C,C)] = {
+    val baseName = "modelT"
+    val preName = baseName + "-pre"
+    val postName = baseName + "-post"
+    val (schemaValPre,declPre) = Symbol[S].draw(preName)
+    val (schemaValPost,declPost) = Symbol[S].draw(postName)
+
+    val z3 = Z3Interpreter.buildDefault
+
+    val assertion = Seq(
+      Assert(pre(schemaValPre)),
+      Assert(post(schemaValPost)),
+      Assert(t(schemaValPre,schemaValPost))
+    )
+
+    (declPre ++ declPost ++ assertion ++ Seq(CheckSat())).map(z3.eval)
+
+    for {
+      mPre <- Model[C].getModel(preName, z3)
+      mPost <- Model[C].getModel(postName, z3)
+    } yield (mPre,mPost)
+  }
 
   def postHatUp[C,A : Semilattice,S : Symbol](t: Transformer[S])(v: A)(
     implicit iM: Model[C] {type Schema = S}, iS: SymAbstract[A,S], iA: Abstraction[C,A]
