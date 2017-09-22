@@ -5,6 +5,7 @@ package domains
 import smtlib.Interpreter
 import smtlib.parser.Commands.{Command, DeclareConst}
 import smtlib.parser.Terms._
+import smtlib.theories.Core._
 import smtlib.theories.Ints._
 
 import symbolic._
@@ -147,6 +148,17 @@ package object interval {
         override def beta(c: Int): I = btw(c,c)
       }
 
+  }
+
+  object symbolic {
+    def add(a: IntSMT): Transformer[IntSMT] = {
+      case (IntSMT(i1),IntSMT(i2)) => 
+        Equals(Add(sTerm(i1),sTerm(a.int1)), sTerm(i2))
+    }
+    def sub(a: IntSMT): Transformer[IntSMT] = {
+      case (IntSMT(i1),IntSMT(i2)) => 
+        Equals(Sub(sTerm(i1),sTerm(a.int1)), sTerm(i2))
+    }
   }
 
 }

@@ -107,7 +107,7 @@ package object symbolic {
     recur(bot[A])
   }
 
-  def comprehend[V : SMTVal](m: List[SExpr]): Map[SSymbol,V] = {
+  private[this] def comprehend[V : SMTVal](m: List[SExpr]): Map[SSymbol,V] = {
     val p: (Map[SSymbol,V],SExpr) => Map[SSymbol,V] = {
       (acc,i) => i match {
         case DefineFun(FunDef(id,_,_,v)) => SMTVal[V].interpret(v) match {
