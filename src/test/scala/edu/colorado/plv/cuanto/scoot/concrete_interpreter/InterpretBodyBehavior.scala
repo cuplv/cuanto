@@ -27,12 +27,12 @@ trait InterpretBodyBehavior { self: CuantoSpec =>
     "test11" -> 2,
     "test12" -> 2
   )
-  def interpreter(interpret : (String,String,List[String]) => Try[Int]) = {
+  def interpreter(interpret : (String,String,List[String]) => Try[CValue]) = {
     forAll(interpretBodyTests){ (test, result) =>
       it should s"interpret test $test to $result" in {
         val res = interpret("ArithmeticTest", s"int $test()",
           List(TestResorcePathFinder.getJavaTestFile("InterpreterTests","ArithmeticTest")))
-        res shouldBe Success(result)
+        res shouldBe Success(CInteger(result))
       }
     }
   }
