@@ -48,7 +48,7 @@ object IntervalDomain {
       /* Do rules. */
       case Unary(op, N(n1)) => denote(op, Left(n1))
       case Unary(op, edu.colorado.plv.cuanto.jsy.Var(name)) => denote(op, Right(name))
-      case Binary(op, N(n1), N(n2)) => denote(op, Left(n1), Left(n2)
+      case Binary(op, N(n1), N(n2)) => denote(op, Left(n1), Left(n2))
       case Binary(op, edu.colorado.plv.cuanto.jsy.Var(n1), edu.colorado.plv.cuanto.jsy.Var(n2)) => denote(op, Right(n1), Right(n2))
       case Binary(op, edu.colorado.plv.cuanto.jsy.Var(n1), N(n2)) => denote(op, Right(n1), Left(n2))
       case Binary(op, N(n1), edu.colorado.plv.cuanto.jsy.Var(n2)) => denote(op, Left(n1), Right(n2))
