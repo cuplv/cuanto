@@ -1,7 +1,10 @@
 import Dependencies._
+import SystemClasspath._
 
 enablePlugins(SiteScaladocPlugin)
 enablePlugins(GhpagesPlugin)
+
+val cuantoClasspath = systemClasspath("CUANTO_CLASSPATH")
 
 lazy val root = (project in file(".")).
   settings(
@@ -51,11 +54,32 @@ lazy val root = (project in file(".")).
 
     // Dependencies
     libraryDependencies ++= Seq(
+      scalaLogging,
       scalaParserCombinators,
       cats,
       scalaTest % Test,
       scalaCheck % Test
     ),
+
+    // Soot dependency using Paderborn Nexus
+    resolvers ++= sootResolvers,
+    libraryDependencies += soot,
+    
+    // Alternative Soot dependency using direct nightly build jar
+    // libraryDependencies += soot from "https://soot-build.cs.uni-paderborn.de/nightly/soot/soot-trunk.jar",
+
+    // Wala dependency
+    libraryDependencies ++= walaCore,
+
+    // scala-smtlib comes from the "sonatype releases" repository
+    resolvers += sonatypeResolver,
+    libraryDependencies += scalaSMTLIB,
+
+    // Tell sbt to look at $CUANTO_CLASSPATH for unmanaged jars.  This
+    // is where system-installed jars (such as jars that depend on
+    // native libraries) are placed by the nix build.
+    unmanagedClasspath in Compile ++= cuantoClasspath,
+    unmanagedClasspath in Test ++= cuantoClasspath,
 
     // Name
     name := "cuanto"
