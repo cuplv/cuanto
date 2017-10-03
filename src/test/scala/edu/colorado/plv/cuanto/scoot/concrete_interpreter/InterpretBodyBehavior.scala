@@ -4,7 +4,7 @@ import edu.colorado.plv.cuanto.CuantoSpec
 import edu.colorado.plv.cuanto.jsy.arithmetic.implicits
 import edu.colorado.plv.cuanto.soot.sootloading.TestResorcePathFinder
 
-import scala.util.{Success, Try}
+import scala.util.{Failure, Success, Try}
 
 /**
   * @author Shawn Meier
@@ -32,6 +32,10 @@ trait InterpretBodyBehavior { self: CuantoSpec =>
       it should s"interpret test $test to $result" in {
         val res = interpret("ArithmeticTest", s"int $test()",
           List(TestResorcePathFinder.getJavaTestFile("InterpreterTests","ArithmeticTest")))
+        res match{
+          case Failure(e) => throw e
+          case _ => ()
+        }
         res shouldBe Success(CInteger(result))
       }
     }

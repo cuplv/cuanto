@@ -2,7 +2,6 @@ package edu.colorado.plv.cuanto.scoot
 package concrete_interpreter
 
 import edu.colorado.plv.cuanto.scoot.jimple._
-import soot.jimple.JimpleBody
 import soot.jimple.internal.{JAssignStmt, JReturnStmt, JimpleLocal}
 //import edu.colorado.plv.cuanto.scoot.concrete_interpreter.ConcreteMemory.{CValue,CInteger}
 
@@ -45,7 +44,7 @@ object Interpreter {
       arg <- denote(e, env)
     } yield -arg
   }
-  def interpretBody(b : JimpleBody): Try[CValue] = {
+  def interpretBody(b : Body): Try[CValue] = {
     Try(internal_interpretBody(List(emptyEnv), b.getFirstNonIdentityStmt, b).getOrElse(throw new RuntimeException("interpreter exception")))
   }
   def updateEnv(env: List[Env], varname: Value, value: Int): List[Env] = {
@@ -60,14 +59,22 @@ object Interpreter {
     }
     newEnv
   }
-  def internal_interpretBody(env : List[Env], loc: soot.Unit, b : JimpleBody): Option[CValue] = {
-    val successor: soot.Unit = b.getUnits.getSuccOf(loc)
+  def internal_interpretBody(env : List[Env], loc: Stmt, b : Body): Option[CValue] = {
+    val successor: Set[Stmt] = b.getSuccessors(loc) // TODO: wrap jimple body b.getUnits.getSuccOf(loc)
     loc match {
-      case r: JReturnStmt  => denote(r.getOp, env.head).map(a => CInteger(a))
-      case a: JAssignStmt => {
-        val varname: soot.Value = a.getLeftOp
-        val newEnv = updateEnv(env, varname, denote(a.getRightOp, env.head).get)
-        internal_interpretBody(newEnv, successor, b)
+      case ReturnStmt(op)  => denote(op, env.head).map(a => CInteger(a))
+//      case a: AssignStmt => {
+//        val varname: soot.Value = a.getLeftOp
+//        val newEnv = updateEnv(env, varname, denote(a.getRightOp, env.head).get)
+//        internal_interpretBody(newEnv, successor, b)
+//      }
+      case AssignStmt(lval, rval) => {
+        val varname = lval
+        val newEnv = updateEnv(env, varname, denote(rval, env.head).get)
+        if(successor.size == 1)
+          internal_interpretBody(newEnv, successor.iterator.next(), b)
+        else
+          ??? //malformed
       }
       case _ => {
         ???

@@ -1,6 +1,7 @@
 package edu.colorado.plv.cuanto.soot.sootloading
 
 import edu.colorado.plv.cuanto.scoot.concrete_interpreter.{CValue, Interpreter}
+import edu.colorado.plv.cuanto.scoot.jimple.Body
 import edu.colorado.plv.cuanto.scoot.sootloading.SootLoading
 import soot.Scene
 import soot.jimple.JimpleBody
@@ -28,7 +29,7 @@ object InterpretMethod {
           val method = clazz.getMethod(methodName)
           val jimpleBody = method.getActiveBody
           jimpleBody match {
-            case j : JimpleBody => Some(Interpreter.interpretBody(j))
+            case j : JimpleBody => Some(Interpreter.interpretBody(new Body(j)))
             case _ => ???
           }
         }else{None}

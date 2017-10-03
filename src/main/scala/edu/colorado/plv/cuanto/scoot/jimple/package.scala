@@ -1,7 +1,7 @@
 package edu.colorado.plv.cuanto.scoot
 
-import scala.language.reflectiveCalls //IntelliJ warning on retValue orders this
-import soot.jimple.JimpleValueSwitch
+import scala.language.reflectiveCalls
+import soot.jimple._
 
 /**
   * @author Jared Wright
@@ -21,6 +21,46 @@ package object jimple {
 
   implicit def convertSubExpr(dt: soot.jimple.SubExpr) : SubExpr = new SubExpr(dt)
 
+//  implicit def convertReturnStmt(dt: soot.jimple.ReturnStmt)
+  implicit def convertUnit(dt: soot.Unit): Stmt = {
+    val s = new StmtSwitch {
+      var retValue : Option[Stmt] = None
+      override def caseIdentityStmt(stmt: IdentityStmt): Unit = ???
+
+
+      override def caseAssignStmt(stmt: soot.jimple.AssignStmt): Unit = retValue = Some(new AssignStmt(stmt))
+
+      override def caseRetStmt(stmt: RetStmt): Unit = ???
+
+      override def caseInvokeStmt(stmt: InvokeStmt): Unit = ???
+
+      override def caseGotoStmt(stmt: GotoStmt): Unit = ???
+
+      override def caseReturnVoidStmt(stmt: ReturnVoidStmt): Unit = ???
+
+      override def caseExitMonitorStmt(stmt: ExitMonitorStmt): Unit = ???
+
+      override def caseNopStmt(stmt: NopStmt): Unit = ???
+
+      override def caseReturnStmt(stmt: soot.jimple.ReturnStmt): Unit = retValue = Some(new ReturnStmt(stmt))
+
+      override def caseLookupSwitchStmt(stmt: LookupSwitchStmt): Unit = ???
+
+      override def caseIfStmt(stmt: IfStmt): Unit = ???
+
+      override def caseThrowStmt(stmt: ThrowStmt): Unit = ???
+
+      override def caseTableSwitchStmt(stmt: TableSwitchStmt): Unit = ???
+
+      override def caseEnterMonitorStmt(stmt: EnterMonitorStmt): Unit = ???
+
+      override def defaultCase(obj: scala.Any): Unit = ???
+
+      override def caseBreakpointStmt(stmt: BreakpointStmt): Unit = ???
+    }
+    dt.apply(s)
+    s.retValue.getOrElse(???)
+  }
   implicit def convertValue(dt: soot.Value) : Value = {
     val s = new JimpleValueSwitch() {
       var retValue : Option[Value] = None
