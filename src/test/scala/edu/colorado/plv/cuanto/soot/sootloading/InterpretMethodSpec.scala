@@ -1,6 +1,7 @@
 package edu.colorado.plv.cuanto.soot.sootloading
 import edu.colorado.plv.cuanto.soottest.EmptyMainTest
 import edu.colorado.plv.cuanto.jutil.implicits._
+import edu.colorado.plv.cuanto.scoot.concrete_interpreter.CInteger
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.util.Success
@@ -17,11 +18,11 @@ class InterpretMethodSpec extends FlatSpec with Matchers {
   "Interpreter" should "interpret a method that returns 1" in {
     val result = InterpretMethod.interpretMethod("ArithmeticTest", "int test1()",
       List(TestResorcePathFinder.getJavaTestFile("InterpreterTests","ArithmeticTest")))
-    result shouldBe Success(3)
+    result shouldBe Success(CInteger(3))
   }
   "Interpreter" should "handle a local integer variable" in {
     val result = InterpretMethod.interpretMethod("ArithmeticTest", "int test2()",
       List(TestResorcePathFinder.getJavaTestFile("InterpreterTests","ArithmeticTest")))
-    result shouldBe Success(4)
+    result shouldBe Success(CInteger(4))
   }
 }
