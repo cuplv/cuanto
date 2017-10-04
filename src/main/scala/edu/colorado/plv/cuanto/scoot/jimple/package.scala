@@ -34,7 +34,7 @@ package object jimple {
 
       override def caseInvokeStmt(stmt: InvokeStmt): Unit = ???
 
-      override def caseGotoStmt(stmt: GotoStmt): Unit = ???
+      override def caseGotoStmt(stmt: soot.jimple.GotoStmt): Unit = retValue = Some(new GotoStmt(stmt))
 
       override def caseReturnVoidStmt(stmt: ReturnVoidStmt): Unit = ???
 
@@ -46,7 +46,7 @@ package object jimple {
 
       override def caseLookupSwitchStmt(stmt: LookupSwitchStmt): Unit = ???
 
-      override def caseIfStmt(stmt: IfStmt): Unit = ???
+      override def caseIfStmt(stmt: soot.jimple.IfStmt): Unit = retValue = Some(new IfStmt(stmt))
 
       override def caseThrowStmt(stmt: ThrowStmt): Unit = ???
 
@@ -82,7 +82,7 @@ package object jimple {
 
       override def caseDynamicInvokeExpr(dynamicInvokeExpr: soot.jimple.DynamicInvokeExpr): Unit = ???
 
-      override def caseEqExpr(eqExpr: soot.jimple.EqExpr): Unit = ???
+      override def caseEqExpr(eqExpr: soot.jimple.EqExpr): Unit = retValue = Some(new EqExpr(eqExpr))
 
       override def caseGeExpr(geExpr: soot.jimple.GeExpr): Unit = ???
 
@@ -100,7 +100,7 @@ package object jimple {
 
       override def caseMulExpr(mulExpr: soot.jimple.MulExpr): Unit = retValue = Some(convertMulExpr(mulExpr))
 
-      override def caseNeExpr(neExpr: soot.jimple.NeExpr): Unit = ???
+      override def caseNeExpr(neExpr: soot.jimple.NeExpr): Unit = retValue = Some(new NeExpr(neExpr))
 
       override def caseNegExpr(negExpr: soot.jimple.NegExpr): Unit = retValue = Some(convertNegExpr(negExpr))
 

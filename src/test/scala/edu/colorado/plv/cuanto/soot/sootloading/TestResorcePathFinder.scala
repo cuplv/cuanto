@@ -4,7 +4,7 @@ import soot.CompilationDeathException
 import sys.process._
 
 /**
-  * Created by s on 7/28/17.
+  * Created by Shawn Meier on 7/28/17.
   */
 object TestResorcePathFinder {
   val fileSep: String = System.getProperty("file.separator")
