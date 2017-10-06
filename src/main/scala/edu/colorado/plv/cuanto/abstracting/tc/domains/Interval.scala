@@ -151,14 +151,28 @@ package object interval {
   }
 
   object symbolic {
-    def add(a: IntSMT): Transformer[IntSMT] = {
+    def add(a: Int): Transformer[IntSMT] = {
       case (IntSMT(i1),IntSMT(i2)) => 
-        Equals(Add(sTerm(i1),sTerm(a.int1)), sTerm(i2))
+        Equals(Add(sTerm(i1),NumeralLit(BigInt(a))), sTerm(i2))
     }
-    def sub(a: IntSMT): Transformer[IntSMT] = {
+    def sub(a: Int): Transformer[IntSMT] = {
       case (IntSMT(i1),IntSMT(i2)) => 
-        Equals(Sub(sTerm(i1),sTerm(a.int1)), sTerm(i2))
+        Equals(Sub(sTerm(i1),NumeralLit(BigInt(a))), sTerm(i2))
     }
+  }
+
+  def add(n: Int)(a: Interval): Interval = a match {
+    case Btw(g1,l1) => Btw(g1 + n, l1 + n)
+    case Lte(l) => Lte(l + n)
+    case Gte(g) => Gte(g + n)
+    case i => i // Bottom or Top will remain the same
+  }
+
+  def sub(n: Int)(a: Interval): Interval = a match {
+    case Btw(g1,l1) => Btw(g1 - n, l1 - n)
+    case Lte(l) => Lte(l - n)
+    case Gte(g) => Gte(g - n)
+    case i => i
   }
 
 }
