@@ -5,7 +5,7 @@ package domains.interval
 import smtlib.theories.Core._
 import smtlib.theories.Ints._
 
-import symbolic._
+import abstracting.tc.symbolic._
 
 import instances._
 
@@ -40,5 +40,28 @@ class SymbolicIntervalSpec extends CuantoSpec {
     }
 
     model("asdf",btwSpec(2,1)) should equal (None)
+  }
+
+
+  val addSpec: Int => Transformer[IntSMT] =
+    n => {
+      case (IntSMT(a1),IntSMT(a2)) => Equals(
+        Add(sTerm(a1),NumeralLit(BigInt(n))),
+        sTerm(a2)
+      )
+    }
+
+  val transformerTests = Table[
+    (Transformer[IntSMT],Constraint[IntSMT],Constraint[IntSMT]),
+    ((Int,Int)) => Boolean
+  ](
+    "SMT Transformer and constraints" -> "Int pair predicate",
+    (addSpec(1),gteSpec(1),gteSpec(5)) -> { case ((i1,i2)) => (i1 + 1) == i2 }
+  )
+
+  "The Int symbolic representation" should "produce transformer models" in {
+    forAll (transformerTests) {
+      case ((t,pre,post),p) => modelT(t)(pre,post).map(p) should equal (Some(true))
+    }
   }
 }
