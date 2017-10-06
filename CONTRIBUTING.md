@@ -51,6 +51,7 @@ If you would like to set up a build environment using your own package manager, 
 - JDK 8
 - `sbt`
 - `z3`
+- [Japron](http://apron.cri.ensmp.fr/library/) (the Apron Java interface)
 
 ### With the Nix Package Manager
 
@@ -172,6 +173,60 @@ $ nix-env -iA nixpkgs.bashInteractive
 ```
 
 [Nix Bash Issue]: https://github.com/NixOS/nixpkgs/issues/27493
+
+#### Apron/Japron Installation
+
+If your development environment does not accommodate nix-installed
+jars or provide a japron/apron package you will need to build it
+yourself.  Generally there are three phases:
+
+- Download Apron source code
+- Compile Apron
+- Configure the environment on your machine (assume you are using linux)
+
+Below are detailed steps for setting up an enviroment where Apron relies on:
+
+1. Clone source code:
+
+    `svn co svn://scm.gforge.inria.fr/svnroot/apron/apron/trunk apron`
+2. Enter Apron's root directory: `cd apron`
+3. Configure Apron:
+
+    `./configure -prefix $out -no-cxx -absolute-dylibs`
+4. Compile Apron: `make`
+5. Test if Apron is functioning well: `make test`
+6. Enter cuanto's root directory: `cd cuanto`
+7. Create a lib folder in cuanto: `mkdir lib`
+8. Move the followings files from `apron/` to `cuanto/lib/`:
+
+    apron.jar, gmp.jar, libapron.so, libboxD.so, libjapron.so, libjgmp.so, liboctD.so, libpolkaMPQ.so
+    
+    Note that these files are not necessarily in Apron's root directory. They might be under some sub-directories.
+9. Open a shell and type:
+
+    `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUANTO/lib`
+    
+    (replace $CUANTO with the absolute path of cuanto)
+10. Done.
+
+#### Apron/Japron installation for MacOS
+
+If you are using MacOS, things will be slightly different when setting up Apron:
+
+1. Replace step 8 above with: 
+
+    Move the followings files from `apron/` to `cuanto/lib/`:
+    
+    apron.jar, gmp.jar, libapron.so, libboxD.so, libjapron.dylib (renamed from libjapron.so), libjgmp.dylib (renamed from libjgmp.so), libjgmp.so, liboctD.so, libpolkaMPQ.so 
+    
+    Note that these files are not necessarily in Apron's root directory. They might be under some sub-directories.
+2. Replace step 9 above with:
+
+    Open a shell and type:
+
+    `export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$CUANTO/lib`
+    
+    (replace $CUANTO with the absolute path of cuanto)
 
 ### Running on Windows
 
