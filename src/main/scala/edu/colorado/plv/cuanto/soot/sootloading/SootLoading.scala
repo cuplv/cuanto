@@ -54,13 +54,13 @@ object SootLoading {
         main foreach { main => Options.v().set_main_class(main) }  //Set single entry point
         val path: String = Scene.v().getSootClassPath
         //Combine paths into semi colon separated list
-        Scene.v().setSootClassPath(path + ":" + paths.foldLeft("")((acc, str) =>
+        Scene.v().setSootClassPath(path + pathSep + paths.foldLeft("")((acc, str) =>
           acc + str + pathSep) + jcePath + pathSep + rtPath)
         val getJimple: GetJimple[T] = new GetJimple(analysis)
         PackManager.v().getPack("wjtp").add(new Transform("wjtp.get_jimple", getJimple))
         soot.Main.main(Array("-unfriendly-mode"))
         getJimple.result match{
-          case Some(result) => result
+          case Some(result) => println(result); result
           case None => throw new RuntimeException("Analysis failed")
         }
       }
@@ -69,9 +69,5 @@ object SootLoading {
       G.reset()
       lock.unlock()
     }
-
-
-
   }
-
 }

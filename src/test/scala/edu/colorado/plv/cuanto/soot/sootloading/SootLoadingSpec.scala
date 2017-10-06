@@ -10,9 +10,9 @@ import soot.{Body, Scene, SootClass, SootMethod}
 import scala.collection.JavaConverters._
 import scala.util.Success
 
-
 /**
-  * Created by s on 3/17/17.
+  * @author Shawn Meier
+  *         Created on 3/17/17.
   */
 class SootLoadingSpec extends FlatSpec with Matchers {
   val fileSep: String = System.getProperty("file.separator")
