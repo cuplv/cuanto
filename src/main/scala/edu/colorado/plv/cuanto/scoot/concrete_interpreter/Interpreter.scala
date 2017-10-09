@@ -18,7 +18,7 @@ object Interpreter {
   type Env = Map[String,Int]
 
   /** An environment with no assigned variables */
-  val emptyEnv: Env = new HashMap[String,Int]() //TODO: update environment
+  private val emptyEnv: Env = new HashMap[String,Int]() //TODO: update environment
 
   /** Interpret arithmetic expressions encoded as a single `Value` */
   def evaluate_expr(v: Value, env: Env = emptyEnv): Option[Int] = v match { //TODO: update denote
@@ -61,12 +61,12 @@ object Interpreter {
     Try(internal_interpretBody(List(emptyEnv), b.getFirstNonIdentityStmt, b).getOrElse(throw new RuntimeException("interpreter exception")))
   }
   //TODO: update environment and update stack
-  def updateEnv(env: Env, varname: String, value: Int): Env = {
+  private def updateEnv(env: Env, varname: String, value: Int): Env = {
     env + (varname -> value)
   }
-  def malformedJimple(): Nothing = throw new RuntimeException("malformed jimple")
+  private def malformedJimple(): Nothing = throw new RuntimeException("malformed jimple")
   @tailrec
-  def internal_interpretBody(stack : List[Env], loc: Stmt, b : Body): Option[CValue] = {
+  private def internal_interpretBody(stack : List[Env], loc: Stmt, b : Body): Option[CValue] = {
     //normal successor, conditional successor TODO: exceptional successor
     val successor = b.getSuccessors(loc)
     interpret_stmt(stack.head, loc) match {
