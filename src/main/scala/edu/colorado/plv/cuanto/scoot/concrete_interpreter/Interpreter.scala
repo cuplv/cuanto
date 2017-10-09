@@ -2,14 +2,11 @@ package edu.colorado.plv.cuanto.scoot
 package concrete_interpreter
 
 import edu.colorado.plv.cuanto.scoot.jimple._
-import soot.jimple.internal.{JAssignStmt, JReturnStmt, JimpleLocal}
 
 import scala.annotation.tailrec
-import scala.util.control.TailCalls.TailRec
-//import edu.colorado.plv.cuanto.scoot.concrete_interpreter.ConcreteMemory.{CValue,CInteger}
 
 import scala.collection.immutable.HashMap
-import scala.util.{Success, Try}
+import scala.util.Try
 
 /** Implement an interpreter for sequences of Jimple assignment
   * statements that represent integer arithmetic programs
@@ -24,37 +21,37 @@ object Interpreter {
   val emptyEnv: Env = new HashMap[String,Int]() //TODO: update environment
 
   /** Interpret arithmetic expressions encoded as a single `Value` */
-  def denote(v: Value, env: Env = emptyEnv): Option[Int] = v match { //TODO: update denote
-    case Local(s) => env get s
+  def evaluate_expr(v: Value, env: Env = emptyEnv): Option[Int] = v match { //TODO: update denote
+    case Local(s) => Some(env.getOrElse(s, throw new RuntimeException(s"Variable $s not found, malformed jimple")))
     case IntConstant(v) => {
       Some(v)
     }
     case AddExpr(e1, e2) => for {
-      arg1 <- denote(e1, env)
-      arg2 <- denote(e2, env)
+      arg1 <- evaluate_expr(e1, env)
+      arg2 <- evaluate_expr(e2, env)
     } yield arg1 + arg2
     case SubExpr(e1, e2) => for {
-      arg1 <- denote(e1, env)
-      arg2 <- denote(e2, env)
+      arg1 <- evaluate_expr(e1, env)
+      arg2 <- evaluate_expr(e2, env)
     } yield arg1 - arg2
     case MulExpr(e1, e2) => for {
-      arg1 <- denote(e1, env)
-      arg2 <- denote(e2, env)
+      arg1 <- evaluate_expr(e1, env)
+      arg2 <- evaluate_expr(e2, env)
     } yield arg1 * arg2
     case DivExpr(e1, e2) => for {
-      arg1 <- denote(e1, env)
-      arg2 <- denote(e2, env)
+      arg1 <- evaluate_expr(e1, env)
+      arg2 <- {val res = evaluate_expr(e2, env); if(res != 0) res else None}
     } yield arg1 / arg2
     case NegExpr(e) => for {
-      arg <- denote(e, env)
+      arg <- evaluate_expr(e, env)
     } yield -arg
     case EqExpr(e1,e2) => for{
-      arg1 <- denote(e1,env)
-      arg2 <- denote(e2,env)
+      arg1 <- evaluate_expr(e1,env)
+      arg2 <- evaluate_expr(e2,env)
     } yield  if(arg1 == arg2) 1 else 0
     case NeExpr(e1,e2) => for{
-        arg1 <- denote(e1,env)
-        arg2 <- denote(e2,env)
+        arg1 <- evaluate_expr(e1,env)
+        arg2 <- evaluate_expr(e2,env)
       }yield if(arg1 != arg2) 1 else 0
     case _ => {
       ???
@@ -63,51 +60,69 @@ object Interpreter {
   def interpretBody(b : Body): Try[CValue] = {
     Try(internal_interpretBody(List(emptyEnv), b.getFirstNonIdentityStmt, b).getOrElse(throw new RuntimeException("interpreter exception")))
   }
-  def updateEnv(env: List[Env], varname: Value, value: Int): List[Env] = {
-
-    val newEnv: List[Env] = varname match{
-      case Local(n) =>  {
-        List(env.head + ((n, value))) ::: env.tail
-      }
-      case _ => {
-        ???
-      }
-    }
-    newEnv
+  //TODO: update environment and update stack
+  def updateEnv(env: Env, varname: String, value: Int): Env = {
+    env + (varname -> value)
   }
+  def malformedJimple(): Nothing = throw new RuntimeException("malformed jimple")
   @tailrec
-  def internal_interpretBody(env : List[Env], loc: Stmt, b : Body): Option[CValue] = {
-    val successor: Set[Stmt] = b.getSuccessors(loc)
-    loc match {
-      case ReturnStmt(op)  => denote(op, env.head).map(a => CInteger(a))
-      case AssignStmt(lval, rval) => {
-        val newEnv = updateEnv(env, lval, denote(rval, env.head).get)
-        if(successor.size == 1)
-          internal_interpretBody(newEnv, successor.iterator.next(), b)
-        else
-          //malformed bytecode
-          ??? //TODO: should we encode the successors into the statements?
-      }
-      case IfStmt(condition, target) => {
-        denote(condition, env.head).map { jumpornot =>
-          if (jumpornot == 1)
-//            internal_interpretBody(env, target, b)
-            target
-          else
-            successor.iterator.next()
-//            internal_interpretBody(env, successor.iterator.next(), b)
-        } match {
-          case Some(a) => internal_interpretBody(env, a, b)
-          case None => None
-        }
-//        next.flatMap((a: Stmt) => internal_interpretBody(env, a, b)) //TODO: this breaks tail recursion
-      }
-      case GotoStmt(target) => {
-        internal_interpretBody(env,target,b)
-      }
-      case _ => {
-        ???
-      }
+  def internal_interpretBody(stack : List[Env], loc: Stmt, b : Body): Option[CValue] = {
+    //normal successor, conditional successor TODO: exceptional successor
+    val successor = b.getSuccessors(loc)
+    interpret_stmt(stack.head, loc) match {
+      case InterpretNext(env) => internal_interpretBody(env :: stack.tail, successor._1.getOrElse(malformedJimple()), b)
+      case InterpretConditionalJump(env) =>
+        internal_interpretBody(env :: stack.tail,
+          successor._2.getOrElse(malformedJimple()),b)
+      case ReturnFromBody(returnValue) => returnValue
+      case ExecutionExceptionDivideByZero(stmt) => ???
+    }
+  }
+
+  /**
+    * Data interpreter needs to understand how to continue interpretation after processing command
+    */
+  private trait StmtResult
+  private trait NormalControlFlow extends StmtResult
+  private sealed case class InterpretNext(newEnvironment : Env) extends NormalControlFlow
+  private sealed case class InterpretConditionalJump(newEnvironment: Env) extends NormalControlFlow
+  private sealed case class ReturnFromBody(result: Option[CValue])  extends NormalControlFlow
+  //TODO: talk about design philosophy, I believe its easier to throw when we encounter malformed jimple
+  //The design philosophy of java is that there are caught exceptions for places where you need to react to a failure,
+  //  there are also uncaught exceptions which indicate something unexpected happened
+  //I believe unexpected exceptions should terminate the program with a stack trace
+  //Malformed jimple is an unexpected runtime error for which it is better to halt the execution of the entire prog
+
+  /**
+    * Execution exceptions such as throw, divide by zero, null pointer etc
+    */
+  private trait ExceptionalControlFlow extends StmtResult
+  private sealed case class ExecutionExceptionDivideByZero(stmt: Stmt) extends ExceptionalControlFlow
+  //TODO: Later we probably want to make these exceptions from the class hierarchy of interpreted program
+
+
+
+  private def wrapExprEvaluationException(exprResult: Option[Int],
+                                          stmt: Stmt,
+                                          successCondition: Int => NormalControlFlow): StmtResult = exprResult match{
+    case Some(v) => successCondition(v)
+    case None => ExecutionExceptionDivideByZero(stmt)
+  }
+  /**
+    *
+    * @param env concrete environment for the interpreter
+    * @param stmt stmt to interpret
+    * @return StmtResult conveys what control flow action needs to be taken as well as the information needed
+    */
+  private def interpret_stmt(env: Env, stmt: Stmt): StmtResult = stmt match{
+    case ReturnStmt(op)  => ReturnFromBody(evaluate_expr(op, env).map(a => CInteger(a)))
+    case AssignStmt(Local(varname),rval) => wrapExprEvaluationException(
+      evaluate_expr(rval,env), stmt, a => InterpretNext(updateEnv(env,varname,a)))
+    case IfStmt(condition,_) => wrapExprEvaluationException(
+      evaluate_expr(condition,env), stmt, a => if (a == 0) InterpretNext(env) else InterpretConditionalJump(env))
+    case GotoStmt(_) => InterpretConditionalJump(env)
+    case _ => {
+      ???
     }
   }
 }

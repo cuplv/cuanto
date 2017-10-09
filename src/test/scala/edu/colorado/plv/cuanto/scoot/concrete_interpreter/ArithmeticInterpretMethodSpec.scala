@@ -5,6 +5,8 @@ import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.PropertyChecks
 import edu.colorado.plv.cuanto.scoot.jimple._
 
+import scala.util.{Failure, Try}
+
 class ArithmeticInterpretMethodSpec extends FlatSpec with Matchers with PropertyChecks {
   import Builder._
   import Interpreter._
@@ -35,17 +37,17 @@ class ArithmeticInterpretMethodSpec extends FlatSpec with Matchers with Property
 
   "The Scoot interpreter" should "interpret stateless Values" in {
     forAll (exprTests) { (e, n) =>
-      denote(e,testEnv) should equal (Some(n))
+      evaluate_expr(e,testEnv) should equal (Some(n))
     }
   }
 
   it should "interpret Values containing in-scope Locals" in {
     forAll (exprLocalTests) { (e, n) =>
-      denote(e,testEnv) should equal (Some(n))
+      evaluate_expr(e,testEnv) should equal (Some(n))
     }
   }
 
   it should "give None when asked to interpret undefined Locals" in {
-    forAll (exprLocalTests) { (e, n) => denote(e) should equal (None) }
+    forAll (exprLocalTests) { (e, n) => assert(Try(evaluate_expr(e)).isInstanceOf[Failure[RuntimeException]]) }
   }
 }

@@ -1,7 +1,6 @@
 package edu.colorado.plv.cuanto.scoot.concrete_interpreter
 
 import edu.colorado.plv.cuanto.CuantoSpec
-import edu.colorado.plv.cuanto.jsy.arithmetic.implicits
 import edu.colorado.plv.cuanto.soot.sootloading.TestResorcePathFinder
 
 import scala.util.{Failure, Success, Try}
@@ -11,7 +10,6 @@ import scala.util.{Failure, Success, Try}
   *         Created on 9/1/17.
   */
 trait InterpretBodyBehavior { self: CuantoSpec =>
-  import edu.colorado.plv.cuanto.testing.implicits.tryEquality
   val interpretBodyTests = Table(
     "methodname" -> "result",
     ("ArithmeticTest","int test1") -> CInteger(3),
