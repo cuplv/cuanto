@@ -1,4 +1,4 @@
-{ stdenv, sbt, z3, jdk }:
+{ stdenv, sbt, z3, jdk, japron }:
 
 let
 
@@ -55,6 +55,6 @@ stdenv.mkDerivation rec {
   version = "dev";
   src = ./.;
   buildInputs = [
-    sbt z3
+	sbt z3 (cuantoClasspath [japron])
   ];
 }
