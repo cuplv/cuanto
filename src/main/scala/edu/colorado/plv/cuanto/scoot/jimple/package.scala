@@ -22,9 +22,9 @@ package object jimple {
   implicit def convertSubExpr(dt: soot.jimple.SubExpr) : SubExpr = new SubExpr(dt)
 
 //  implicit def convertReturnStmt(dt: soot.jimple.ReturnStmt)
-  implicit def convertUnit(dt: soot.Unit): Stmt = {
+  implicit def convertUnit(dt: soot.Unit): edu.colorado.plv.cuanto.scoot.jimple.Stmt = {
     val s = new StmtSwitch {
-      var retValue : Option[Stmt] = None
+      var retValue : Option[edu.colorado.plv.cuanto.scoot.jimple.Stmt] = None
       override def caseIdentityStmt(stmt: IdentityStmt): Unit = ???
 
 
