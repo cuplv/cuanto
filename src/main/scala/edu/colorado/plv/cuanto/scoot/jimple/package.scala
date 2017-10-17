@@ -83,7 +83,7 @@ package object jimple {
 
       override def caseEqExpr(eqExpr: soot.jimple.EqExpr): Unit = retValue = Some(new EqExpr(eqExpr))
 
-      override def caseGeExpr(geExpr: soot.jimple.GeExpr): Unit = ???
+      override def caseGeExpr(geExpr: soot.jimple.GeExpr): Unit = retValue = Some(new GeExpr(geExpr))
 
       override def caseGtExpr(gtExpr: soot.jimple.GtExpr): Unit = ???
 

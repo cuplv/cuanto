@@ -15,44 +15,50 @@ object Interpreter {
 
   /** An "execution environment" or state, mapping variables (of type
     * `Local`) to integer values */
-  type Env = Map[String,Int]
+  type Env = Map[String,CValue]
 
   /** An environment with no assigned variables */
-  private val emptyEnv: Env = new HashMap[String,Int]() //TODO: update environment
+  private val emptyEnv: Env = new HashMap[String,CValue]() //TODO: update environment
 
   /** Interpret arithmetic expressions encoded as a single `Value` */
-  def evaluate_expr(v: Value, env: Env = emptyEnv): Option[Int] = v match { //TODO: update denote
-    case Local(s) => Some(env.getOrElse(s, throw new RuntimeException(s"Variable $s not found, malformed jimple")))
+  def evaluate_expr(v: Value, env: Env): Option[CValue] = v match { //TODO: update denote
+    case Local(s) => {
+      Some(env.getOrElse(s, throw new RuntimeException(s"Variable $s not found, malformed jimple")))
+    }
     case IntConstant(v) => {
-      Some(v)
+      Some(CInteger(v))
     }
     case AddExpr(e1, e2) => for {
       arg1 <- evaluate_expr(e1, env)
       arg2 <- evaluate_expr(e2, env)
-    } yield arg1 + arg2
+    } yield ConcreteMemory.add(arg1, arg2)
     case SubExpr(e1, e2) => for {
       arg1 <- evaluate_expr(e1, env)
       arg2 <- evaluate_expr(e2, env)
-    } yield arg1 - arg2
+    } yield ConcreteMemory.sub(arg1,arg2)
     case MulExpr(e1, e2) => for {
       arg1 <- evaluate_expr(e1, env)
       arg2 <- evaluate_expr(e2, env)
-    } yield arg1 * arg2
+    } yield ConcreteMemory.mul(arg1,arg2)
     case DivExpr(e1, e2) => for {
       arg1 <- evaluate_expr(e1, env)
       arg2 <- {val res = evaluate_expr(e2, env); if(res != 0) res else None}
-    } yield arg1 / arg2
+    } yield ConcreteMemory.div(arg1,arg2)
     case NegExpr(e) => for {
       arg <- evaluate_expr(e, env)
-    } yield -arg
+    } yield ConcreteMemory.neg(arg)
     case EqExpr(e1,e2) => for{
       arg1 <- evaluate_expr(e1,env)
       arg2 <- evaluate_expr(e2,env)
-    } yield  if(arg1 == arg2) 1 else 0
+    } yield  ConcreteMemory.equ(arg1,arg2)
     case NeExpr(e1,e2) => for{
         arg1 <- evaluate_expr(e1,env)
         arg2 <- evaluate_expr(e2,env)
-      }yield if(arg1 != arg2) 1 else 0
+    }yield ConcreteMemory.nequ(arg1,arg2)
+    case GeExpr(e1,e2) => for{
+      arg1 <- evaluate_expr(e1,env)
+      arg2 <- evaluate_expr(e2,env)
+    }yield ConcreteMemory.ge(arg1,arg2)
     case _ => {
       ???
     }
@@ -61,7 +67,7 @@ object Interpreter {
     Try(internal_interpretBody(List(emptyEnv), b.getFirstNonIdentityStmt, b).getOrElse(throw new RuntimeException("interpreter exception")))
   }
   //TODO: update environment and update stack
-  private def updateEnv(env: Env, varname: String, value: Int): Env = {
+  private def updateEnv(env: Env, varname: String, value: CValue): Env = {
     env + (varname -> value)
   }
   private def malformedJimple(): Nothing = throw new RuntimeException("malformed jimple")
@@ -102,9 +108,9 @@ object Interpreter {
 
 
 
-  private def wrapExprEvaluationException(exprResult: Option[Int],
+  private def wrapExprEvaluationException(exprResult: Option[CValue],
                                           stmt: Stmt,
-                                          successCondition: Int => NormalControlFlow): StmtResult = exprResult match{
+                                          successCondition: CValue => NormalControlFlow): StmtResult = exprResult match{
     case Some(v) => successCondition(v)
     case None => ExecutionExceptionDivideByZero(stmt)
   }
@@ -115,11 +121,11 @@ object Interpreter {
     * @return StmtResult conveys what control flow action needs to be taken as well as the information needed
     */
   private def interpret_stmt(env: Env, stmt: Stmt): StmtResult = stmt match{
-    case ReturnStmt(op)  => ReturnFromBody(evaluate_expr(op, env).map(a => CInteger(a)))
+    case ReturnStmt(op)  => ReturnFromBody(evaluate_expr(op, env).map(a => a))
     case AssignStmt(Local(varname),rval) => wrapExprEvaluationException(
       evaluate_expr(rval,env), stmt, a => InterpretNext(updateEnv(env,varname,a)))
     case IfStmt(condition,_) => wrapExprEvaluationException(
-      evaluate_expr(condition,env), stmt, a => if (a == 0) InterpretNext(env) else InterpretConditionalJump(env))
+      evaluate_expr(condition,env), stmt, a => if (ConcreteMemory.isZero(a)) InterpretNext(env) else InterpretConditionalJump(env))
     case GotoStmt(_) => InterpretConditionalJump(env)
     case _ => {
       ???
