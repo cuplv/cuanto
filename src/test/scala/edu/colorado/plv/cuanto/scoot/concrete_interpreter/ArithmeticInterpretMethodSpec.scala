@@ -5,6 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.PropertyChecks
 import edu.colorado.plv.cuanto.scoot.jimple._
 
+import scala.collection.immutable.HashMap
 import scala.util.{Failure, Try}
 
 class ArithmeticInterpretMethodSpec extends FlatSpec with Matchers with PropertyChecks {
@@ -14,7 +15,7 @@ class ArithmeticInterpretMethodSpec extends FlatSpec with Matchers with Property
   val va = local("va")
   val vb = local("vb")
 
-  val testEnv : Map[String, Int] = Map(("va",3),("vb",15))
+  val testEnv : Map[String, CValue] = Map(("va",CInteger(3)),("vb",CInteger(15)))
 
   val exprTests = Table(
     "expression" -> "denotation",
@@ -48,6 +49,6 @@ class ArithmeticInterpretMethodSpec extends FlatSpec with Matchers with Property
   }
 
   it should "give None when asked to interpret undefined Locals" in {
-    forAll (exprLocalTests) { (e, n) => assert(Try(evaluate_expr(e)).isInstanceOf[Failure[RuntimeException]]) }
+    forAll (exprLocalTests) { (e, n) => assert(Try(evaluate_expr(e,new HashMap[String,CValue]())).isInstanceOf[Failure[RuntimeException]]) }
   }
 }
