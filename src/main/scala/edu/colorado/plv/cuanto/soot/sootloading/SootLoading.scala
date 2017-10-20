@@ -42,6 +42,7 @@ object SootLoading {
     */
   def getAnalysisResult[T](paths: List[String], main: Option[String] = None,analysis: Scene=>T): Try[T] ={
     try {
+      G.reset()
       lock.lock() //Lock used to prevent concurrent use of global static soot variables
       Try({
         Options.v().keep_line_number() //Soot does not automatically retain line number info, this option keeps it
@@ -58,7 +59,7 @@ object SootLoading {
           acc + str + pathSep) + jcePath + pathSep + rtPath)
         val getJimple: GetJimple[T] = new GetJimple(analysis)
         PackManager.v().getPack("wjtp").add(new Transform("wjtp.get_jimple", getJimple))
-        soot.Main.main(Array("-unfriendly-mode"))
+          soot.Main.main(Array("-unfriendly-mode"))
         getJimple.result match{
           case Some(result) => println(result); result
           case None => throw new RuntimeException("Analysis failed")
