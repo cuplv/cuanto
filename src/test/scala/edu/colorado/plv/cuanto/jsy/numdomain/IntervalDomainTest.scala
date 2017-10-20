@@ -28,18 +28,7 @@ class IntervalDomainTest extends FlatSpec with Matchers {
     *
     */
 
-  /*val denoteTests = Table(
-    "expression" -> "denotation",
-    "2" -> 2,
-    "1 + 1" -> 2,
-    "1 - 1" -> 0,
-    "1 * 1" -> 1,
-    "1 / 1" -> 1,
-    "1 + 2 + 3" -> 6,
-    "1 + 2 * 3" -> 7
-  )*/
-
-  "Construct a new domain in Apron" should "not crash" in {
+  "Interval analysis" should "work on jsy" in {
     val manager = new Polka(false)
     val box = Array(new Interval(1, 10), new Interval(2, 5))
     val varnames = Array("x1", "x2")
@@ -59,9 +48,9 @@ class IntervalDomainTest extends FlatSpec with Matchers {
     // interpret the target expression into an Apron constraint
     IntervalDomain.interpret(target) match {
       case Some(cons) =>
-        println(cons)
         val res = a1.getBound(manager, new Texpr1Intern(env, cons))
-        println(res)
+        assert(res.toString == "[-75,-18]")
+      case None => throw new IllegalStateException("Cannot interpret a jsy expression into an Apron constraint")
     }
   }
 }
