@@ -1,0 +1,452 @@
+\documentclass{report}
+
+\usepackage{syntax}
+\usepackage{xspace}
+\usepackage{mathpartir}
+\usepackage{url}
+
+\newcommand{\minijava}{MiniJava\xspace}
+\newcommand{\javita}{Javita\xspace}
+
+\begin{document}
+\title{Javita}
+
+\maketitle
+
+% jimple - grammar for classes?
+
+
+\section{\javita - Java subset handled in Cuanto}
+We informally define \javita, a subset of Java inspired by \minijava
+(a grammar for \minijava is available here \label{sec:minijava}).
+
+We define a different subset of Java than \minijava that has less
+language syntax restrictions. The \minijava syntax restrictions are
+not important when using soot as frontend (we already have parsing and
+typechecking).
+
+The \javita fragment contains:
+\begin{itemize}
+\item Integer and Boolean variables;
+\item Operations on Integer variables (sum, difference,
+  multiplication, division, modulo);
+\item Operations on Boolean variables (and, or, negation, xor, ...); 
+\item Control flow: Sequences, for loops, while loops, do while loops;
+\item Declare static methods, with Integer and Boolean return values
+  and parameters;
+\item Call to static methods;
+\item Declaration of classes with static (Integer or Boolean) fields.
+\end{itemize} 
+
+The rest of the Java language is outside the fragment:
+\begin{itemize}
+\item No variables of type different from Boolean or Integer;
+\item No dynamic memory allocation (no arrays, no creation of new objects);;
+\item No calls to methods on objects, no dynamic dispatch;
+\item No handling of exception;
+\item No declaration of non-static fields, no inheritance, no
+  implementation of interfaces, no generics types.
+\end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\appendix
+
+\section{Jimple grammar}
+\begin{grammar}
+<jimple_method> ::= <local_declarations> <identity_stmts> <stmts> <exception_ranges>
+
+<local_declarations> ::= <local_declaration> <local_declarations>
+
+<stmts> ::= <label> ":" <stmt> ";" <stmts> \alt  <stmt> ";" <smts>
+
+<exception_ranges> ::= <exception_range> <exception_ranges>
+
+<local_declaration> ::= <type> <name> ";"
+
+<identity_stmts> ::= <identity_stmt> <identity_stmts>
+
+<stmt> ::= <breakpoint_stmt> \alt <assign_stmt> \alt <enter_monitor_stmt>
+<goto_stmt> \alt <if_stmt> \alt <invoke_stmt> \alt <lookup_switch_stmt> \alt <nop_stmt> \alt <ret_stmt> \alt <return_stmt> \alt <return_void_stmt> \alt <table_switch_stmt> \alt <throw_stmt>
+
+<breakpoint_stmt> ::= "breakpoint"
+
+<assign_stmt> ::= <variable> "=" <rvalue>
+
+<identity_stmt> ::= <local> ":=" <identity_value>
+
+<enter_monitor_stmt> ::= "entermonitor" <immediate>
+
+<exit_monitor_stmt> ::= "exitmonitor" <immediate>
+
+<goto_stmt> ::= "goto" <label>
+
+<if_stmt> ::= "if" <condition> "then" <label>
+
+<invoke_stmt> ::= <invoke_expr>
+
+<lookup_switch_stmt> ::= "lookupswitch(" <immediate> ") {" <cases> " default: <goto> " <label> "}" <nop_stmt> ::= "nop"
+
+<ret_stmt> ::= "ret" <local>
+
+<return_stmt> ::= "return" <immediate>
+
+<return_void_stmt> ::= "return" 
+
+<table_switch_stmt> ::= "tableswitch(" <immediate> ") {" <cases> " default: <goto> " <label> "}" <throw_stmt> ::= "throw" <immediate>
+
+<cases> ::= <case> <cases>
+
+<case> ::= "case " <int_constant> ": <goto> " <label>
+
+<condition> ::= <eq_expr> \alt <ge_expr> \alt <le_expr> \alt <lt_expr> \alt <ne_expr> \alt <gt_expr>
+
+<rvalue> ::= <array_ref> \alt <constant> \alt <expr> \alt <instance_field_ref> \alt <local> <next_next_stmt_address> \alt <static_field_ref>
+
+<identity_value> ::= <caught_exception_ref> \alt <parameter_ref> \alt <this_ref>
+
+<variable> ::= <array_ref> \alt <instance_field_ref> \alt <static_field_ref> \alt <local>
+
+<immediate> ::= <constant> \alt <local>
+
+<expr> ::= <binop_expr> \alt <cast_expr> \alt <instance_of_expr> \alt <invoke_expr> \alt <new_array_expr> \alt <new_expr> \alt <new_multi_array_expr> \alt <unop_expr>
+
+<binop_expr> ::= <add_expr> \alt <and_expr> \alt <cmp_expr> \alt <cmpg_expr> \alt <cmpl_expr> \alt <div_expr> \alt <eq_expr> \alt <ge_expr> \alt <gt_expr> \alt <le_expr> \alt <lt_expr> \alt <mul_expr> \alt <ne_expr> \alt <or_expr> \alt <rem_expr> \alt <shl_expr> \alt <shr_expr> \alt <sub_expr> \alt <ushr_expr> \alt <xor_expr>
+
+<add_expr> ::= <immediate> "+"<immediate>
+
+<and_expr> ::= <immediate> "&"<immediate>
+
+<cmp_expr> ::= <immediate> "cmp"<immediate>
+
+<cmpg_expr> ::= <immediate> "cmpg"<immediate>
+
+<cmpl_expr> ::= <immediate> "cmpl"<immediate>
+
+<div_expr> ::= <immediate> "/"<immediate>
+
+<eq_expr> ::= <immediate> "=="<immediate>
+
+<ge_expr> ::= <immediate> ">="<immediate>
+
+<gt_expr> ::= <immediate> ">"<immediate>
+
+<le_expr> ::= <immediate> "<="<immediate>
+
+<lt_expr> ::= <immediate> "<"<immediate>
+
+<mul_expr> ::= <immediate> "*"<immediate>
+
+<ne_expr> ::= <immediate> "!="<immediate>
+
+<or_expr> ::= <immediate> "\alt"<immediate>
+
+<rem_expr> ::= <immediate> "%"<immediate>
+
+<shl_expr> ::= <immediate> "<<"<immediate>
+
+<shr_expr> ::= <immediate> ">>"<immediate>
+
+<sub_expr> ::= <immediate> "-"<immediate>
+
+<ushr_expr> ::= <immediate> "ushr"<immediate>
+
+<xor_expr> ::= <immediate> "xor"<immediate>
+
+<cast_expr> ::= "(" <type> ")"<immediate>
+
+<instance_of_expr> ::= <immediate> "instanceof" <ref_type>
+
+<invoke_expr> ::= <interface_invoke_expr> \alt <special_invoke_expr> \alt <static_invoke_expr> <virtual_invoke_expr>
+
+<static_invoke_expr> ::= "staticinvoke" "[" <method_signature> "](" <immediate_list> ")"
+
+<interface_invoke_expr> ::= "interfaceinvoke" <immediate> ".[" + <method_signature> "]" "(" <immediate_list> ")"
+
+<special_invoke_expr> ::= "specialinvoke" <immediate> ".[" <method_signature> "]" "(" <immediate_list> ")"
+
+<virtual_invoke_expr> ::= "virtualinvoke" <immediate> ".[" <method_signature> "]" "(" <immediate_list> ")"
+
+<immediate_list> ::= <immediate> \alt <immediate> <immediate_next_list>
+
+<immediate_next_list> ::= "," <immediate> <immediate_next_list>
+
+<new_array_expr> ::= "new" <type> "[" <immediate> "]"
+
+<new_expr> ::= "new" <ref_type> "()"
+
+<new_multi_array_expr> ::= "new <multiarray> " <type> sized_dims <empty_dims>
+
+<sized_dims> ::= "[" <immediate> "]" <next_sized_dims>
+
+<next_sized_dims> ::= "[" <immediate> "]" <next_sized_dims>
+
+<empty_dims> ::= "[]" <empty_dims> 
+
+<unop_expr> ::= <length_expr> | <neg_expr>
+
+<length_expr> ::= "length" <immediate>
+
+<neg_expr> ::= "-" <immediate>
+
+<array_ref> ::= <immediate> "[" <immediate> "]";
+
+<instance_field_ref> ::= <immediate> ".[" <field_signature> "]";
+
+<static_field_ref> ::= "[" <field_signature> "]";
+
+<method_signature> ::= <identifier> "(" <type_list> "):" <type>;
+
+<field_signature> ::= <identifier> ":" <type>
+
+<type_list> ::= <type> <type_next_list>
+
+<type_next_list> ::= "," <type> <type_next_list>
+
+<caught_exception_ref> ::= "@caughtexception"
+
+<parameter_ref> ::= "@parameter" <int_constant>
+
+<this_ref> ::= "@this"
+
+<label> ::= <identifier>
+
+<local> ::= <identifier>
+
+<constant> ::= <double_constant> \alt <float_constant> \alt <int_constant> \alt <long_constant>  <string_constant> \alt <null_constant>
+
+<type> ::= <int_type> \alt <long_type> \alt <float_type> \alt <double_type> \alt <ref_type> <stmt_address_type> \alt <void_type>
+
+<exception_range> ::= ".catch" <ref_type> "from" <label> "to" <label> "using" <label>;
+
+\end{grammar}
+\section{\minijava}
+\label{sec:minijava}
+
+\minijava language~\cite{miniJavaSyntax}
+
+MiniJava features:
+\begin{itemize}
+\item Integer and Boolean primitive types
+\item Integer array types (I don't see array of arrays)
+\item Classes without method overloading (no interfaces, generics, \ldots)
+\item Restricted control flow and expressions (no exception handling)
+\end{itemize}
+
+\begin{grammar}
+<Program>	::=	<MainClass> ( <ClassDeclaration> )*
+
+<MainClass>	::=	"class" <Identifier> "{" "public" "static" "void" "main" "(" "String" "[" "]" <Identifier> ")" "{" <Statement> "}" "}"
+
+<ClassDeclaration>	::=	"class" <Identifier> ( "extends" <Identifier> )? "{" ( <VarDeclaration> )* ( <MethodDeclaration> )* "}"
+
+<VarDeclaration>	::=	<Type> <Identifier> ";"
+
+<MethodDeclaration>	::=	"public" <Type> <Identifier> "(" ( <Type> <Identifier> ( "," <Type> <Identifier> )* )? ")" "{" ( <VarDeclaration> )* ( <Statement> )* "return" <Expression> ";" "}"
+
+<Type>	::=	"int" "[" "]"
+\alt	"boolean"
+\alt	"int"
+\alt	Identifier
+
+<Statement>	::=	"{" ( <Statement> )* "}"
+\alt	"if" "(" <Expression> ")" <Statement> "else" <Statement>
+\alt	"while" "(" Expression ")" <Statement>
+\alt	"System.out.println" "(" <Expression> ")" ";"
+\alt	<Identifier> "=" <Expression> ";"
+\alt	<Identifier> "[" <Expression> "]" "=" <Expression> ";"
+
+<Expression>	::=	<Expression> <Expression>
+\alt <Expression> "<" <Expression>
+\alt <Expression> "+" <Expression>
+\alt <Expression>  "-" <Expression>
+\alt <Expression> "*" <Expression>
+\alt	<Expression> "[" <Expression> "]"
+\alt	<Expression> "." "length"
+\alt	<Expression> "." <Identifier> "(" ( <Expression> ( "," <Expression> )* )? ")"
+\alt	<INTEGER_LITERAL>
+\alt	"true"
+\alt	"false"
+\alt	<Identifier>
+\alt	"this"
+\alt	"new" "int" "[" Expression "]"
+\alt	"new" <Identifier> "(" ")"
+\alt	"!" <Expression>
+\alt	"(" <Expression> ")"
+<Identifier>	::=	<IDENTIFIER>
+\end{grammar}
+
+\section{Jimple Syntax - Method Body}
+\label{sec:jimple}
+Full Jimple syntax for a single method ~\cite{Vallee-Rai98jimple:simplifying}
+
+\begin{grammar}
+<jimple_method> ::= <local_declarations> <identity_stmts> <stmts> <exception_ranges>
+
+<local_declarations> ::= <local_declaration> <local_declarations>
+
+<stmts> ::= <label> ":" <stmt> ";" <stmts> \alt  <stmt> ";" <smts>
+
+<exception_ranges> ::= <exception_range> <exception_ranges>
+
+<local_declaration> ::= <type> <name> ";"
+
+<identity_stmts> ::= <identity_stmt> <identity_stmts>
+
+<stmt> ::= <breakpoint_stmt> \alt <assign_stmt> \alt <enter_monitor_stmt>
+<goto_stmt> \alt <if_stmt> \alt <invoke_stmt> \alt <lookup_switch_stmt> \alt <nop_stmt> \alt <ret_stmt> \alt <return_stmt> \alt <return_void_stmt> \alt <table_switch_stmt> \alt <throw_stmt>
+
+<breakpoint_stmt> ::= "breakpoint"
+
+<assign_stmt> ::= <variable> "=" <rvalue>
+
+<identity_stmt> ::= <local> ":=" <identity_value>
+
+<enter_monitor_stmt> ::= "entermonitor" <immediate>
+
+<exit_monitor_stmt> ::= "exitmonitor" <immediate>
+
+<goto_stmt> ::= "goto" <label>
+
+<if_stmt> ::= "if" <condition> "then" <label>
+
+<invoke_stmt> ::= <invoke_expr>
+
+<lookup_switch_stmt> ::= "lookupswitch(" <immediate> ") {" <cases> " default: <goto> " <label> "}" <nop_stmt> ::= "nop"
+
+<ret_stmt> ::= "ret" <local>
+
+<return_stmt> ::= "return" <immediate>
+
+<return_void_stmt> ::= "return" 
+
+<table_switch_stmt> ::= "tableswitch(" <immediate> ") {" <cases> " default: <goto> " <label> "}" <throw_stmt> ::= "throw" <immediate>
+
+<cases> ::= <case> <cases>
+
+<case> ::= "case " <int_constant> ": <goto> " <label>
+
+<condition> ::= <eq_expr> \alt <ge_expr> \alt <le_expr> \alt <lt_expr> \alt <ne_expr> \alt <gt_expr>
+
+<rvalue> ::= <array_ref> \alt <constant> \alt <expr> \alt <instance_field_ref> \alt <local> <next_next_stmt_address> \alt <static_field_ref>
+
+<identity_value> ::= <caught_exception_ref> \alt <parameter_ref> \alt <this_ref>
+
+<variable> ::= <array_ref> \alt <instance_field_ref> \alt <static_field_ref> \alt <local>
+
+<immediate> ::= <constant> \alt <local>
+
+<expr> ::= <binop_expr> \alt <cast_expr> \alt <instance_of_expr> \alt <invoke_expr> \alt <new_array_expr> \alt <new_expr> \alt <new_multi_array_expr> \alt <unop_expr>
+
+<binop_expr> ::= <add_expr> \alt <and_expr> \alt <cmp_expr> \alt <cmpg_expr> \alt <cmpl_expr> \alt <div_expr> \alt <eq_expr> \alt <ge_expr> \alt <gt_expr> \alt <le_expr> \alt <lt_expr> \alt <mul_expr> \alt <ne_expr> \alt <or_expr> \alt <rem_expr> \alt <shl_expr> \alt <shr_expr> \alt <sub_expr> \alt <ushr_expr> \alt <xor_expr>
+
+<add_expr> ::= <immediate> "+"<immediate>
+
+<and_expr> ::= <immediate> "&"<immediate>
+
+<cmp_expr> ::= <immediate> "cmp"<immediate>
+
+<cmpg_expr> ::= <immediate> "cmpg"<immediate>
+
+<cmpl_expr> ::= <immediate> "cmpl"<immediate>
+
+<div_expr> ::= <immediate> "/"<immediate>
+
+<eq_expr> ::= <immediate> "=="<immediate>
+
+<ge_expr> ::= <immediate> ">="<immediate>
+
+<gt_expr> ::= <immediate> ">"<immediate>
+
+<le_expr> ::= <immediate> "<="<immediate>
+
+<lt_expr> ::= <immediate> "<"<immediate>
+
+<mul_expr> ::= <immediate> "*"<immediate>
+
+<ne_expr> ::= <immediate> "!="<immediate>
+
+<or_expr> ::= <immediate> "\alt"<immediate>
+
+<rem_expr> ::= <immediate> "%"<immediate>
+
+<shl_expr> ::= <immediate> "<<"<immediate>
+
+<shr_expr> ::= <immediate> ">>"<immediate>
+
+<sub_expr> ::= <immediate> "-"<immediate>
+
+<ushr_expr> ::= <immediate> "ushr"<immediate>
+
+<xor_expr> ::= <immediate> "xor"<immediate>
+
+<cast_expr> ::= "(" <type> ")"<immediate>
+
+<instance_of_expr> ::= <immediate> "instanceof" <ref_type>
+
+<invoke_expr> ::= <interface_invoke_expr> \alt <special_invoke_expr> \alt <static_invoke_expr> <virtual_invoke_expr>
+
+<static_invoke_expr> ::= "staticinvoke" "[" <method_signature> "](" <immediate_list> ")"
+
+<interface_invoke_expr> ::= "interfaceinvoke" <immediate> ".[" + <method_signature> "]" "(" <immediate_list> ")"
+
+<special_invoke_expr> ::= "specialinvoke" <immediate> ".[" <method_signature> "]" "(" <immediate_list> ")"
+
+<virtual_invoke_expr> ::= "virtualinvoke" <immediate> ".[" <method_signature> "]" "(" <immediate_list> ")"
+
+<immediate_list> ::= <immediate> \alt <immediate> <immediate_next_list>
+
+<immediate_next_list> ::= "," <immediate> <immediate_next_list>
+
+<new_array_expr> ::= "new" <type> "[" <immediate> "]"
+
+<new_expr> ::= "new" <ref_type> "()"
+
+<new_multi_array_expr> ::= "new <multiarray> " <type> sized_dims <empty_dims>
+
+<sized_dims> ::= "[" <immediate> "]" <next_sized_dims>
+
+<next_sized_dims> ::= "[" <immediate> "]" <next_sized_dims>
+
+<empty_dims> ::= "[]" <empty_dims> 
+
+<unop_expr> ::= <length_expr> | <neg_expr>
+
+<length_expr> ::= "length" <immediate>
+
+<neg_expr> ::= "-" <immediate>
+
+<array_ref> ::= <immediate> "[" <immediate> "]";
+
+<instance_field_ref> ::= <immediate> ".[" <field_signature> "]";
+
+<static_field_ref> ::= "[" <field_signature> "]";
+
+<method_signature> ::= <identifier> "(" <type_list> "):" <type>;
+
+<field_signature> ::= <identifier> ":" <type>
+
+<type_list> ::= <type> <type_next_list>
+
+<type_next_list> ::= "," <type> <type_next_list>
+
+<caught_exception_ref> ::= "@caughtexception"
+
+<parameter_ref> ::= "@parameter" <int_constant>
+
+<this_ref> ::= "@this"
+
+<label> ::= <identifier>
+
+<local> ::= <identifier>
+
+<constant> ::= <double_constant> \alt <float_constant> \alt <int_constant> \alt <long_constant>  <string_constant> \alt <null_constant>
+
+<type> ::= <int_type> \alt <long_type> \alt <float_type> \alt <double_type> \alt <ref_type> <stmt_address_type> \alt <void_type>
+
+<exception_range> ::= ".catch" <ref_type> "from" <label> "to" <label> "using" <label>;
+
+\end{grammar}
+
+\end{document}
