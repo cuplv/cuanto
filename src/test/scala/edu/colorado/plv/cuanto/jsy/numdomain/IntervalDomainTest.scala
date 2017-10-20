@@ -5,12 +5,10 @@ import edu.colorado.plv.cuanto.jsy.arithmetic.{Minus, N, Plus, Times}
 import edu.colorado.plv.cuanto.jsy.{Binary, Var}
 import org.scalatest.{FlatSpec, Matchers}
 
-import scala.collection.immutable.HashMap
-
 /**
   * @author Tianhan Lu
   */
-class IntervalDomain extends FlatSpec with Matchers {
+class IntervalDomainTest extends FlatSpec with Matchers {
   /**
     *
     * val box = Array (
@@ -30,7 +28,7 @@ class IntervalDomain extends FlatSpec with Matchers {
     *
     */
 
-  val denoteTests = Table(
+  /*val denoteTests = Table(
     "expression" -> "denotation",
     "2" -> 2,
     "1 + 1" -> 2,
@@ -39,7 +37,7 @@ class IntervalDomain extends FlatSpec with Matchers {
     "1 / 1" -> 1,
     "1 + 2 + 3" -> 6,
     "1 + 2 * 3" -> 7
-  )
+  )*/
 
   "Construct a new domain in Apron" should "not crash" in {
     val manager = new Polka(false)
@@ -53,12 +51,17 @@ class IntervalDomain extends FlatSpec with Matchers {
       */
     val a1 = new Abstract1(manager, env, varnames, box)
 
-    val target = Binary(Minus, Binary(Times, Binary(Plus, Var("x1"), N(3)), Binary(Minus, Var("x2"), N(7))), N(10)) // (x1 + 3) * (x2 - 7) - 10
+    /**
+      * (x1 + 3) * (x2 - 7) - 10
+      */
+    val target = Binary(Minus, Binary(Times, Binary(Plus, Var("x1"), N(3)), Binary(Minus, Var("x2"), N(7))), N(10))
 
     // interpret the target expression into an Apron constraint
-    val cons = IntervalDomain.interpret(target)
-    cons match {
-      case Some(cons) => a1.getBound(manager, new Texpr1Intern(env, cons))
+    IntervalDomain.interpret(target) match {
+      case Some(cons) =>
+        println(cons)
+        val res = a1.getBound(manager, new Texpr1Intern(env, cons))
+        println(res)
     }
   }
 }
