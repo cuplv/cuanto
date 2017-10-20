@@ -2,6 +2,14 @@ package edu.colorado.plv.cuanto
 package abstracting.tc
 package domains
 
+import smtlib.Interpreter
+import smtlib.parser.Commands.{Command, DeclareConst}
+import smtlib.parser.Terms._
+import smtlib.theories.Core._
+import smtlib.theories.Ints._
+
+import symbolic._
+
 /** A domain representing an integer constrained by an upper and/or
   * lower bound
   *
@@ -45,7 +53,39 @@ package object interval {
     reduce(Btw(g,l))
   }
 
+  case class IntSMT(int1: SSymbol)
+
   object instances {
+    implicit val intSMTSymbol: Symbol[IntSMT] = new Symbol[IntSMT] {
+      override def draw(name: String): (IntSMT,Traversable[Command]) = {
+        val s: SSymbol = SSymbol(name)
+
+        (IntSMT(s),Seq(DeclareConst(s,IntSort())))
+      }
+    }
+
+    implicit val intSMTVal: SMTVal[Int] = new SMTVal[Int] {
+      override def interpret(value: Term): Option[Int] = value match {
+        case NumeralLit(v) => Some(v.intValue())
+        case _ => None
+      }
+    }
+
+    implicit val intModel: Model[Int] {type Schema = IntSMT} = new Model[Int] {
+      override type Schema = IntSMT
+      override def getModel(name: String, i: Interpreter): Option[Int] = {
+        for {
+          intResults <- getModelMap(i)
+          int <- intResults get SSymbol(name)
+        } yield int
+      }
+    }
+
+    implicit val intervalSym: SymAbstract[Interval,IntSMT] =
+      new SymAbstract[Interval,IntSMT] {
+        override def gammaHat(a: Interval): Constraint[IntSMT] = ???
+      }
+      
     implicit val latticeInterval: Lattice[Interval] = new Lattice[I] {
       val bot: Interval = Bot
       val top: Interval = Top
@@ -108,6 +148,31 @@ package object interval {
         override def beta(c: Int): I = btw(c,c)
       }
 
+  }
+
+  object symbolic {
+    def add(a: Int): Transformer[IntSMT] = {
+      case (IntSMT(i1),IntSMT(i2)) => 
+        Equals(Add(sTerm(i1),NumeralLit(BigInt(a))), sTerm(i2))
+    }
+    def sub(a: Int): Transformer[IntSMT] = {
+      case (IntSMT(i1),IntSMT(i2)) => 
+        Equals(Sub(sTerm(i1),NumeralLit(BigInt(a))), sTerm(i2))
+    }
+  }
+
+  def add(n: Int)(a: Interval): Interval = a match {
+    case Btw(g1,l1) => Btw(g1 + n, l1 + n)
+    case Lte(l) => Lte(l + n)
+    case Gte(g) => Gte(g + n)
+    case i => i // Bottom or Top will remain the same
+  }
+
+  def sub(n: Int)(a: Interval): Interval = a match {
+    case Btw(g1,l1) => Btw(g1 - n, l1 - n)
+    case Lte(l) => Lte(l - n)
+    case Gte(g) => Gte(g - n)
+    case i => i
   }
 
 }
