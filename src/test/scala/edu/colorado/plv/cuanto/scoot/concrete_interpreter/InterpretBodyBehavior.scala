@@ -27,7 +27,8 @@ trait InterpretBodyBehavior { self: CuantoSpec =>
     ("BooleanTest", "boolean test1") -> CInteger(1),
     ("BooleanTest", "boolean test2") -> CInteger(1),
     ("BooleanTest", "boolean test3") -> CInteger(0),
-    ("ControlFlowTest", "int test1") -> CInteger(8)
+    ("ControlFlowTest", "int test1") -> CInteger(8),
+    ("FunctionTest", "int test1") -> CInteger(3)
   )
   val interpretBoolBodyTests = Table(
     "methodname" -> "result",

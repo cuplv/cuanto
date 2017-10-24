@@ -15,16 +15,16 @@ class ArithmeticInterpretMethodSpec extends FlatSpec with Matchers with Property
   val va = local("va")
   val vb = local("vb")
 
-  val testEnv : Map[String, CValue] = Map(("va",CInteger(3)),("vb",CInteger(15)))
+  val testEnv  = StackFrame(None, Map(("va",CInteger(3)),("vb",CInteger(15))), None)
 
   val exprTests = Table(
     "expression" -> "denotation",
-    int(1) -> 1,
-    neg(int(1)) -> -1,
-    add(int(1))(int(1)) -> 2,
-    sub(int(3))(int(1)) -> 2,
-    mul(int(3))(int(2)) -> 6,
-    div(int(8))(int(4)) -> 2
+    int(1) -> CInteger(1),
+    neg(int(1)) -> CInteger(-1),
+    add(int(1))(int(1)) -> CInteger(2),
+    sub(int(3))(int(1)) -> CInteger(2),
+    mul(int(3))(int(2)) -> CInteger(6),
+    div(int(8))(int(4)) -> CInteger(2)
   )
 
   val e1 : AddExpr = add(va)(int(1))
@@ -32,23 +32,24 @@ class ArithmeticInterpretMethodSpec extends FlatSpec with Matchers with Property
 
   val exprLocalTests = Table(
     "expression" -> "denotation",
-    e1 -> 4,
-    e2 -> 5
+    e1 -> CInteger(4),
+    e2 -> CInteger(5)
   )
 
   "The Scoot interpreter" should "interpret stateless Values" in {
     forAll (exprTests) { (e, n) =>
-      evaluate_expr(e,testEnv) should equal (Some(n))
+      evaluate_expr(e, testEnv) should equal (Some(n))
     }
   }
 
   it should "interpret Values containing in-scope Locals" in {
     forAll (exprLocalTests) { (e, n) =>
-      evaluate_expr(e,testEnv) should equal (Some(n))
+      val maybeValue = evaluate_expr(e, testEnv)
+      maybeValue should equal (Some(n))
     }
   }
 
   it should "give None when asked to interpret undefined Locals" in {
-    forAll (exprLocalTests) { (e, n) => assert(Try(evaluate_expr(e,new HashMap[String,CValue]())).isInstanceOf[Failure[RuntimeException]]) }
+    forAll (exprLocalTests) { (e, n) => assert(Try(evaluate_expr(e,StackFrame(None,new HashMap[String,CValue](), None))).isInstanceOf[Failure[RuntimeException]]) }
   }
 }
