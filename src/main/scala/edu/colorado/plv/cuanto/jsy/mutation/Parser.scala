@@ -1,14 +1,15 @@
-package edu.colorado.plv.cuanto.jsy.mutation
+package edu.colorado.plv.cuanto.jsy
+package mutation
 
-import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike, UnitOpParser}
+import edu.colorado.plv.cuanto.jsy.common.{JsyParserLike, OpParserLike}
 
-trait ParserLike extends OpParserLike with JsyParserLike
+trait ParserLike extends OpParserLike with JsyParserLike {
+  abstract override def opAtom: Parser[Expr] =
+    positioned("null" ^^^ Null) |
+    super.opAtom
 
-/**
-  * @author Bor-Yuh Evan Chang
-  */
-object Parser extends UnitOpParser with ParserLike {
-  override val bop = ???
-  override def expr = ???
-  override def start = ???
+  lazy val mutationBop: OpPrecedence = List(
+    List("=" -> Assign)
+  )
 }
+

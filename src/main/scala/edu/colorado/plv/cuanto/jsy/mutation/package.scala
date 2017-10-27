@@ -11,12 +11,6 @@ package mutation {
   /** @group Intermediate AST Nodes */
   case object Deref extends Uop
 
-  /** Address.
-    *
-    * @group Intermediate AST Nodes
-    */
-  case class A private (a: Int) extends Val
-
 }
 
 

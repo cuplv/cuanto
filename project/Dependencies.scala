@@ -8,7 +8,9 @@ object Dependencies {
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
   
   lazy val scalaParserCombinators = "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.5"
-  
+
+  lazy val cats = "org.typelevel" %% "cats" % "0.9.0"
+
   lazy val sootResolvers = Seq(
     "soot snapshot" at "https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-snapshot/",
     "soot release" at "https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-release/"
