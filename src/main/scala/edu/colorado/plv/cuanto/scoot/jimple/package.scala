@@ -1,7 +1,6 @@
 package edu.colorado.plv.cuanto.scoot
 
 import scala.language.reflectiveCalls
-import soot.jimple._
 
 /**
   * @author Jared Wright
@@ -23,46 +22,46 @@ package object jimple {
 
 //  implicit def convertReturnStmt(dt: soot.jimple.ReturnStmt)
   implicit def convertUnit(dt: soot.Unit): edu.colorado.plv.cuanto.scoot.jimple.Stmt = {
-    val s = new StmtSwitch {
+    val s = new soot.jimple.StmtSwitch {
       var retValue : Option[edu.colorado.plv.cuanto.scoot.jimple.Stmt] = None
-      override def caseIdentityStmt(stmt: IdentityStmt): Unit = ???
+      override def caseIdentityStmt(stmt: soot.jimple.IdentityStmt): Unit = ???
 
 
       override def caseAssignStmt(stmt: soot.jimple.AssignStmt): Unit = retValue = Some(new AssignStmt(stmt))
 
-      override def caseRetStmt(stmt: RetStmt): Unit = ???
+      override def caseRetStmt(stmt: soot.jimple.RetStmt): Unit = ???
 
-      override def caseInvokeStmt(stmt: InvokeStmt): Unit = ???
+      override def caseInvokeStmt(stmt: soot.jimple.InvokeStmt): Unit = ???
 
       override def caseGotoStmt(stmt: soot.jimple.GotoStmt): Unit = retValue = Some(new GotoStmt(stmt))
 
-      override def caseReturnVoidStmt(stmt: ReturnVoidStmt): Unit = ???
+      override def caseReturnVoidStmt(stmt: soot.jimple.ReturnVoidStmt): Unit = ???
 
-      override def caseExitMonitorStmt(stmt: ExitMonitorStmt): Unit = ???
+      override def caseExitMonitorStmt(stmt: soot.jimple.ExitMonitorStmt): Unit = ???
 
-      override def caseNopStmt(stmt: NopStmt): Unit = ???
+      override def caseNopStmt(stmt: soot.jimple.NopStmt): Unit = ???
 
       override def caseReturnStmt(stmt: soot.jimple.ReturnStmt): Unit = retValue = Some(new ReturnStmt(stmt))
 
-      override def caseLookupSwitchStmt(stmt: LookupSwitchStmt): Unit = ???
+      override def caseLookupSwitchStmt(stmt: soot.jimple.LookupSwitchStmt): Unit = ???
 
       override def caseIfStmt(stmt: soot.jimple.IfStmt): Unit = retValue = Some(new IfStmt(stmt))
 
-      override def caseThrowStmt(stmt: ThrowStmt): Unit = ???
+      override def caseThrowStmt(stmt: soot.jimple.ThrowStmt): Unit = ???
 
-      override def caseTableSwitchStmt(stmt: TableSwitchStmt): Unit = ???
+      override def caseTableSwitchStmt(stmt: soot.jimple.TableSwitchStmt): Unit = ???
 
-      override def caseEnterMonitorStmt(stmt: EnterMonitorStmt): Unit = ???
+      override def caseEnterMonitorStmt(stmt: soot.jimple.EnterMonitorStmt): Unit = ???
 
       override def defaultCase(obj: scala.Any): Unit = ???
 
-      override def caseBreakpointStmt(stmt: BreakpointStmt): Unit = ???
+      override def caseBreakpointStmt(stmt: soot.jimple.BreakpointStmt): Unit = ???
     }
     dt.apply(s)
     s.retValue.getOrElse(???)
   }
   implicit def convertValue(dt: soot.Value) : Value = {
-    val s = new JimpleValueSwitch() {
+    val s = new soot.jimple.JimpleValueSwitch() {
       var retValue : Option[Value] = None
 
       //ExprSwitch methods
@@ -84,7 +83,7 @@ package object jimple {
 
       override def caseEqExpr(eqExpr: soot.jimple.EqExpr): Unit = retValue = Some(new EqExpr(eqExpr))
 
-      override def caseGeExpr(geExpr: soot.jimple.GeExpr): Unit = ???
+      override def caseGeExpr(geExpr: soot.jimple.GeExpr): Unit = retValue = Some(new GeExpr(geExpr))
 
       override def caseGtExpr(gtExpr: soot.jimple.GtExpr): Unit = ???
 
@@ -120,7 +119,7 @@ package object jimple {
 
       override def caseSpecialInvokeExpr(specialInvokeExpr: soot.jimple.SpecialInvokeExpr): Unit = ???
 
-      override def caseStaticInvokeExpr(staticInvokeExpr: soot.jimple.StaticInvokeExpr): Unit = ???
+      override def caseStaticInvokeExpr(staticInvokeExpr: soot.jimple.StaticInvokeExpr): Unit = retValue = Some(new StaticInvokeExpr(staticInvokeExpr))
 
       override def caseSubExpr(subExpr: soot.jimple.SubExpr): Unit = retValue = Some(convertSubExpr(subExpr))
 
