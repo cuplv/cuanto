@@ -12,7 +12,9 @@ class IntervalDomainTest extends FlatSpec with Matchers {
   "Interval analysis" should "work on jsy" in {
     val manager = new Polka(false)
     val box = Array(new Interval(1, 10), new Interval(2, 5))
-    val varnames = Array("x1", "x2")
+    val var1 = "x1"
+    val var2 = "x2"
+    val varnames = Array(var1, var2)
     val env = new Environment(varnames, Array[String]())
     /**
       * The element is such that vars[i] is in interval box[i].
@@ -23,8 +25,10 @@ class IntervalDomainTest extends FlatSpec with Matchers {
 
     /**
       * (x1 + 3) * (x2 - 7) - 10
+      * 1 <= x1 <= 10
+      * 2 <= x2 <= 5
       */
-    val target = Binary(Minus, Binary(Times, Binary(Plus, Var("x1"), N(3)), Binary(Minus, Var("x2"), N(7))), N(10))
+    val target = Binary(Minus, Binary(Times, Binary(Plus, Var(var1), N(3)), Binary(Minus, Var(var2), N(7))), N(10))
 
     // interpret the target expression into an Apron constraint
     IntervalDomain.interpret(target) match {
