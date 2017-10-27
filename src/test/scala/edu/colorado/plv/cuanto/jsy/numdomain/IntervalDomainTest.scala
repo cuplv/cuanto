@@ -10,22 +10,7 @@ import org.scalatest.{FlatSpec, Matchers}
   */
 class IntervalDomainTest extends FlatSpec with Matchers {
   /**
-    *
-    * val box = Array (
-    *   x1 >= 1 && x1 <= 10  => new Interval(...)
-    *   x2 >= 2 && x2 <= 5   => new Interval(...)
-    * )
-    *
-    * x3 = (x1 + 3) * (x2 - 7) - 10 => new Texpr0Intern(new Texpr0BinNode(...))
-    *
-    * public Abstract0(man: Manager, intdim: Int, realdim: Int, c: Array[Lincons0])
-    * new Abstract0(man, 0, 2, box)
-    *
-    *
-    * x3 ϵ ?  => a0.getBound(man, texp)
-    *
-    * // public Abstract0(man: Manager, intdim: Int, realdim: Int, c: Array[Tcons0])
-    *
+    * DYLD_LIBRARY_PATH=/nix/store/bwgwq2qkh9j3wrr5m6x6nmq86q4ppqsl-japron-1097/lib
     */
 
   "Interval analysis" should "work on jsy" in {
