@@ -10,7 +10,7 @@ import gmp.Mpfr
   */
 object IntervalDomain {
   implicit def convert(d: Double): MpfrScalar = new MpfrScalar(d, Mpfr.RNDU)
-  val ERROR_VAL = new Texpr1CstNode(-1.0)
+  val ERROR = new Texpr1CstNode(-1.0)
 
   /**
     *
@@ -44,7 +44,7 @@ object IntervalDomain {
   def wrap(uop: Uop, node: Option[Texpr1Node]): Texpr1Node = {
     node match {
       case Some(node) => genNegNode(node)
-      case None => ERROR_VAL
+      case None => ERROR
     }
   }
 
@@ -58,7 +58,7 @@ object IntervalDomain {
   def wrap(bop: Bop, left: Option[Texpr1Node], right: Option[Texpr1Node]): Texpr1Node = {
     (left, right) match {
       case (Some(left), Some(right)) => genBinNode(bop, left, right)
-      case _ => ERROR_VAL
+      case _ => ERROR
     }
   }
 
